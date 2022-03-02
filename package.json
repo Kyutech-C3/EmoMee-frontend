@@ -11,9 +11,11 @@
     "lint": "npm run lint:js"
   },
   "dependencies": {
+    "@nuxt/kit": "^0.8.1-edge",
     "@nuxtjs/axios": "^5.13.1",
     "@nuxtjs/pwa": "^3.3.5",
     "core-js": "^3.9.1",
+    "face-api.js": "^0.22.2",
     "nuxt": "^2.15.3"
   },
   "devDependencies": {
