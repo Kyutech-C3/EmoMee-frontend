@@ -1,6 +1,7 @@
 <template>
   <div>
-    {{ emotion_list }}
+    <p>{{ emotion_list }}</p>
+    <p>{{ top }}</p>
   </div>
 </template>
 
@@ -10,6 +11,8 @@ import * as faceapi from 'face-api.js'
 export default {
   data() {
     return {
+      top_history: [],
+      top: '',
       emotion_list: {},
     }
   },
@@ -24,21 +27,37 @@ export default {
         .detectSingleFace(img, new faceapi.TinyFaceDetectorOptions())
         .withFaceExpressions()
 
-      this.emotion_list = detectionWithExpression.expressions
+      if ('expressions' in detectionWithExpression) {
+        let pairs = Object.entries(detectionWithExpression.expressions)
+        pairs = pairs.filter((pair) => pair[1] >= 0.3)
 
-      const pairs = Object.entries(this.emotion_list)
-      pairs.sort((p1, p2) => {
-        const p1Val = p1[1]
-        const p2Val = p2[1]
-        return p2Val - p1Val
-      })
+        pairs.sort((p1, p2) => {
+          return p2[1] - p1[1]
+        })
 
-      this.emotion_list = Object.fromEntries(pairs)
-      this.emotion_list = this.emotion_list.fromEntries(
-        Object.entries(this.emotion_list).map(([key, val]) =>
-          val < 0.3 ? delete this.emotion_list[key] : [key, val]
-        )
-      )
+        if (pairs.length > 0) {
+          this.top_history.push(pairs[0][0])
+          if (this.top_history.length > 5) {
+            this.top_history.shift()
+          }
+
+          const historyCountMap = {}
+          for (const history of this.top_history) {
+            if (historyCountMap[history] === undefined) {
+              historyCountMap[history] = 0
+            } else {
+              historyCountMap[history] += 1
+            }
+          }
+
+          const historyPairs = Object.entries(historyCountMap)
+          historyPairs.sort((p1, p2) => {
+            return p2[1] - p1[1]
+          })
+          this.top = historyPairs[0][0]
+          this.emotion_list = Object.fromEntries(pairs)
+        }
+      }
     },
   },
   mounted() {
