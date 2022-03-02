@@ -2,6 +2,7 @@
   <div>
     <p>{{ emotion_list }}</p>
     <p>{{ top }}</p>
+    <p>face_detected: {{ face_detected }}</p>
   </div>
 </template>
 
@@ -13,6 +14,7 @@ export default {
     return {
       top_history: [],
       top: '',
+      face_detected: false,
       emotion_list: {},
     }
   },
@@ -26,6 +28,15 @@ export default {
       const detectionWithExpression = await faceapi
         .detectSingleFace(img, new faceapi.TinyFaceDetectorOptions())
         .withFaceExpressions()
+
+      if (
+        detectionWithExpression != null &&
+        'detection' in detectionWithExpression
+      ) {
+        this.face_detected = true
+      } else {
+        this.face_detected = false
+      }
 
       if ('expressions' in detectionWithExpression) {
         let pairs = Object.entries(detectionWithExpression.expressions)
