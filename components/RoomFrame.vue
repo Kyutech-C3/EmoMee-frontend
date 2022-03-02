@@ -20,13 +20,13 @@ export default {
   },
   methods: {
     async loadModels(img) {
-      await faceapi.nets.tinyFaceDetector.loadFromUri('/weights')
+      await faceapi.nets.ssdMobilenetv1.loadFromUri('/weights')
       await faceapi.nets.faceExpressionNet.loadFromUri('/weights')
       setInterval(this.analysys, 100, img)
     },
     async analysys(img) {
       const detectionWithExpression = await faceapi
-        .detectSingleFace(img, new faceapi.TinyFaceDetectorOptions())
+        .detectSingleFace(img, new faceapi.SsdMobilenetv1Options())
         .withFaceExpressions()
 
       if (
