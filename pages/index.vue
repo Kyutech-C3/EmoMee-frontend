@@ -2,6 +2,7 @@
   <div class="container">
     <div>
       <Logo />
+      <RoomFrame />
       <h1 class="title">EmoMee-frontend</h1>
       <div class="links">
         <a
