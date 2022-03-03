@@ -8,7 +8,7 @@
         :key="faceReaction.id"
         :src="faceReaction.img"
         :alt="faceReaction.name"
-        :title="faceReaction.id"
+        :title="faceReaction.name"
         class="w-16 h-16 mx-1 cursor-pointer rounded-full hover:bg-gray-200 select-none"
         @click="selectNoFaceReaction"
       />
@@ -20,7 +20,7 @@
         :key="faceReaction.id"
         :src="faceReaction.img"
         :alt="faceReaction.name"
-        :title="faceReaction.id"
+        :title="faceReaction.name"
         class="w-16 h-16 mx-1 cursor-pointer rounded-full hover:bg-gray-200 select-none"
         @click="selectFaceReaction"
       />
