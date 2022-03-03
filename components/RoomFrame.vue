@@ -34,7 +34,6 @@ export default {
       let faceDetectorOptions = new faceapi.SsdMobilenetv1Options()
       if (this.tinyModel) {
         faceDetectorOptions = new faceapi.TinyFaceDetectorOptions()
-        console.log('tiny')
       }
 
       const detectionWithExpression = await faceapi
