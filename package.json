@@ -11,12 +11,17 @@
     "lint": "npm run lint:js"
   },
   "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^6.0.0",
+    "@fortawesome/free-regular-svg-icons": "^6.0.0",
+    "@fortawesome/free-solid-svg-icons": "^6.0.0",
     "@nuxt/kit": "^0.8.1-edge",
     "@nuxtjs/axios": "^5.13.1",
+    "@nuxtjs/fontawesome": "^1.1.2",
     "@nuxtjs/pwa": "^3.3.5",
     "core-js": "^3.9.1",
     "face-api.js": "^0.22.2",
-    "nuxt": "^2.15.3"
+    "nuxt": "^2.15.3",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^6.0.0",
