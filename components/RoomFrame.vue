@@ -3,6 +3,7 @@
     <p>{{ emotion_list }}</p>
     <p>{{ top }}</p>
     <p>face_detected: {{ face_detected }}</p>
+    <p>is_tiny_model: {{ tinyModel }}</p>
   </div>
 </template>
 
@@ -10,6 +11,15 @@
 import * as faceapi from 'face-api.js'
 
 export default {
+  props: {
+    tinyModel: {
+      type: Boolean,
+      required: true,
+      default() {
+        return false
+      },
+    },
+  },
   data() {
     return {
       top_history: [],
@@ -20,13 +30,22 @@ export default {
   },
   methods: {
     async loadModels(img) {
-      await faceapi.nets.ssdMobilenetv1.loadFromUri('/weights')
+      if (this.tinyModel) {
+        await faceapi.nets.tinyFaceDetector.loadFromUri('/weights')
+      } else {
+        await faceapi.nets.ssdMobilenetv1.loadFromUri('/weights')
+      }
       await faceapi.nets.faceExpressionNet.loadFromUri('/weights')
       setInterval(this.analysys, 100, img)
     },
     async analysys(img) {
+      let faceDetectorOptions = new faceapi.SsdMobilenetv1Options()
+      if (this.tinyModel) {
+        faceDetectorOptions = new faceapi.TinyFaceDetectorOptions()
+      }
+
       const detectionWithExpression = await faceapi
-        .detectSingleFace(img, new faceapi.SsdMobilenetv1Options())
+        .detectSingleFace(img, faceDetectorOptions)
         .withFaceExpressions()
 
       if (
