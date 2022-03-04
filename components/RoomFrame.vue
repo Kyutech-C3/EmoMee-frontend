@@ -4,6 +4,7 @@
     <p>{{ top }}</p>
     <p>face_detected: {{ face_detected }}</p>
     <p>is_tiny_model: {{ tinyModel }}</p>
+    <p>volume: {{ volume }}</p>
   </div>
 </template>
 
@@ -26,9 +27,21 @@ export default {
       top: '',
       face_detected: false,
       emotion_list: {},
+      volume: 0,
+      analyser: null,
     }
   },
   methods: {
+    loadAudioAnalyser(stream) {
+      const audioContext = new AudioContext()
+      this.analyser = audioContext.createAnalyser()
+      const microphone = audioContext.createMediaStreamSource(stream)
+      this.analyser.fftSize = 512
+      this.analyser.minDecibels = -127
+      this.analyser.maxDecibels = 0
+      this.analyser.smoothingTimeConstant = 0.4
+      microphone.connect(this.analyser)
+    },
     async loadModels(img) {
       if (this.tinyModel) {
         await faceapi.nets.tinyFaceDetector.loadFromUri('/weights')
@@ -87,16 +100,27 @@ export default {
       } else {
         this.face_detected = false
       }
+
+      const volumes = new Uint8Array(this.analyser.frequencyBinCount)
+      this.analyser.getByteFrequencyData(volumes)
+      const volumeSum = volumes.reduce((prev, current) => prev + current)
+      const average = volumeSum / volumes.length
+
+      this.volume = Math.min(Math.round(average / 10), 9)
     },
   },
   mounted() {
     const video = document.createElement('video')
+    video.muted = true
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
-        video.srcObject = stream
-        video.play()
-        this.loadModels(video)
-      })
+      navigator.mediaDevices
+        .getUserMedia({ video: true, audio: { echoCancellation: true } })
+        .then((stream) => {
+          video.srcObject = stream
+          video.play()
+          this.loadAudioAnalyser(stream)
+          this.loadModels(video)
+        })
     }
   },
 }
