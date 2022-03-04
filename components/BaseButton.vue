@@ -1,7 +1,10 @@
 <template>
-  <nuxt-link :to="to" class="rounded-2xl px-7 py-3 drop-shadow-md bg-white">
+  <div
+    :to="to"
+    class="rounded-2xl px-7 py-3 drop-shadow-md bg-white cursor-pointer"
+  >
     <slot></slot>
-  </nuxt-link>
+  </div>
 </template>
 
 <script>
