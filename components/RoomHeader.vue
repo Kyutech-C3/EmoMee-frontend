@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute flex w-full top-0 justify-between items-center bg-blue-900 h-18 px-10"
+    class="absolute flex w-full justify-between items-center bg-blue-900 h-18 px-10 transition-all z-50"
   >
     <img src="@/assets/c3_logo.png" class="w-10 h-auto" />
     <div class="flex">

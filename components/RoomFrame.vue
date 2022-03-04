@@ -1,17 +1,54 @@
 <template>
-  <div>
+  <div class="relative h-screen overflow-hidden">
+    <div
+      v-if="!headerOpen"
+      class="h-18 w-full absolute z-20 top-0"
+      @mouseover="headerOpen = true"
+    ></div>
+    <div
+      v-if="headerOpen || selectBaseFaceBarOpen"
+      class="w-full h-full absolute z-0"
+      @mouseover="closeModal"
+    ></div>
+    <room-header
+      :class="
+        headerOpen ? 'top-0 opacity-100 visible' : '-top-18 opacity-0 invisible'
+      "
+    />
     <p>{{ emotion_list }}</p>
     <p>{{ top }}</p>
     <p>face_detected: {{ face_detected }}</p>
     <p>is_tiny_model: {{ tinyModel }}</p>
     <p>volume: {{ volume }}</p>
+    <div
+      class="w-40 h-full absolute z-10 right-0 top-0"
+      @mouseover="selectBaseFaceBarOpen = true"
+    ></div>
+    <select-base-face-bar
+      ref="child"
+      class="absolute bottom-0 top-0 z-50"
+      :class="
+        selectBaseFaceBarOpen
+          ? 'right-10 opacity-100 visible'
+          : '-right-20 opacity-0 invisible'
+      "
+    />
+    <select-reaction-bar class="absolute bottom-10 left-0 right-0" />
   </div>
 </template>
 
 <script>
 import * as faceapi from 'face-api.js'
+import SelectBaseFaceBar from '@/components/SelectBaseFaceBar.vue'
+import RoomHeader from '@/components/RoomHeader.vue'
+import SelectReactionBar from '@/components/SelectReactionBar.vue'
 
 export default {
+  components: {
+    RoomHeader,
+    SelectReactionBar,
+    SelectBaseFaceBar,
+  },
   props: {
     tinyModel: {
       type: Boolean,
@@ -29,6 +66,22 @@ export default {
       emotion_list: {},
       volume: 0,
       analyser: null,
+      headerOpen: false,
+      selectBaseFaceBarOpen: false,
+    }
+  },
+  mounted() {
+    const video = document.createElement('video')
+    video.muted = true
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+      navigator.mediaDevices
+        .getUserMedia({ video: true, audio: { echoCancellation: true } })
+        .then((stream) => {
+          video.srcObject = stream
+          video.play()
+          this.loadAudioAnalyser(stream)
+          this.loadModels(video)
+        })
     }
   },
   methods: {
@@ -108,20 +161,11 @@ export default {
 
       this.volume = Math.min(Math.round(average / 10), 9)
     },
-  },
-  mounted() {
-    const video = document.createElement('video')
-    video.muted = true
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices
-        .getUserMedia({ video: true, audio: { echoCancellation: true } })
-        .then((stream) => {
-          video.srcObject = stream
-          video.play()
-          this.loadAudioAnalyser(stream)
-          this.loadModels(video)
-        })
-    }
+    closeModal() {
+      this.headerOpen = false
+      this.selectBaseFaceBarOpen = false
+      this.$refs.child.openSelectFaceModal('')
+    },
   },
 }
 </script>

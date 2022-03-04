@@ -1,5 +1,5 @@
 <template>
-  <div class="relative">
+  <div class="relative transition-all">
     <div
       class="border border-gray-300 rounded-full px-1 py-5 w-20 drop-shadow-md bg-color m-0 absolute right-0"
     >

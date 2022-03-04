@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex justify-center border border-gray-300 rounded-full px-8 py-1 w-fit mx-auto drop-shadow-md bg-color"
+    class="flex border border-gray-300 rounded-full px-8 py-1 w-fit mx-auto drop-shadow-md bg-color"
   >
     <div class="flex">
       <img
