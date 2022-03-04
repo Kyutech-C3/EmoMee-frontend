@@ -11,7 +11,15 @@
 import * as faceapi from 'face-api.js'
 
 export default {
-  props: ['tinyModel'],
+  props: {
+    tinyModel: {
+      type: Boolean,
+      required: true,
+      default() {
+        return false
+      },
+    },
+  },
   data() {
     return {
       top_history: [],
