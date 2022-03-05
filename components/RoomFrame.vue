@@ -18,6 +18,7 @@
       :class="
         headerOpen ? 'top-0 opacity-100 visible' : '-top-18 opacity-0 invisible'
       "
+      :url="''"
     />
     <div class="absolute -z-10">
       <p>{{ emotion_list }}</p>
@@ -120,13 +121,13 @@ export default {
         {
           id: this.generateUUID(),
           name: 'hoge',
-          faceGif: require('@/assets/emoji/base/smile/smile1.gif'),
+          faceGif: require('@/assets/pigeon/nuetral.png'),
           voiceON: true,
         },
         {
           id: this.generateUUID(),
           name: 'hoge1',
-          faceGif: require('@/assets/emoji/base/smile/smile2.gif'),
+          faceGif: require('@/assets/pigeon/riseki_sleep.png'),
           voiceON: true,
         },
         {

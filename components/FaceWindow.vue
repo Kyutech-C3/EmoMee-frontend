@@ -1,6 +1,6 @@
 <template>
   <div
-    class="border border-gray-300 bg-color rounded-3xl relative pt-10"
+    class="border border-gray-300 bg-color rounded-3xl relative pt-10 select-none"
     :class="voiceON ? 'border-green-500 border-2' : ''"
   >
     <p class="mx-auto w-fit">{{ name }}</p>
