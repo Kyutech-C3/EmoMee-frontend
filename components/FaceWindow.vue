@@ -1,7 +1,7 @@
 <template>
   <div
     class="border border-gray-300 bg-color rounded-3xl relative pt-10"
-    :class="voiceON ? 'border-green-300 border-2' : ''"
+    :class="voiceON ? 'border-green-500 border-2' : ''"
   >
     <p class="mx-auto w-fit">{{ name }}</p>
     <img :src="faceGif" class="h-4/5 w-auto mx-auto" />
@@ -38,6 +38,6 @@ export default {
 
 <style scoped>
 .bg-color {
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.6);
 }
 </style>

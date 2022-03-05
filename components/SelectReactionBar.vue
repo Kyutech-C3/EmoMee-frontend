@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex border border-gray-300 rounded-full px-8 py-1 w-fit mx-auto drop-shadow-md bg-color"
+    class="flex border border-gray-300 rounded-full px-8 py-1 w-fit mx-auto origin-shadow bg-color transition-all"
   >
     <div class="flex">
       <img
@@ -9,11 +9,13 @@
         :src="faceReaction.img"
         :alt="faceReaction.name"
         :title="faceReaction.name"
-        class="w-16 h-16 mx-1 cursor-pointer rounded-full hover:bg-gray-200 select-none"
+        class="w-16 h-16 mx-1 cursor-pointer rounded-full select-none hover:bg-black hover:bg-opacity-10"
         @click="selectNoFaceReaction"
       />
     </div>
-    <div class="border-2 border-gray-300 w-1 my-3 mx-3 select-none"></div>
+    <div
+      class="border-2 border-gray-400 w-1 my-3 mx-3 select-none rounded"
+    ></div>
     <div class="flex">
       <img
         v-for="faceReaction in faceReactions"
@@ -21,12 +23,12 @@
         :src="faceReaction.img"
         :alt="faceReaction.name"
         :title="faceReaction.name"
-        class="w-16 h-16 mx-1 cursor-pointer rounded-full hover:bg-gray-200 select-none"
+        class="w-16 h-16 mx-1 cursor-pointer rounded-full hover:bg-black hover:bg-opacity-10 select-none"
         @click="selectFaceReaction"
       />
     </div>
     <font-awesome-icon
-      class="w-10 mx-4 text-gray-500 hover:text-gray-700 cursor-pointer select-none"
+      class="w-10 mx-4 text-gray-600 hover:text-gray-800 cursor-pointer select-none"
       :icon="['fas', 'circle-plus']"
       @click="openReactionModal"
     />
@@ -71,6 +73,8 @@ export default {
     openReactionModal() {
       this.activeModal = !this.activeModal
     },
+    selectNoFaceReaction() {},
+    selectFaceReaction() {},
   },
 }
 </script>
@@ -78,5 +82,8 @@ export default {
 <style scoped>
 .bg-color {
   background-color: rgba(255, 255, 255, 0.7);
+}
+.origin-shadow {
+  box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.5);
 }
 </style>

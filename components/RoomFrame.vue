@@ -6,7 +6,11 @@
       @mouseover="headerOpen = true"
     ></div>
     <div
-      v-if="headerOpen || selectBaseFaceBarOpen"
+      v-if="
+        headerOpen ||
+        selectBaseFaceBarOpen ||
+        (smallWind && selectReactionBarOpen)
+      "
       class="w-full h-full absolute z-0"
       @mouseover="closeModal"
     ></div>
@@ -23,7 +27,8 @@
       <p>volume: {{ volume }}</p>
     </div>
     <div
-      class="flex flex-wrap justify-center h-4/5 place-items-center gap-3 mx-auto mt-5 -z-10"
+      id="faceWindows"
+      class="flex flex-wrap justify-center h-4/5 place-items-center gap-3 mx-auto pt-5 -z-10"
       :class="[
         { 'vw-1-6': users.length < 7 },
         { 'vw-7-12': users.length >= 7 && users.length < 13 },
@@ -45,7 +50,7 @@
       />
     </div>
     <div
-      class="w-40 h-5/6 absolute z-10 right-0 bottom-0"
+      class="w-32 h-3/4 absolute z-10 right-0 top-1/2 -translate-y-1/2"
       @mouseover="selectBaseFaceBarOpen = true"
     ></div>
     <select-base-face-bar
@@ -57,7 +62,20 @@
           : '-right-20 opacity-0 invisible'
       "
     />
-    <select-reaction-bar class="absolute bottom-10 left-0 right-0" />
+    <div
+      id="hoverReactionBarId"
+      class="w-4/5 h-24 absolute z-10 left-1/2 -translate-x-1/2 -bottom-24"
+      @mouseover="selectReactionBarOpen = true"
+    ></div>
+    <select-reaction-bar
+      id="selectReactionBar"
+      class="absolute left-0 right-0"
+      :class="
+        selectReactionBarOpen
+          ? 'bottom-5 opacity-100 visible'
+          : '-bottom-24 opacity-0 invisible'
+      "
+    />
   </div>
 </template>
 
@@ -95,7 +113,9 @@ export default {
       analyser: null,
       headerOpen: false,
       selectBaseFaceBarOpen: false,
-      bgColor: 'bg-orange-300',
+      selectReactionBarOpen: true,
+      smallWind: false,
+      bgColor: 'room-bg-color',
       users: [
         {
           id: this.generateUUID(),
@@ -133,43 +153,45 @@ export default {
           faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
           voiceON: false,
         },
-        {
-          id: this.generateUUID(),
-          name: 'hoge1',
-          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
-          voiceON: false,
-        },
-        {
-          id: this.generateUUID(),
-          name: 'hoge1',
-          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
-          voiceON: false,
-        },
-        {
-          id: this.generateUUID(),
-          name: 'hoge1',
-          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
-          voiceON: false,
-        },
-        {
-          id: this.generateUUID(),
-          name: 'hoge1',
-          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
-          voiceON: false,
-        },
-        {
-          id: this.generateUUID(),
-          name: 'hoge1',
-          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
-          voiceON: false,
-        },
-        {
-          id: this.generateUUID(),
-          name: 'hoge1',
-          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
-          voiceON: false,
-        },
+        // {
+        //   id: this.generateUUID(),
+        //   name: 'hoge1',
+        //   faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
+        //   voiceON: false,
+        // },
+        // {
+        //   id: this.generateUUID(),
+        //   name: 'hoge1',
+        //   faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
+        //   voiceON: false,
+        // },
+        // {
+        //   id: this.generateUUID(),
+        //   name: 'hoge1',
+        //   faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
+        //   voiceON: false,
+        // },
+        // {
+        //   id: this.generateUUID(),
+        //   name: 'hoge1',
+        //   faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
+        //   voiceON: false,
+        // },
+        // {
+        //   id: this.generateUUID(),
+        //   name: 'hoge1',
+        //   faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
+        //   voiceON: false,
+        // },
+        // {
+        //   id: this.generateUUID(),
+        //   name: 'hoge1',
+        //   faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
+        //   voiceON: false,
+        // },
       ],
+      width: 0,
+      height: 0,
     }
   },
   mounted() {
@@ -185,6 +207,14 @@ export default {
           this.loadModels(video)
         })
     }
+
+    window.addEventListener('resize', this.handleResize)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.handleResize)
+  },
+  beforeMount() {
+    this.updateWindowSize()
   },
   methods: {
     loadAudioAnalyser(stream) {
@@ -267,15 +297,82 @@ export default {
       this.headerOpen = false
       this.selectBaseFaceBarOpen = false
       this.$refs.child.openSelectFaceModal('')
+      if (this.smallWind) {
+        this.selectReactionBarOpen = false
+      }
     },
     generateUUID() {
       return uuidv4()
+    },
+    updateWindowSize() {
+      this.width = window.innerWidth
+      this.height = window.innerHeight
+    },
+    handleResize() {
+      this.updateWindowSize()
+      if (this.height <= 730) {
+        document.getElementById('selectBaseFaceBer').classList.add('faceBar')
+      } else {
+        document.getElementById('selectBaseFaceBer').classList.remove('faceBar')
+      }
+      if (this.height <= 590) {
+        this.smallWind = true
+        this.selectReactionBarOpen = false
+        document.getElementById('faceWindows').classList.add('windows')
+        document
+          .getElementById('hoverReactionBarId')
+          .classList.add('hoverReactionBar')
+      } else {
+        this.smallWind = false
+        this.selectReactionBarOpen = true
+        document.getElementById('faceWindows').classList.remove('windows')
+        document
+          .getElementById('hoverReactionBarId')
+          .classList.remove('hoverReactionBar')
+      }
+      // eslint-disable-next-line no-console
+      console.log(this.width + ',' + this.height)
     },
   },
 }
 </script>
 
-<style scoped>
+<style>
+.windows {
+  height: 100%;
+  padding-bottom: 1.25rem;
+}
+.faceBar {
+  overflow: scroll;
+  overflow-x: visible !important;
+  height: 70vh;
+}
+.faceBar::-webkit-scrollbar {
+  display: block;
+  width: 2px;
+}
+.faceBar::-webkit-scrollbar-track {
+  background: inherit;
+  margin: 35px 0;
+  border-radius: 5px;
+}
+.faceBar::-webkit-scrollbar-thumb {
+  background: #ff9100;
+  border-radius: 5px;
+  border-right: none;
+  border-left: none;
+}
+/* .test::-webkit-scrollbar-track-piece:end {
+  background: transparent;
+  margin-bottom: 35px;
+}
+.test::-webkit-scrollbar-track-piece:start {
+  background: transparent;
+  margin-top: 35px;
+} */
+.hoverReactionBar {
+  bottom: 0;
+}
 .vw-1-6 {
   width: min(90vw, 1000px);
 }
@@ -311,6 +408,9 @@ export default {
   width: -webkit-calc(1 / 4 * 100% - 12px);
   width: calc(1 / 4 * 100% - 12px);
   min-width: 150px;
+}
+.room-bg-color {
+  background-color: rgb(50, 52, 78);
 }
 @media screen and (max-width: 695px) {
   .h-size-5-6 {

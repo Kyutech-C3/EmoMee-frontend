@@ -1,7 +1,8 @@
 <template>
-  <div class="transition-all">
+  <div class="transition-all overflow-visible">
     <div
-      class="border border-gray-300 rounded-full px-1 py-5 w-20 drop-shadow-md bg-color m-0"
+      id="selectBaseFaceBer"
+      class="border border-gray-300 rounded-full px-1 py-5 w-20 origin-shadow bg-color m-0"
     >
       <div v-for="face in baseFace" :key="face.id" class="select-none h-24">
         <p class="text-center">{{ face.type }}</p>
@@ -9,11 +10,11 @@
           :src="face.img"
           :alt="face.name"
           :title="face.name"
-          class="w-16 h-16 mx-auto cursor-pointer rounded-full hover:bg-gray-200 select-none z-50"
+          class="w-16 h-16 mx-auto cursor-pointer rounded-full hover:bg-black hover:bg-opacity-10 select-none z-50"
           @click="openSelectFaceModal(face.type)"
         />
         <div
-          class="flex justify-center border border-gray-300 rounded-full px-8 py-1 mx-auto self-drop-shadow bg-color relative bottom-18 transition-all z-0"
+          class="flex justify-center border border-gray-300 rounded-full px-8 py-1 mx-auto origin-shadow bg-color relative bottom-18 transition-all z-50"
           :class="
             activeModal === face.type
               ? 'w-96 opacity-100 visible right-100'
@@ -26,7 +27,7 @@
             :src="faceReaction.img"
             :alt="faceReaction.name"
             :title="faceReaction.name"
-            class="w-16 h-16 mx-1 cursor-pointer rounded-full hover:bg-gray-200 select-none block"
+            class="w-16 h-16 mx-1 cursor-pointer rounded-full hover:bg-black hover:bg-opacity-10 select-none block"
             @click="selectNoFaceReaction"
           />
         </div>
@@ -126,7 +127,7 @@ export default {
 .bg-color {
   background-color: rgba(255, 255, 255, 0.7);
 }
-.self-drop-shadow {
-  --tw-drop-shadow: drop-shadow(0 0 30px rgb(0 0 0 / 0.15));
+.origin-shadow {
+  box-shadow: inset 0 0 10px 0 rgba(0, 0, 0, 0.5);
 }
 </style>
