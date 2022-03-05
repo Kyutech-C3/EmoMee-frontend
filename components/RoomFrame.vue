@@ -1,5 +1,5 @@
 <template>
-  <div class="relative h-screen overflow-hidden">
+  <div class="relative h-screen overflow-hidden" :class="bgColor">
     <div
       v-if="!headerOpen"
       class="h-18 w-full absolute z-20 top-0"
@@ -15,18 +15,42 @@
         headerOpen ? 'top-0 opacity-100 visible' : '-top-18 opacity-0 invisible'
       "
     />
-    <p>{{ emotion_list }}</p>
-    <p>{{ top }}</p>
-    <p>face_detected: {{ face_detected }}</p>
-    <p>is_tiny_model: {{ tinyModel }}</p>
-    <p>volume: {{ volume }}</p>
+    <div class="absolute -z-10">
+      <p>{{ emotion_list }}</p>
+      <p>{{ top }}</p>
+      <p>face_detected: {{ face_detected }}</p>
+      <p>is_tiny_model: {{ tinyModel }}</p>
+      <p>volume: {{ volume }}</p>
+    </div>
     <div
-      class="w-40 h-full absolute z-10 right-0 top-0"
+      class="flex flex-wrap justify-center h-4/5 place-items-center gap-3 mx-auto mt-5 -z-10"
+      :class="[
+        { 'vw-1-6': users.length < 7 },
+        { 'vw-7-12': users.length >= 7 && users.length < 13 },
+      ]"
+    >
+      <face-window
+        v-for="user in users"
+        :key="user.id"
+        :name="user.name"
+        :face-gif="user.faceGif"
+        :voice-o-n="user.voiceON"
+        :class="[
+          { 'w-12-space h-size-1-4': users.length < 5 },
+          { 'w-13-space': users.length >= 5 && users.length < 10 },
+          { 'w-14-space': users.length >= 10 && users.length < 13 },
+          { 'h-size-5-6': users.length >= 5 && users.length < 7 },
+          { 'h-size-7-12': users.length >= 7 && users.length < 13 },
+        ]"
+      />
+    </div>
+    <div
+      class="w-40 h-5/6 absolute z-10 right-0 bottom-0"
       @mouseover="selectBaseFaceBarOpen = true"
     ></div>
     <select-base-face-bar
       ref="child"
-      class="absolute bottom-0 top-0 z-50"
+      class="absolute top-1/2 -translate-y-1/2 z-50"
       :class="
         selectBaseFaceBarOpen
           ? 'right-10 opacity-100 visible'
@@ -39,6 +63,8 @@
 
 <script>
 import * as faceapi from 'face-api.js'
+import { v4 as uuidv4 } from 'uuid'
+import FaceWindow from './FaceWindow.vue'
 import SelectBaseFaceBar from '@/components/SelectBaseFaceBar.vue'
 import RoomHeader from '@/components/RoomHeader.vue'
 import SelectReactionBar from '@/components/SelectReactionBar.vue'
@@ -48,6 +74,7 @@ export default {
     RoomHeader,
     SelectReactionBar,
     SelectBaseFaceBar,
+    FaceWindow,
   },
   props: {
     tinyModel: {
@@ -68,6 +95,81 @@ export default {
       analyser: null,
       headerOpen: false,
       selectBaseFaceBarOpen: false,
+      bgColor: 'bg-orange-300',
+      users: [
+        {
+          id: this.generateUUID(),
+          name: 'hoge',
+          faceGif: require('@/assets/emoji/base/smile/smile1.gif'),
+          voiceON: true,
+        },
+        {
+          id: this.generateUUID(),
+          name: 'hoge1',
+          faceGif: require('@/assets/emoji/base/smile/smile2.gif'),
+          voiceON: true,
+        },
+        {
+          id: this.generateUUID(),
+          name: 'hoge1',
+          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
+          voiceON: false,
+        },
+        {
+          id: this.generateUUID(),
+          name: 'hoge1',
+          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
+          voiceON: false,
+        },
+        {
+          id: this.generateUUID(),
+          name: 'hoge1',
+          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
+          voiceON: false,
+        },
+        {
+          id: this.generateUUID(),
+          name: 'hoge1',
+          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
+          voiceON: false,
+        },
+        {
+          id: this.generateUUID(),
+          name: 'hoge1',
+          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
+          voiceON: false,
+        },
+        {
+          id: this.generateUUID(),
+          name: 'hoge1',
+          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
+          voiceON: false,
+        },
+        {
+          id: this.generateUUID(),
+          name: 'hoge1',
+          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
+          voiceON: false,
+        },
+        {
+          id: this.generateUUID(),
+          name: 'hoge1',
+          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
+          voiceON: false,
+        },
+        {
+          id: this.generateUUID(),
+          name: 'hoge1',
+          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
+          voiceON: false,
+        },
+        {
+          id: this.generateUUID(),
+          name: 'hoge1',
+          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
+          voiceON: false,
+        },
+      ],
     }
   },
   mounted() {
@@ -166,6 +268,62 @@ export default {
       this.selectBaseFaceBarOpen = false
       this.$refs.child.openSelectFaceModal('')
     },
+    generateUUID() {
+      return uuidv4()
+    },
   },
 }
 </script>
+
+<style scoped>
+.vw-1-6 {
+  width: min(90vw, 1000px);
+}
+.vw-7-12 {
+  width: min(100vw, 1300px);
+}
+.h-size-1-4 {
+  height: -webkit-calc(1 / 2 * 100% - 12px);
+  height: calc(1 / 2 * 100% - 12px);
+  min-height: 150px;
+}
+.h-size-5-6 {
+  height: -webkit-calc(1 / 2 * 100% - 12px);
+  height: calc(1 / 2 * 100% - 12px);
+  min-height: 150px;
+}
+.h-size-7-12 {
+  height: -webkit-calc(1 / 3 * 100% - 12px);
+  height: calc(1 / 3 * 100% - 12px);
+  min-height: 150px;
+}
+.w-12-space {
+  width: -webkit-calc(1 / 2 * 100% - 12px);
+  width: calc(1 / 2 * 100% - 12px);
+  min-width: 200px;
+}
+.w-13-space {
+  width: -webkit-calc(1 / 3 * 100% - 12px);
+  width: calc(1 / 3 * 100% - 12px);
+  min-width: 200px;
+}
+.w-14-space {
+  width: -webkit-calc(1 / 4 * 100% - 12px);
+  width: calc(1 / 4 * 100% - 12px);
+  min-width: 150px;
+}
+@media screen and (max-width: 695px) {
+  .h-size-5-6 {
+    height: -webkit-calc(1 / 3 * 100% - 12px);
+    height: calc(1 / 3 * 100% - 12px);
+    min-height: 150px;
+  }
+}
+@media screen and (max-width: 625px) {
+  .h-size-7-12 {
+    height: -webkit-calc(1 / 4 * 100% - 12px);
+    height: calc(1 / 4 * 100% - 12px);
+    min-height: 150px;
+  }
+}
+</style>

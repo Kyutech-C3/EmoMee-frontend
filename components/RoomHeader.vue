@@ -6,6 +6,7 @@
     <div class="flex">
       <base-button
         class="bg-red-500 mx-5 px-6 py-1.5 rounded-lg hover:bg-red-600 hover:drop-shadow-xl"
+        :to="''"
         @click="exitRoomWarning"
       >
         退出
@@ -13,7 +14,7 @@
       <font-awesome-icon
         :icon="['fas', 'gear']"
         class="w-7 mx-4 text-gray-300 hover:text-gray-400 cursor-pointer select-none"
-        @click="openReactionModal"
+        @click="openSettingModale"
       />
     </div>
   </div>
@@ -33,6 +34,7 @@ export default {
     exitRoom() {
       this.$router.push('/')
     },
+    openSettingModale() {},
   },
 }
 </script>

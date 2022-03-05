@@ -1,10 +1,10 @@
 <template>
   <div
-    class="border border-gray-300 bg-color rounded-3xl w-40 h-40 pt-3"
+    class="border border-gray-300 bg-color rounded-3xl relative pt-10"
     :class="voiceON ? 'border-green-300 border-2' : ''"
   >
-    <span class="text-center">{{ name }}</span>
-    <img :src="faceGif" class="mx-auto" />
+    <p class="mx-auto w-fit">{{ name }}</p>
+    <img :src="faceGif" class="h-4/5 w-auto mx-auto" />
   </div>
 </template>
 

@@ -1,13 +1,9 @@
 <template>
-  <div class="relative transition-all">
+  <div class="transition-all">
     <div
-      class="border border-gray-300 rounded-full px-1 py-5 w-20 drop-shadow-md bg-color m-0 absolute right-0"
+      class="border border-gray-300 rounded-full px-1 py-5 w-20 drop-shadow-md bg-color m-0"
     >
-      <div
-        v-for="face in baseFace"
-        :key="face.id"
-        class="my-5 select-none h-24"
-      >
+      <div v-for="face in baseFace" :key="face.id" class="select-none h-24">
         <p class="text-center">{{ face.type }}</p>
         <img
           :src="face.img"
