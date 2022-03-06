@@ -48,8 +48,7 @@
     </div>
     <base-button
       class="bg-red-500 ml-16 mr-6 px-8 py-2.5 rounded-lg hover:bg-red-600 hover:drop-shadow-xl select-none"
-      :to="''"
-      @click="exitRoomWarning"
+      @click.native="exitRoom"
     >
       退出
     </base-button>
@@ -99,9 +98,6 @@ export default {
     },
     selectNoFaceReaction() {},
     selectFaceReaction() {},
-    exitRoomWarning() {
-      this.warning = !this.warning
-    },
     exitRoom() {
       this.$router.push('/')
     },
