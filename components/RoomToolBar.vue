@@ -1,5 +1,7 @@
 <template>
-  <div class="flex items-center justify-between mx-8 select-none">
+  <div
+    class="w-full flex items-center justify-between px-8 select-none absolute bottom-4"
+  >
     <RoomStatusButton :is-afk="isAfk" @click="isAfk = !isAfk" />
     <div class="flex items-center">
       <RoomBaseButton class="cursor-pointer hover:bg-gray-100">
@@ -12,7 +14,7 @@
             :key="i"
             :src="reactionIcon"
             alt=""
-            class="w-14 mx-1 rounded-full cursor-pointer hover:bg-gray-100"
+            class="w-14 mx-2 p-1.5 rounded-full cursor-pointer hover:bg-gray-100"
           />
         </div>
       </RoomBaseButton>
@@ -29,11 +31,11 @@ export default {
   data() {
     return {
       reactionIcons: [
-        require('@/assets/face/smile/smile1.gif'),
-        require('@/assets/face/smile/smile1.gif'),
-        require('@/assets/face/sad/pleading_face.gif'),
-        require('@/assets/face/angry/pouting_face.gif'),
-        require('@/assets/face/surprise/hushed_face.gif'),
+        require('@/assets/reaction/png/thumbsup.png'),
+        require('@/assets/reaction/png/raised-hand.png'),
+        require('@/assets/reaction/png/clap.png'),
+        require('@/assets/reaction/png/pray.png'),
+        require('@/assets/reaction/png/heart.png'),
       ],
       isAfk: false,
     }

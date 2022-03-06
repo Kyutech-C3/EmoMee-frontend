@@ -7,7 +7,7 @@
     >
       <FontAwesomeIcon :icon="['fas', 'ellipsis-vertical']" class="w-2" />
     </RoomBaseButton>
-    <RoomBaseModal v-if="showModal" class="absolute bottom-32 w-56">
+    <RoomBaseModal v-if="showModal" class="absolute bottom-20 w-56">
       <ul>
         <li class="flex justify-between items-center my-3">
           <p>表情検知</p>
