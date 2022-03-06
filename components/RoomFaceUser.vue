@@ -1,10 +1,10 @@
 <template>
   <div
-    class="border border-gray-300 bg-color rounded-3xl relative pt-10 select-none"
-    :class="voiceON ? 'border-green-500 border-2' : ''"
+    class="border border-gray-300 rounded-3xl pt-10 select-none"
+    :class="isSpeaking ? 'border-green-500 border-2' : ''"
   >
-    <p class="mx-auto w-fit">{{ name }}</p>
-    <img :src="faceGif" class="h-4/5 w-auto mx-auto" />
+    <img :src="faceImageSrc" alt="Face Image" class="h-4/5 mx-auto" />
+    <p class="mx-auto w-full text-center leading-8 bg-gray-100">{{ name }}</p>
   </div>
 </template>
 
@@ -18,14 +18,14 @@ export default {
         return ''
       },
     },
-    faceGif: {
+    faceImageSrc: {
       type: String,
       required: true,
       default() {
         return ''
       },
     },
-    voiceON: {
+    isSpeaking: {
       type: Boolean,
       required: true,
       default() {
@@ -35,9 +35,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-.bg-color {
-  background-color: rgba(255, 255, 255, 0.6);
-}
-</style>
