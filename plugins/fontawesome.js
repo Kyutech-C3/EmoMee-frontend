@@ -3,7 +3,12 @@ import { library, config } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 // 1. 利用したいアイコンを以下にてimportする
-import { faCirclePlus, faGear } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCirclePlus,
+  faCopy,
+  faMicrophoneSlash,
+  faVideoSlash,
+} from '@fortawesome/free-solid-svg-icons'
 
 import {
   faYoutube,
@@ -23,7 +28,9 @@ library.add(
   faSave,
   faGithub,
   faCirclePlus,
-  faGear
+  faCopy,
+  faMicrophoneSlash,
+  faVideoSlash
 )
 
 Vue.component('FontAwesomeIcon', FontAwesomeIcon)

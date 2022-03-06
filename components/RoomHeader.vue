@@ -1,37 +1,61 @@
 <template>
   <div
-    class="absolute flex w-full top-0 justify-between items-center bg-blue-900 h-18 px-10"
+    class="absolute flex w-full justify-between items-center bg-blue-900 h-18 px-10 transition-all z-50"
   >
     <img src="@/assets/c3_logo.png" class="w-10 h-auto" />
-    <div class="flex">
-      <base-button
-        class="bg-red-500 mx-5 px-6 py-1.5 rounded-lg hover:bg-red-600 hover:drop-shadow-xl"
-        @click="exitRoomWarning"
+    <div class="flex select-none">
+      <div
+        class="flex items-center text-xs text-gray-300 hover:text-gray-400 mr-5 cursor-pointer"
+        @click="copy(url)"
       >
-        退出
-      </base-button>
-      <font-awesome-icon
-        :icon="['fas', 'gear']"
-        class="w-7 mx-4 text-gray-300 hover:text-gray-400 cursor-pointer select-none"
-        @click="openReactionModal"
-      />
+        <p
+          class="transition-all"
+          :class="successCopy ? 'opacity-100' : 'opacity-0'"
+        >
+          コピー完了
+        </p>
+        <font-awesome-icon
+          :icon="['fas', 'copy']"
+          class="w-5 mx-1 select-none"
+        />
+        <p>招待リンクをコピー</p>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    url: {
+      type: String,
+      required: true,
+      default() {
+        return ''
+      },
+    },
+  },
   data() {
     return {
-      warning: false,
+      successCopy: false,
     }
   },
+  updated() {
+    setTimeout(() => {
+      this.successCopy = false
+    }, 3000)
+  },
   methods: {
-    exitRoomWarning() {
-      this.warning = !this.warning
-    },
-    exitRoom() {
-      this.$router.push('/')
+    async copy(url) {
+      try {
+        await navigator.clipboard.writeText(url)
+        // eslint-disable-next-line no-console
+        console.log('Success to copy')
+        this.successCopy = true
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.log('Failed to copy', err)
+      }
     },
   },
 }

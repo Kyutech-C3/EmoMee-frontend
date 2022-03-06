@@ -83,7 +83,7 @@
 <script>
 import * as faceapi from 'face-api.js'
 import { v4 as uuidv4 } from 'uuid'
-import FaceWindow from './FaceWindow.vue'
+import FaceWindow from '@/components/FaceWindow.vue'
 import SelectBaseFaceBar from '@/components/SelectBaseFaceBar.vue'
 import RoomHeader from '@/components/RoomHeader.vue'
 import SelectReactionBar from '@/components/SelectReactionBar.vue'
@@ -95,17 +95,9 @@ export default {
     SelectBaseFaceBar,
     FaceWindow,
   },
-  props: {
-    tinyModel: {
-      type: Boolean,
-      required: true,
-      default() {
-        return false
-      },
-    },
-  },
   data() {
     return {
+      tinyModel: false,
       top_history: [],
       top: '',
       face_detected: false,
