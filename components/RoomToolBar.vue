@@ -14,8 +14,13 @@
             :key="i"
             :src="reactionIcon"
             alt=""
-            class="w-14 mx-2 p-1.5 rounded-full cursor-pointer hover:bg-gray-100"
+            class="w-14 mx-2 p-1.5 rounded-full cursor-pointer scale-95 hover:bg-gray-100 hover:scale-100"
           />
+          <div
+            class="w-14 mx-2 rounded-full cursor-pointer scale-95 hover:bg-gray-100 hover:scale-100"
+          >
+            <FontAwesomeIcon :icon="['fas', 'plus']" class="w-9 mx-auto my-2" />
+          </div>
         </div>
       </RoomBaseButton>
       <RoomMenuButton />

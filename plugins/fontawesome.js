@@ -9,6 +9,7 @@ import {
   faVideoSlash,
   faEllipsisVertical,
   faCircle,
+  faPlus,
 } from '@fortawesome/free-solid-svg-icons'
 
 import {} from '@fortawesome/free-brands-svg-icons'
@@ -24,7 +25,8 @@ library.add(
   faVideoSlash,
   faEllipsisVertical,
   faFaceSmile,
-  faCircle
+  faCircle,
+  faPlus
 )
 
 Vue.component('FontAwesomeIcon', FontAwesomeIcon)
