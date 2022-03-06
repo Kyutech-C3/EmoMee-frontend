@@ -1,25 +1,5 @@
 <template>
-  <div class="relative h-screen overflow-hidden" :class="bgColor">
-    <div
-      v-if="!headerOpen"
-      class="h-18 w-full absolute z-20 top-0"
-      @mouseover="headerOpen = true"
-    ></div>
-    <div
-      v-if="
-        headerOpen ||
-        selectBaseFaceBarOpen ||
-        (smallWind && selectReactionBarOpen)
-      "
-      class="w-full h-full absolute z-0"
-      @mouseover="closeModal"
-    ></div>
-    <room-header
-      :class="
-        headerOpen ? 'top-0 opacity-100 visible' : '-top-18 opacity-0 invisible'
-      "
-      :url="''"
-    />
+  <div class="relative h-screen overflow-hidden">
     <div class="absolute -z-10">
       <p>{{ emotion_list }}</p>
       <p>{{ top }}</p>
@@ -27,74 +7,16 @@
       <p>is_tiny_model: {{ tinyModel }}</p>
       <p>volume: {{ volume }}</p>
     </div>
-    <div
-      id="faceWindows"
-      class="flex flex-wrap justify-center h-4/5 place-items-center gap-3 mx-auto pt-5 -z-10"
-      :class="[
-        { 'vw-1-6': users.length < 7 },
-        { 'vw-7-12': users.length >= 7 && users.length < 13 },
-      ]"
-    >
-      <face-window
-        v-for="user in users"
-        :key="user.id"
-        :name="user.name"
-        :face-gif="user.faceGif"
-        :voice-o-n="user.voiceON"
-        :class="[
-          { 'w-12-space h-size-1-4': users.length < 5 },
-          { 'w-13-space': users.length >= 5 && users.length < 10 },
-          { 'w-14-space': users.length >= 10 && users.length < 13 },
-          { 'h-size-5-6': users.length >= 5 && users.length < 7 },
-          { 'h-size-7-12': users.length >= 7 && users.length < 13 },
-        ]"
-      />
-    </div>
-    <div
-      class="w-32 h-3/4 absolute z-10 right-0 top-1/2 -translate-y-1/2"
-      @mouseover="selectBaseFaceBarOpen = true"
-    ></div>
-    <select-base-face-bar
-      ref="child"
-      class="absolute top-1/2 -translate-y-1/2 z-50"
-      :class="
-        selectBaseFaceBarOpen
-          ? 'right-10 opacity-100 visible'
-          : '-right-20 opacity-0 invisible'
-      "
-    />
-    <div
-      id="hoverReactionBarId"
-      class="w-4/5 h-24 absolute z-10 left-1/2 -translate-x-1/2 -bottom-24"
-      @mouseover="selectReactionBarOpen = true"
-    ></div>
-    <select-reaction-bar
-      id="selectReactionBar"
-      class="absolute left-0 right-0"
-      :class="
-        selectReactionBarOpen
-          ? 'bottom-5 opacity-100 visible'
-          : '-bottom-24 opacity-0 invisible'
-      "
-    />
+    <RoomFaceUsers :users="users" />
+    <RoomToolBar />
   </div>
 </template>
 
 <script>
 import * as faceapi from 'face-api.js'
 import { v4 as uuidv4 } from 'uuid'
-import FaceWindow from '@/components/FaceWindow.vue'
-import SelectBaseFaceBar from '@/components/SelectBaseFaceBar.vue'
-import RoomHeader from '@/components/RoomHeader.vue'
-import SelectReactionBar from '@/components/SelectReactionBar.vue'
 
 export default {
-  components: {
-    RoomHeader,
-    SelectReactionBar,
-    SelectBaseFaceBar,
-    FaceWindow,
-  },
   data() {
     return {
       tinyModel: false,
@@ -108,7 +30,6 @@ export default {
       selectBaseFaceBarOpen: false,
       selectReactionBarOpen: true,
       smallWind: false,
-      bgColor: 'room-bg-color',
       users: [
         {
           id: this.generateUUID(),
@@ -146,59 +67,26 @@ export default {
           faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
           voiceON: false,
         },
-        // {
-        //   id: this.generateUUID(),
-        //   name: 'hoge1',
-        //   faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
-        //   voiceON: false,
-        // },
-        // {
-        //   id: this.generateUUID(),
-        //   name: 'hoge1',
-        //   faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
-        //   voiceON: false,
-        // },
-        // {
-        //   id: this.generateUUID(),
-        //   name: 'hoge1',
-        //   faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
-        //   voiceON: false,
-        // },
-        // {
-        //   id: this.generateUUID(),
-        //   name: 'hoge1',
-        //   faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
-        //   voiceON: false,
-        // },
-        // {
-        //   id: this.generateUUID(),
-        //   name: 'hoge1',
-        //   faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
-        //   voiceON: false,
-        // },
-        // {
-        //   id: this.generateUUID(),
-        //   name: 'hoge1',
-        //   faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
-        //   voiceON: false,
-        // },
       ],
       width: 0,
       height: 0,
+      isEnabledFaceFeature: false,
     }
   },
   mounted() {
-    const video = document.createElement('video')
-    video.muted = true
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices
-        .getUserMedia({ video: true, audio: { echoCancellation: true } })
-        .then((stream) => {
-          video.srcObject = stream
-          video.play()
-          this.loadAudioAnalyser(stream)
-          this.loadModels(video)
-        })
+    if (this.isEnabledFaceFeature) {
+      const video = document.createElement('video')
+      video.muted = true
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices
+          .getUserMedia({ video: true, audio: { echoCancellation: true } })
+          .then((stream) => {
+            video.srcObject = stream
+            video.play()
+            this.loadAudioAnalyser(stream)
+            this.loadModels(video)
+          })
+      }
     }
 
     window.addEventListener('resize', this.handleResize)
@@ -329,94 +217,3 @@ export default {
   },
 }
 </script>
-
-<style>
-.windows {
-  height: 100%;
-  padding-bottom: 1.25rem;
-}
-.faceBar {
-  overflow: scroll;
-  overflow-x: visible !important;
-  height: 70vh;
-}
-.faceBar::-webkit-scrollbar {
-  display: block;
-  width: 2px;
-}
-.faceBar::-webkit-scrollbar-track {
-  background: inherit;
-  margin: 35px 0;
-  border-radius: 5px;
-}
-.faceBar::-webkit-scrollbar-thumb {
-  background: #ff9100;
-  border-radius: 5px;
-  border-right: none;
-  border-left: none;
-}
-/* .test::-webkit-scrollbar-track-piece:end {
-  background: transparent;
-  margin-bottom: 35px;
-}
-.test::-webkit-scrollbar-track-piece:start {
-  background: transparent;
-  margin-top: 35px;
-} */
-.hoverReactionBar {
-  bottom: 0;
-}
-.vw-1-6 {
-  width: min(90vw, 1000px);
-}
-.vw-7-12 {
-  width: min(100vw, 1300px);
-}
-.h-size-1-4 {
-  height: -webkit-calc(1 / 2 * 100% - 12px);
-  height: calc(1 / 2 * 100% - 12px);
-  min-height: 150px;
-}
-.h-size-5-6 {
-  height: -webkit-calc(1 / 2 * 100% - 12px);
-  height: calc(1 / 2 * 100% - 12px);
-  min-height: 150px;
-}
-.h-size-7-12 {
-  height: -webkit-calc(1 / 3 * 100% - 12px);
-  height: calc(1 / 3 * 100% - 12px);
-  min-height: 150px;
-}
-.w-12-space {
-  width: -webkit-calc(1 / 2 * 100% - 12px);
-  width: calc(1 / 2 * 100% - 12px);
-  min-width: 200px;
-}
-.w-13-space {
-  width: -webkit-calc(1 / 3 * 100% - 12px);
-  width: calc(1 / 3 * 100% - 12px);
-  min-width: 200px;
-}
-.w-14-space {
-  width: -webkit-calc(1 / 4 * 100% - 12px);
-  width: calc(1 / 4 * 100% - 12px);
-  min-width: 150px;
-}
-.room-bg-color {
-  background-color: rgb(50, 52, 78);
-}
-@media screen and (max-width: 695px) {
-  .h-size-5-6 {
-    height: -webkit-calc(1 / 3 * 100% - 12px);
-    height: calc(1 / 3 * 100% - 12px);
-    min-height: 150px;
-  }
-}
-@media screen and (max-width: 625px) {
-  .h-size-7-12 {
-    height: -webkit-calc(1 / 4 * 100% - 12px);
-    height: calc(1 / 4 * 100% - 12px);
-    min-height: 150px;
-  }
-}
-</style>
