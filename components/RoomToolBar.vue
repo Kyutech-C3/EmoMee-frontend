@@ -29,11 +29,11 @@ export default {
   data() {
     return {
       reactionIcons: [
-        require('@/assets/emoji/base/smile/smile1.gif'),
-        require('@/assets/emoji/base/smile/smile1.gif'),
-        require('@/assets/emoji/base/sad/pleading_face.gif'),
-        require('@/assets/emoji/base/angry/pouting_face.gif'),
-        require('@/assets/emoji/base/surprise/hushed_face.gif'),
+        require('@/assets/face/smile/smile1.gif'),
+        require('@/assets/face/smile/smile1.gif'),
+        require('@/assets/face/sad/pleading_face.gif'),
+        require('@/assets/face/angry/pouting_face.gif'),
+        require('@/assets/face/surprise/hushed_face.gif'),
       ],
       isAfk: false,
     }
