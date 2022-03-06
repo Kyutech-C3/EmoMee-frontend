@@ -104,6 +104,7 @@ export default {
 
     if (this.ws !== null) {
       this.ws.onerror = (err) => {
+        // eslint-disable-next-line no-console
         console.log(err)
       }
       this.ws.onmessage = (event) => {
