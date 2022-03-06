@@ -16,9 +16,7 @@
           />
         </div>
       </RoomBaseButton>
-      <RoomBaseButton class="cursor-pointer hover:bg-gray-100">
-        <FontAwesomeIcon :icon="['fas', 'ellipsis-vertical']" class="w-2" />
-      </RoomBaseButton>
+      <RoomMenuButton />
     </div>
     <RoomBaseButton class="cursor-pointer bg-yellow-100 hover:bg-yellow-200">
       <p class="text-xl">退室</p>
