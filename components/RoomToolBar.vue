@@ -19,7 +19,7 @@
           <RoomReactionModal />
         </div>
       </RoomBaseButton>
-      <RoomMenuButton />
+      <RoomMenuModal />
     </div>
     <RoomBaseButton class="cursor-pointer bg-yellow-100 hover:bg-yellow-200">
       <p class="text-xl">退室</p>
