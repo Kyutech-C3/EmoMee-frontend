@@ -48,4 +48,8 @@ export default {
   build: {},
 
   ssr: false,
+
+  generate: {
+    fallback: true,
+  },
 }
