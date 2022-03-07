@@ -14,7 +14,7 @@
       >
         <div class="flex items-center">
           <img
-            src="@/assets/face/neutral/1f610.png"
+            src="@/assets/face/neutral/neutral_face.png"
             alt="NeutralFace"
             class="w-10 h-10 mx-3 cursor-pointer scale-95 hover:scale-100"
             @click="translateClass = 'translate-x-0'"

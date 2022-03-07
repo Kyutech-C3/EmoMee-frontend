@@ -12,27 +12,27 @@
         <li>
           <div class="w-full flex flex-wrap">
             <img
-              src="@/assets/reaction/png/1f64b.png"
+              src="@/assets/reaction/png/clap.png"
               class="w-8 mx-1 cursor-pointer scale-95 hover:scale-100"
             />
             <img
-              src="@/assets/reaction/png/1f64b.png"
+              src="@/assets/reaction/png/clap.png"
               class="w-8 mx-1 cursor-pointer scale-95 hover:scale-100"
             />
             <img
-              src="@/assets/reaction/png/1f64b.png"
+              src="@/assets/reaction/png/clap.png"
               class="w-8 mx-1 cursor-pointer scale-95 hover:scale-100"
             />
             <img
-              src="@/assets/reaction/png/1f64b.png"
+              src="@/assets/reaction/png/clap.png"
               class="w-8 mx-1 cursor-pointer scale-95 hover:scale-100"
             />
             <img
-              src="@/assets/reaction/png/1f64b.png"
+              src="@/assets/reaction/png/clap.png"
               class="w-8 mx-1 cursor-pointer scale-95 hover:scale-100"
             />
             <img
-              src="@/assets/reaction/png/1f64b.png"
+              src="@/assets/reaction/png/clap.png"
               class="w-8 mx-1 cursor-pointer scale-95 hover:scale-100"
             />
           </div>
@@ -43,19 +43,19 @@
         <li>
           <div class="w-full flex flex-wrap">
             <img
-              src="@/assets/reaction/png/1f64b.png"
+              src="@/assets/reaction/png/clap.png"
               class="w-8 mx-1 cursor-pointer scale-95 hover:scale-100"
             />
             <img
-              src="@/assets/reaction/png/1f64b.png"
+              src="@/assets/reaction/png/clap.png"
               class="w-8 mx-1 cursor-pointer scale-95 hover:scale-100"
             />
             <img
-              src="@/assets/reaction/png/1f64b.png"
+              src="@/assets/reaction/png/clap.png"
               class="w-8 mx-1 cursor-pointer scale-95 hover:scale-100"
             />
             <img
-              src="@/assets/reaction/png/1f64b.png"
+              src="@/assets/reaction/png/clap.png"
               class="w-8 mx-1 cursor-pointer scale-95 hover:scale-100"
             />
           </div>
