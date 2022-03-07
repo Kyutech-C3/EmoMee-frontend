@@ -105,7 +105,6 @@ export default {
                   json.changed_user
                 )
                 this.key++
-                // console.log(this.room_information)
                 break
               }
             }
