@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import RoomSettingForm from '../../components/RoomSettingForm.vue'
+import RoomSettingForm from '../../components/room/RoomSettingForm.vue'
 import BaseButton from '../../components/BaseButton.vue'
 
 export default {

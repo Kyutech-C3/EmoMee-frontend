@@ -33,7 +33,7 @@ export default {
       key: 0,
       width: 0,
       height: 0,
-      isEnabledFaceFeature: true,
+      isEnabledFaceFeature: false,
       ws: null,
       user_name: '',
       user_id: '',
