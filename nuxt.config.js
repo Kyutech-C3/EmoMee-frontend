@@ -24,6 +24,15 @@ export default {
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     '@nuxtjs/tailwindcss',
+    [
+      '@nuxtjs/google-fonts',
+      {
+        families: {
+          'M+PLUS+Rounded+1c': true,
+        },
+        display: 'swap',
+      },
+    ],
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
