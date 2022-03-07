@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <div>
-      <Logo />
       <RoomFrame :tiny-model="false" />
       <h1 class="title">EmoMee-frontend</h1>
       <div class="links">

@@ -21,7 +21,8 @@
     "core-js": "^3.9.1",
     "face-api.js": "^0.22.2",
     "nuxt": "^2.15.3",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "vue-click-outside": "^1.1.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^6.0.0",

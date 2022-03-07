@@ -12,7 +12,7 @@
         />
         <span class="ml-3">
           <button @click="cpClick()">
-            <img src="../assets/Icon/copy.png" />
+            <img src="../../assets/Icon/copy.png" />
           </button>
         </span>
       </div>
@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import InfoArea from '../components/InfoArea.vue'
+import InfoArea from '../InfoArea.vue'
 export default {
   components: { InfoArea },
   data() {

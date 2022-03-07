@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import InfoArea from '../components/InfoArea.vue'
+import InfoArea from '../InfoArea.vue'
 export default {
   components: { InfoArea },
   data() {

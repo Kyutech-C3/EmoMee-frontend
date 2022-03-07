@@ -1,7 +1,7 @@
 <template>
   <div
     id="faceWindows"
-    class="flex flex-wrap justify-center h-4/5 place-items-center gap-3 mx-auto pt-5 -z-10"
+    class="flex flex-wrap justify-center h-4/5 place-items-center gap-3 mx-auto m-5"
     :class="[
       { 'vw-1-6': users.length < 7 },
       { 'vw-7-12': users.length >= 7 && users.length < 13 },
@@ -9,10 +9,10 @@
   >
     <RoomFaceUser
       v-for="user in users"
-      :key="user.id"
+      :key="user.user_id + generateUUID"
       :name="user.name"
-      :face-gif="user.faceGif"
-      :voice-o-n="user.voiceON"
+      :face-image-src="getFaceGif(user.emotion, user.emoji)"
+      :is-speaking="false"
       :class="[
         { 'w-12-space h-size-1-4': users.length < 5 },
         { 'w-13-space': users.length >= 5 && users.length < 10 },
@@ -25,11 +25,30 @@
 </template>
 
 <script>
+import { v4 as uuidv4 } from 'uuid'
+import emojiList from '@/assets/emoji-list.json'
 export default {
   props: {
     users: {
       type: Array,
       required: true,
+      default() {
+        return []
+      },
+    },
+  },
+  data() {
+    return {
+      emojis: emojiList,
+    }
+  },
+  methods: {
+    getFaceGif(emotion, emoji) {
+      const path = this.emojis[emotion][emoji[emotion]].path
+      return require('@/assets/' + path)
+    },
+    generateUUID() {
+      return uuidv4()
     },
   },
 }
