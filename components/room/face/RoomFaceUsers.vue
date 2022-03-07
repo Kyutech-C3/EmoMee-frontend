@@ -13,7 +13,7 @@
       :key="user.user_id"
       :name="user.name"
       :face-image-src="getFaceGif(user.emotion, user.emoji)"
-      :is-speaking="false"
+      :is-speaking="user.is_speaking"
       class="m-2"
     />
   </div>
