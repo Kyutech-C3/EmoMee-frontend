@@ -4,9 +4,7 @@
   >
     <RoomStatusButton :is-afk="isAfk" @click="isAfk = !isAfk" />
     <div class="flex items-center">
-      <RoomBaseButton class="cursor-pointer hover:bg-gray-100">
-        <FontAwesomeIcon :icon="['far', 'face-smile']" class="w-7" />
-      </RoomBaseButton>
+      <RoomFaceModal />
       <RoomBaseButton class="mx-5">
         <div class="flex">
           <img
