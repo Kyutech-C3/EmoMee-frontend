@@ -127,31 +127,13 @@ export default {
         {
           id: this.generateUUID(),
           name: 'hoge1',
-          faceGif: require('@/assets/pigeon/riseki_sleep.png'),
+          faceGif: require('@/assets/pigeon/nuetral.png'),
           voiceON: true,
         },
         {
           id: this.generateUUID(),
           name: 'hoge1',
-          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
-          voiceON: false,
-        },
-        {
-          id: this.generateUUID(),
-          name: 'hoge1',
-          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
-          voiceON: false,
-        },
-        {
-          id: this.generateUUID(),
-          name: 'hoge1',
-          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
-          voiceON: false,
-        },
-        {
-          id: this.generateUUID(),
-          name: 'hoge1',
-          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
+          faceGif: require('@/assets/pigeon/nuetral.png'),
           voiceON: false,
         },
         // {

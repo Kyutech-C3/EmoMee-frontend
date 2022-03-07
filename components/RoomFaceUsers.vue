@@ -9,7 +9,7 @@
   >
     <RoomFaceUser
       v-for="user in users"
-      :key="user.id"
+      :key="user.user_id + generateUUID"
       :name="user.name"
       :face-image-src="user.faceGif"
       :is-speaking="user.voiceON"
@@ -25,11 +25,30 @@
 </template>
 
 <script>
+import { v4 as uuidv4 } from 'uuid'
+import emojiList from '@/assets/emoji-list.json'
 export default {
   props: {
     users: {
       type: Array,
       required: true,
+      default() {
+        return []
+      },
+    },
+  },
+  data() {
+    return {
+      emojis: emojiList,
+    }
+  },
+  methods: {
+    getFaceGif(emotion, emoji) {
+      const path = this.emojis[emotion][emoji[emotion]].path
+      return require('@/assets/' + path)
+    },
+    generateUUID() {
+      return uuidv4()
     },
   },
 }

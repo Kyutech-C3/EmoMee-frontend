@@ -2,7 +2,7 @@
   <div
     class="absolute flex w-full justify-between items-center bg-blue-900 h-18 px-10 transition-all z-50"
   >
-    <img src="@/assets/c3_logo.png" class="w-10 h-auto" />
+    <img src="@/assets/pigeon/nuetral.png" class="w-10 h-auto" />
     <div class="flex select-none">
       <div
         class="flex items-center text-xs text-gray-300 hover:text-gray-400 mr-5 cursor-pointer"

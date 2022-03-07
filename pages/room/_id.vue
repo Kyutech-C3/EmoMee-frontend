@@ -7,7 +7,7 @@
       <p>is_tiny_model: {{ tinyModel }}</p>
       <p>volume: {{ volume }}</p>
     </div>
-    <RoomFaceUsers :users="users" />
+    <RoomFaceUsers :key="key" :users="room_information.users" />
     <RoomToolBar />
   </div>
 </template>
@@ -30,47 +30,15 @@ export default {
       selectBaseFaceBarOpen: false,
       selectReactionBarOpen: true,
       smallWind: false,
-      users: [
-        {
-          id: this.generateUUID(),
-          name: 'hoge',
-          faceGif: require('@/assets/pigeon/nuetral.png'),
-          voiceON: true,
-        },
-        {
-          id: this.generateUUID(),
-          name: 'hoge1',
-          faceGif: require('@/assets/pigeon/riseki_sleep.png'),
-          voiceON: true,
-        },
-        {
-          id: this.generateUUID(),
-          name: 'hoge1',
-          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
-          voiceON: false,
-        },
-        {
-          id: this.generateUUID(),
-          name: 'hoge1',
-          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
-          voiceON: false,
-        },
-        {
-          id: this.generateUUID(),
-          name: 'hoge1',
-          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
-          voiceON: false,
-        },
-        {
-          id: this.generateUUID(),
-          name: 'hoge1',
-          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
-          voiceON: false,
-        },
-      ],
+      key: 0,
       width: 0,
       height: 0,
-      isEnabledFaceFeature: false,
+      isEnabledFaceFeature: true,
+      ws: null,
+      user_name: '',
+      user_id: '',
+      prev_status: 'neutral',
+      room_information: {},
     }
   },
   mounted() {
@@ -86,6 +54,69 @@ export default {
             this.loadAudioAnalyser(stream)
             this.loadModels(video)
           })
+      }
+    }
+
+    this.user_name = this.$route.query.user_name
+    this.ws = new WebSocket(
+      'ws://emomee.pigeons.house:6060/ws/room/' +
+        this.$route.params.id +
+        '?user_name=' +
+        this.user_name
+    )
+
+    if (this.ws !== null) {
+      this.ws.onerror = (err) => {
+        // eslint-disable-next-line no-console
+        console.log(err)
+      }
+      this.ws.onmessage = (event) => {
+        if (this.key >= 10) {
+          this.key = 1
+        }
+        const json = JSON.parse(event.data)
+        console.log(JSON.stringify(json))
+        if (
+          json.event === 'join_new_user' &&
+          this.user_id === '' &&
+          json.user.name === this.user_name
+        ) {
+          this.user_id = json.user.user_id
+        } else if (
+          json.event === 'join_new_user' &&
+          this.user_id !== json.user.user_id
+        ) {
+          const users = this.room_information.users
+          users.push(json.user)
+          Object.assign(this.room_information, users)
+          this.key++
+        } else if (json.event === 'room_info') {
+          Object.assign(this.room_information, json.room)
+          this.key++
+        } else if (json.event === 'changed_user') {
+          if (this.room_information)
+            for (const index in this.room_information.users) {
+              if (
+                this.room_information.users[index].user_id ===
+                json.changed_user.user_id
+              ) {
+                Object.assign(
+                  this.room_information.users[index],
+                  json.changed_user
+                )
+                this.key++
+                break
+              }
+            }
+        } else if (json.event === 'exit_user') {
+          if (this.room_information) {
+            const deleteUsreIndex = this.room_information.users.indexOf(
+              json.user
+            )
+            this.room_information.users.splice(deleteUsreIndex, 1)
+            this.key++
+          }
+        }
       }
     }
 
@@ -160,6 +191,12 @@ export default {
               return p2[1] - p1[1]
             })
             this.top = historyPairs[0][0]
+            if (this.user_id !== '') {
+              if (this.prev_status !== this.top) {
+                this.sendEmotion(this.top)
+              }
+            }
+            this.prev_status = this.top
             this.emotion_list = Object.fromEntries(pairs)
           }
         }
@@ -173,6 +210,39 @@ export default {
       const average = volumeSum / volumes.length
 
       this.volume = Math.min(Math.round(average / 10), 9)
+    },
+    closeWebSocket() {
+      if (this.ws !== null) {
+        this.ws.close()
+      }
+    },
+    sendEmotion(emotion) {
+      const message = {
+        event: 'change_emotion',
+        emotion,
+      }
+      if (this.ws !== null) {
+        this.ws.send(JSON.stringify(message))
+      }
+    },
+    sendEmojiSetting(emotion, emoji) {
+      const message = {
+        event: 'change_setting_emoji',
+        emotion,
+        emoji,
+      }
+      if (this.ws !== null) {
+        this.ws.send(JSON.stringify(message))
+      }
+    },
+    sendAfkStatus(isAfk) {
+      const message = {
+        event: 'switch_afk',
+        isAfk,
+      }
+      if (this.ws !== null) {
+        this.ws.send(JSON.stringify(message))
+      }
     },
     closeModal() {
       this.headerOpen = false
