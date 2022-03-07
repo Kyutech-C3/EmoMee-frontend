@@ -11,8 +11,8 @@
       v-for="user in users"
       :key="user.user_id + generateUUID"
       :name="user.name"
-      :face-image-src="user.faceGif"
-      :is-speaking="user.voiceON"
+      :face-image-src="getFaceGif(user.emotion, user.emoji)"
+      :is-speaking="false"
       :class="[
         { 'w-12-space h-size-1-4': users.length < 5 },
         { 'w-13-space': users.length >= 5 && users.length < 10 },
