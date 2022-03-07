@@ -7,7 +7,7 @@
       <p>is_tiny_model: {{ tinyModel }}</p>
       <p>volume: {{ volume }}</p>
     </div>
-    <RoomFaceUsers :users="users" />
+    <RoomFaceUsers :key="key" :users="room_information.users" />
     <RoomToolBar />
   </div>
 </template>
@@ -30,44 +30,7 @@ export default {
       selectBaseFaceBarOpen: false,
       selectReactionBarOpen: true,
       smallWind: false,
-      users: [
-        {
-          id: this.generateUUID(),
-          name: 'hoge',
-          faceGif: require('@/assets/pigeon/nuetral.png'),
-          voiceON: true,
-        },
-        {
-          id: this.generateUUID(),
-          name: 'hoge1',
-          faceGif: require('@/assets/pigeon/riseki_sleep.png'),
-          voiceON: true,
-        },
-        {
-          id: this.generateUUID(),
-          name: 'hoge1',
-          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
-          voiceON: false,
-        },
-        {
-          id: this.generateUUID(),
-          name: 'hoge1',
-          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
-          voiceON: false,
-        },
-        {
-          id: this.generateUUID(),
-          name: 'hoge1',
-          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
-          voiceON: false,
-        },
-        {
-          id: this.generateUUID(),
-          name: 'hoge1',
-          faceGif: require('@/assets/emoji/base/smile/smile3.gif'),
-          voiceON: false,
-        },
-      ],
+      key: 0,
       width: 0,
       height: 0,
       isEnabledFaceFeature: true,
@@ -108,15 +71,28 @@ export default {
         console.log(err)
       }
       this.ws.onmessage = (event) => {
+        if (this.key >= 10) {
+          this.key = 1
+        }
         const json = JSON.parse(event.data)
+        console.log(JSON.stringify(json))
         if (
           json.event === 'join_new_user' &&
           this.user_id === '' &&
           json.user.name === this.user_name
         ) {
           this.user_id = json.user.user_id
+        } else if (
+          json.event === 'join_new_user' &&
+          this.user_id !== json.user.user_id
+        ) {
+          const users = this.room_information.users
+          users.push(json.user)
+          Object.assign(this.room_information, users)
+          this.key++
         } else if (json.event === 'room_info') {
-          this.room_information = json.room
+          Object.assign(this.room_information, json.room)
+          this.key++
         } else if (json.event === 'changed_user') {
           if (this.room_information)
             for (const index in this.room_information.users) {
@@ -124,10 +100,23 @@ export default {
                 this.room_information.users[index].user_id ===
                 json.changed_user.user_id
               ) {
-                this.room_information.users[index] = json.changed_user
+                Object.assign(
+                  this.room_information.users[index],
+                  json.changed_user
+                )
+                this.key++
+                // console.log(this.room_information)
                 break
               }
             }
+        } else if (json.event === 'exit_user') {
+          if (this.room_information) {
+            const deleteUsreIndex = this.room_information.users.indexOf(
+              json.user
+            )
+            this.room_information.users.splice(deleteUsreIndex, 1)
+            this.key++
+          }
         }
       }
     }
