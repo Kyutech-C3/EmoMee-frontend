@@ -45,60 +45,60 @@ export default {
         {
           id: this.generateUUID(),
           name: 'smile face 1',
-          img: require('@/assets/emoji/base/smile/smile1.gif'),
+          img: require('@/assets/pigeon/nuetral.png'),
         },
-        {
-          id: this.generateUUID(),
-          name: 'smile face 2',
-          img: require('@/assets/emoji/base/smile/smile2.gif'),
-        },
-        {
-          id: this.generateUUID(),
-          name: 'smile face 3',
-          img: require('../assets/emoji/base/smile/smile3.gif'),
-        },
-        {
-          id: this.generateUUID(),
-          name: 'smile face 4',
-          img: require('../assets/emoji/base/smile/smile4.gif'),
-        },
-        {
-          id: this.generateUUID(),
-          name: 'smile face 5',
-          img: require('../assets/emoji/base/smile/smile5.gif'),
-        },
+        // {
+        //   id: this.generateUUID(),
+        //   name: 'smile face 2',
+        //   img: require('@/assets/emoji/base/smile/smile2.gif'),
+        // },
+        // {
+        //   id: this.generateUUID(),
+        //   name: 'smile face 3',
+        //   img: require('../assets/emoji/base/smile/smile3.gif'),
+        // },
+        // {
+        //   id: this.generateUUID(),
+        //   name: 'smile face 4',
+        //   img: require('../assets/emoji/base/smile/smile4.gif'),
+        // },
+        // {
+        //   id: this.generateUUID(),
+        //   name: 'smile face 5',
+        //   img: require('../assets/emoji/base/smile/smile5.gif'),
+        // },
       ],
       baseFace: {
         neutral: {
           id: this.generateUUID(),
           name: 'smile face 1',
           type: 'neutral',
-          img: require('@/assets/emoji/base/smile/smile1.gif'),
+          img: require('@/assets/pigeon/nuetral.png'),
         },
-        smile: {
-          id: this.generateUUID(),
-          name: 'smile face 2',
-          type: 'smile',
-          img: require('@/assets/emoji/base/smile/smile2.gif'),
-        },
-        sad: {
-          id: this.generateUUID(),
-          name: 'smile face 3',
-          type: 'sad',
-          img: require('../assets/emoji/base/smile/smile3.gif'),
-        },
-        angry: {
-          id: this.generateUUID(),
-          name: 'smile face 4',
-          type: 'angry',
-          img: require('../assets/emoji/base/smile/smile4.gif'),
-        },
-        surprise: {
-          id: this.generateUUID(),
-          name: 'smile face 5',
-          type: 'surprise',
-          img: require('../assets/emoji/base/smile/smile5.gif'),
-        },
+        // smile: {
+        //   id: this.generateUUID(),
+        //   name: 'smile face 2',
+        //   type: 'smile',
+        //   img: require('@/assets/emoji/base/smile/smile2.gif'),
+        // },
+        // sad: {
+        //   id: this.generateUUID(),
+        //   name: 'smile face 3',
+        //   type: 'sad',
+        //   img: require('../assets/emoji/base/smile/smile3.gif'),
+        // },
+        // angry: {
+        //   id: this.generateUUID(),
+        //   name: 'smile face 4',
+        //   type: 'angry',
+        //   img: require('../assets/emoji/base/smile/smile4.gif'),
+        // },
+        // surprise: {
+        //   id: this.generateUUID(),
+        //   name: 'smile face 5',
+        //   type: 'surprise',
+        //   img: require('../assets/emoji/base/smile/smile5.gif'),
+        // },
       },
       activeModal: '',
     }

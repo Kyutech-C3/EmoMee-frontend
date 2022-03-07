@@ -65,23 +65,23 @@ export default {
         {
           id: this.generateUUID(),
           name: 'smile face 1',
-          img: require('@/assets/emoji/base/smile/smile1.gif'),
+          img: require('@/assets/pigeon/nuetral.png'),
         },
-        {
-          id: this.generateUUID(),
-          name: 'smile face 2',
-          img: require('@/assets/emoji/base/smile/smile2.gif'),
-        },
-        {
-          id: this.generateUUID(),
-          name: 'smile face 3',
-          img: require('../assets/emoji/base/smile/smile3.gif'),
-        },
-        {
-          id: this.generateUUID(),
-          name: 'smile face 4',
-          img: require('../assets/emoji/base/smile/smile4.gif'),
-        },
+        // {
+        //   id: this.generateUUID(),
+        //   name: 'smile face 2',
+        //   img: require('@/assets/emoji/base/smile/smile2.gif'),
+        // },
+        // {
+        //   id: this.generateUUID(),
+        //   name: 'smile face 3',
+        //   img: require('../assets/emoji/base/smile/smile3.gif'),
+        // },
+        // {
+        //   id: this.generateUUID(),
+        //   name: 'smile face 4',
+        //   img: require('../assets/emoji/base/smile/smile4.gif'),
+        // },
       ],
       activeModal: false,
       voiceOFF: false,
