@@ -1,39 +1,49 @@
 <template>
   <div
     id="faceWindows"
-    class="flex flex-wrap justify-center h-4/5 place-items-center gap-3 mx-auto m-5"
-    :class="[
-      { 'vw-1-6': users.length < 7 },
-      { 'vw-7-12': users.length >= 7 && users.length < 13 },
-    ]"
+    class="h-5/6 mx-auto my-2 flex flex-wrap content-center justify-center"
+    :class="
+      users.length === 5 || users.length === 6 || users.length === 9
+        ? 'max-w-[912px]'
+        : 'max-w-[1216px]'
+    "
   >
     <RoomFaceUser
       v-for="user in users"
-      :key="user.user_id + generateUUID"
+      :key="user.user_id"
       :name="user.name"
       :face-image-src="getFaceGif(user.emotion, user.emoji)"
       :is-speaking="false"
-      :class="[
-        { 'w-12-space h-size-1-4': users.length < 5 },
-        { 'w-13-space': users.length >= 5 && users.length < 10 },
-        { 'w-14-space': users.length >= 10 && users.length < 13 },
-        { 'h-size-5-6': users.length >= 5 && users.length < 7 },
-        { 'h-size-7-12': users.length >= 7 && users.length < 13 },
-      ]"
+      class="m-2"
     />
   </div>
 </template>
 
 <script>
-import { v4 as uuidv4 } from 'uuid'
 import emojiList from '@/assets/emoji-list.json'
+
 export default {
   props: {
     users: {
       type: Array,
       required: true,
       default() {
-        return []
+        return [
+          {
+            user_id: '001',
+            name: 'テスト',
+            emotion: 'neutral',
+            emoji: {
+              neutral: 0,
+              happy: 0,
+              sad: 0,
+              angry: 0,
+              fearful: 0,
+              disgusted: 0,
+              surprised: 0,
+            },
+          },
+        ]
       },
     },
   },
@@ -46,9 +56,6 @@ export default {
     getFaceGif(emotion, emoji) {
       const path = this.emojis[emotion][emoji[emotion]].path
       return require('@/assets/' + path)
-    },
-    generateUUID() {
-      return uuidv4()
     },
   },
 }
