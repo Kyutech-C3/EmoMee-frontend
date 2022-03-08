@@ -5,6 +5,7 @@
       <p>{{ top }}</p>
       <p>face_detected: {{ faceDetected }}</p>
       <p>is_tiny_model: {{ tinyModel }}</p>
+      <p>inference_interval: {{ inferenceInterval }}ms</p>
       <p>volume: {{ volume }}</p>
     </div>
     <RoomFaceUsers :key="key" :users="roomInformation.users" />
@@ -40,6 +41,7 @@ export default {
       roomInformation: {},
       video: null,
       stream: null,
+      inferenceInterval: 100,
     }
   },
   mounted() {
@@ -97,11 +99,20 @@ export default {
         }
         if (json.event === 'exit_user') {
           if (this.roomInformation) {
-            const deleteUsreIndex = this.roomInformation.users.indexOf(
-              json.user
-            )
-            this.roomInformation.users.splice(deleteUsreIndex, 1)
-            this.key++
+            let deleteUserIndex = -1
+            for (const [user, index] of Object.entries(
+              this.roomInformation.users
+            )) {
+              if (user.user_id === json.user.user_id) {
+                deleteUserIndex = index
+                break
+              }
+            }
+
+            if (deleteUserIndex < 0) {
+              this.roomInformation.users.splice(deleteUserIndex, 1)
+              this.key++
+            }
           }
         }
       }
@@ -124,7 +135,7 @@ export default {
               this.video.srcObject = this.stream
               this.video.play()
               this.loadAudioAnalyser(this.stream)
-              setInterval(this.analysys, 100, this.video)
+              setInterval(this.analysys, this.inferenceInterval, this.video)
             })
         } else {
           navigator.mediaDevices
@@ -133,7 +144,7 @@ export default {
               this.stream = stream
               this.video.srcObject = this.stream
               this.video.play()
-              setInterval(this.analysys, 100, this.video)
+              setInterval(this.analysys, this.inferenceInterval, this.video)
             })
         }
       }
