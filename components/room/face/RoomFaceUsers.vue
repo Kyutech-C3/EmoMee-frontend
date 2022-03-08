@@ -54,7 +54,7 @@ export default {
   },
   methods: {
     getFaceGif(emotion, emoji) {
-      const path = this.emojis[emotion][emoji[emotion]].path
+      const path = this.emojis[emotion][emoji[emotion]]
       return require('@/assets/' + path)
     },
   },
