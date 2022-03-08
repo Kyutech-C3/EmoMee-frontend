@@ -1,45 +1,43 @@
 <template>
   <div class="relative h-screen overflow-hidden">
     <div class="absolute -z-10">
-      <p>{{ emotion_list }}</p>
+      <p>{{ emotionList }}</p>
       <p>{{ top }}</p>
-      <p>face_detected: {{ face_detected }}</p>
+      <p>face_detected: {{ faceDetected }}</p>
       <p>is_tiny_model: {{ tinyModel }}</p>
       <p>volume: {{ volume }}</p>
     </div>
-    <RoomFaceUsers :key="key" :users="room_information.users" />
-    <RoomToolBar />
+    <RoomFaceUsers :key="key" :users="roomInformation.users" />
+    <RoomToolBar
+      @sendAfkStatus="sendAfkStatus"
+      @sendEmojiSetting="sendEmojiSetting"
+      @sendReaction="sendReaction"
+      @leavingRoom="leavingRoom"
+    />
   </div>
 </template>
 
 <script>
 import * as faceapi from 'face-api.js'
-import { v4 as uuidv4 } from 'uuid'
 
 export default {
   data() {
     return {
       tinyModel: false,
-      top_history: [],
+      topHistory: [],
       top: '',
-      face_detected: false,
-      emotion_list: {},
+      faceDetected: false,
+      emotionList: {},
       volume: 0,
       analyser: null,
-      headerOpen: false,
-      selectBaseFaceBarOpen: false,
-      selectReactionBarOpen: true,
-      smallWind: false,
       key: 0,
-      width: 0,
-      height: 0,
       isEnabledFaceFeature: false,
       isEnabledAudioFeature: false,
       ws: null,
-      user_name: '',
-      user_id: '',
-      prev_status: 'neutral',
-      room_information: {},
+      userName: '',
+      userId: '',
+      prevStatus: 'neutral',
+      roomInformation: {},
       video: null,
       stream: null,
     }
@@ -52,138 +50,62 @@ export default {
       this.startMedia(true, true)
     }
 
-    this.user_name = this.$route.query.user_name
+    this.userName = this.$route.query.user_name
     this.ws = new WebSocket(
-      'wss://emomee.pigeons.house/ws/room/' +
-        this.$route.params.id +
-        '?user_name=' +
-        this.user_name
+      `${this.$config.webSocketBaseUrl}${this.$route.params.id}?user_name=${this.userName}`
     )
 
     if (this.ws !== null) {
       this.ws.onerror = (err) => {
         // eslint-disable-next-line no-console
-        console.log(err)
+        console.error(err)
       }
       this.ws.onmessage = (event) => {
         if (this.key >= 10) {
           this.key = 1
         }
         const json = JSON.parse(event.data)
-        if (
-          json.event === 'join_new_user' &&
-          this.user_id === '' &&
-          json.user.name === this.user_name
-        ) {
-          this.user_id = json.user.user_id
-        } else if (
-          json.event === 'join_new_user' &&
-          this.user_id !== json.user.user_id
-        ) {
-          const users = this.room_information.users
-          users.push(json.user)
-          Object.assign(this.room_information, users)
+        if (json.event === 'join_new_user') {
+          if (this.userId === '' && json.user.name === this.userName) {
+            this.userId = json.user.user_id
+          } else if (this.userId !== json.user.user_id) {
+            const users = this.roomInformation.users
+            users.push(json.user)
+            Object.assign(this.roomInformation, users)
+            this.key++
+          }
+        }
+        if (json.event === 'room_info') {
+          Object.assign(this.roomInformation, json.room)
           this.key++
-        } else if (json.event === 'room_info') {
-          Object.assign(this.room_information, json.room)
-          this.key++
-        } else if (json.event === 'changed_user') {
-          if (this.room_information)
-            for (const index in this.room_information.users) {
+        }
+        if (json.event === 'changed_user') {
+          if (this.roomInformation)
+            for (const index in this.roomInformation.users) {
               if (
-                this.room_information.users[index].user_id ===
+                this.roomInformation.users[index].user_id ===
                 json.changed_user.user_id
               ) {
                 Object.assign(
-                  this.room_information.users[index],
+                  this.roomInformation.users[index],
                   json.changed_user
                 )
                 this.key++
                 break
               }
             }
-        } else if (json.event === 'exit_user') {
-          if (this.room_information) {
-            const deleteUsreIndex = this.room_information.users.indexOf(
+        }
+        if (json.event === 'exit_user') {
+          if (this.roomInformation) {
+            const deleteUsreIndex = this.roomInformation.users.indexOf(
               json.user
             )
-            this.room_information.users.splice(deleteUsreIndex, 1)
+            this.roomInformation.users.splice(deleteUsreIndex, 1)
             this.key++
           }
         }
       }
     }
-
-    this.user_name = this.$route.query.user_name
-    this.ws = new WebSocket(
-      'ws://emomee.pigeons.house:6060/ws/room/' +
-        this.$route.params.id +
-        '?user_name=' +
-        this.user_name
-    )
-
-    if (this.ws !== null) {
-      this.ws.onerror = (err) => {
-        // eslint-disable-next-line no-console
-        console.log(err)
-      }
-      this.ws.onmessage = (event) => {
-        if (this.key >= 10) {
-          this.key = 1
-        }
-        const json = JSON.parse(event.data)
-        console.log(JSON.stringify(json))
-        if (
-          json.event === 'join_new_user' &&
-          this.user_id === '' &&
-          json.user.name === this.user_name
-        ) {
-          this.user_id = json.user.user_id
-        } else if (
-          json.event === 'join_new_user' &&
-          this.user_id !== json.user.user_id
-        ) {
-          const users = this.room_information.users
-          users.push(json.user)
-          Object.assign(this.room_information, users)
-          this.key++
-        } else if (json.event === 'room_info') {
-          Object.assign(this.room_information, json.room)
-          this.key++
-        } else if (json.event === 'changed_user') {
-          if (this.room_information)
-            for (const index in this.room_information.users) {
-              if (
-                this.room_information.users[index].user_id ===
-                json.changed_user.user_id
-              ) {
-                Object.assign(
-                  this.room_information.users[index],
-                  json.changed_user
-                )
-                this.key++
-                break
-              }
-            }
-        } else if (json.event === 'exit_user') {
-          if (this.room_information) {
-            const deleteUsreIndex = this.room_information.users.indexOf(
-              json.user
-            )
-            this.room_information.users.splice(deleteUsreIndex, 1)
-            this.key++
-          }
-        }
-      }
-    }
-
-    window.addEventListener('resize', this.handleResize)
-  },
-  beforeDestroy() {
-    window.removeEventListener('resize', this.handleResize)
-  },
-  beforeMount() {
-    this.updateWindowSize()
   },
   methods: {
     startMedia(isCamera, isMicrophone) {
@@ -221,11 +143,11 @@ export default {
       this.isEnabledFaceFeature = false
       this.isEnabledAudioFeature = false
       if (this.stream !== null) {
-        this.stream.getVideoTracks().forEach((track) => {
-          track.stop()
+        this.stream.getVideoTracks().forEach(async (track) => {
+          await track.stop()
         })
-        this.stream.getAudioTracks().forEach((track) => {
-          track.stop()
+        this.stream.getAudioTracks().forEach(async (track) => {
+          await track.stop()
         })
       }
     },
@@ -262,7 +184,7 @@ export default {
           detectionWithExpression != null &&
           'detection' in detectionWithExpression
         ) {
-          this.face_detected = true
+          this.faceDetected = true
           if (detectionWithExpression.expressions !== undefined) {
             let pairs = Object.entries(detectionWithExpression.expressions)
             pairs = pairs.filter((pair) => pair[1] >= 0.3)
@@ -272,13 +194,13 @@ export default {
             })
 
             if (pairs.length > 0) {
-              this.top_history.push(pairs[0][0])
-              if (this.top_history.length > 5) {
-                this.top_history.shift()
+              this.topHistory.push(pairs[0][0])
+              if (this.topHistory.length > 5) {
+                this.topHistory.shift()
               }
 
               const historyCountMap = {}
-              for (const history of this.top_history) {
+              for (const history of this.topHistory) {
                 if (historyCountMap[history] === undefined) {
                   historyCountMap[history] = 0
                 } else {
@@ -291,17 +213,17 @@ export default {
                 return p2[1] - p1[1]
               })
               this.top = historyPairs[0][0]
-              if (this.user_id !== '') {
-                if (this.prev_status !== this.top) {
+              if (this.userId !== '') {
+                if (this.prevStatus !== this.top) {
                   this.sendEmotion(this.top)
                 }
               }
-              this.prev_status = this.top
-              this.emotion_list = Object.fromEntries(pairs)
+              this.prevStatus = this.top
+              this.emotionList = Object.fromEntries(pairs)
             }
           }
         } else {
-          this.face_detected = false
+          this.faceDetected = false
         }
       }
 
@@ -366,45 +288,20 @@ export default {
         this.ws.send(JSON.stringify(message))
       }
     },
-    closeModal() {
-      this.headerOpen = false
-      this.selectBaseFaceBarOpen = false
-      this.$refs.child.openSelectFaceModal('')
-      if (this.smallWind) {
-        this.selectReactionBarOpen = false
+    // リアクションの送信
+    sendReaction(reactionName) {
+      const message = {
+        event: 'reaction',
+        reaction: reactionName,
+      }
+      if (this.ws !== null) {
+        this.ws.send(JSON.stringify(message))
       }
     },
-    generateUUID() {
-      return uuidv4()
-    },
-    updateWindowSize() {
-      this.width = window.innerWidth
-      this.height = window.innerHeight
-    },
-    handleResize() {
-      this.updateWindowSize()
-      if (this.height <= 730) {
-        document.getElementById('selectBaseFaceBer').classList.add('faceBar')
-      } else {
-        document.getElementById('selectBaseFaceBer').classList.remove('faceBar')
-      }
-      if (this.height <= 590) {
-        this.smallWind = true
-        this.selectReactionBarOpen = false
-        document.getElementById('faceWindows').classList.add('windows')
-        document
-          .getElementById('hoverReactionBarId')
-          .classList.add('hoverReactionBar')
-      } else {
-        this.smallWind = false
-        this.selectReactionBarOpen = true
-        document.getElementById('faceWindows').classList.remove('windows')
-        document
-          .getElementById('hoverReactionBarId')
-          .classList.remove('hoverReactionBar')
-      }
-      // eslint-disable-next-line no-console
-      console.log(this.width + ',' + this.height)
+    // 退室
+    leavingRoom() {
+      this.stopMedia()
+      this.$router.push('/')
     },
   },
 }

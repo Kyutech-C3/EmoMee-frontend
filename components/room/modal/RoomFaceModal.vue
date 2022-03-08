@@ -17,37 +17,37 @@
             src="@/assets/face/neutral/neutral_face.png"
             alt="NeutralFace"
             class="w-10 h-10 mx-3 cursor-pointer scale-95 hover:scale-100"
-            @click="translateClass = 'translate-x-0'"
+            @click="changeBarTranslate('neutral', 'translate-x-0')"
           />
           <img
             src="@/assets/face/smile/smile1.gif"
             alt="SmileFace"
             class="w-12 mx-2 cursor-pointer scale-95 hover:scale-100"
-            @click="translateClass = 'translate-x-[-4rem]'"
+            @click="changeBarTranslate('happy', 'translate-x-[-4rem]')"
           />
           <img
             src="@/assets/face/angry/pouting_face.gif"
             alt="AngryFace"
             class="w-12 mx-2 cursor-pointer scale-95 hover:scale-100"
-            @click="translateClass = 'translate-x-[-8rem]'"
+            @click="changeBarTranslate('angry', 'translate-x-[-8rem]')"
           />
           <img
             src="@/assets/face/disgusted/unamused_face.gif"
             alt="DisgustedFace"
             class="w-12 mx-2 cursor-pointer scale-95 hover:scale-100"
-            @click="translateClass = 'translate-x-[-12rem]'"
+            @click="changeBarTranslate('disgusted', 'translate-x-[-12rem]')"
           />
           <img
             src="@/assets/face/fearful/face_screaming_in_fear.gif"
             alt="FearfulFace"
             class="w-12 mx-2 cursor-pointer scale-95 hover:scale-100"
-            @click="translateClass = 'translate-x-[-16rem]'"
+            @click="changeBarTranslate('fearful', 'translate-x-[-16rem]')"
           />
           <img
             src="@/assets/face/surprise/hushed_face.gif"
             alt="SurpriseFace"
             class="w-12 mx-2 cursor-pointer scale-95 hover:scale-100"
-            @click="translateClass = 'translate-x-[-20rem]'"
+            @click="changeBarTranslate('surprise', 'translate-x-[-20rem]')"
           />
         </div>
       </RoomBaseModal>
@@ -56,16 +56,19 @@
           src="@/assets/face/smile/smile1.gif"
           alt="SmileFace"
           class="w-12 m-2 cursor-pointer scale-95 hover:scale-100"
+          @click="(event) => $emit('sendEmojiSetting', selectedEmotion, 0)"
         />
         <img
           src="@/assets/face/smile/smile1.gif"
           alt="SmileFace"
           class="w-12 m-2 cursor-pointer scale-95 hover:scale-100"
+          @click="(event) => $emit('sendEmojiSetting', selectedEmotion, 1)"
         />
         <img
           src="@/assets/face/smile/smile1.gif"
           alt="SmileFace"
           class="w-12 m-2 cursor-pointer scale-95 hover:scale-100"
+          @click="(event) => $emit('sendEmojiSetting', selectedEmotion, 2)"
         />
       </RoomBaseModal>
     </div>
@@ -83,6 +86,7 @@ export default {
     return {
       showModal: false,
       translateClass: 'translate-x-0',
+      selectedEmotion: '',
     }
   },
   methods: {
@@ -90,6 +94,10 @@ export default {
       if (this.showModal) {
         this.showModal = !this.showModal
       }
+    },
+    changeBarTranslate(emotion, tailwindClass) {
+      this.selectedEmotion = emotion
+      this.translateClass = tailwindClass
     },
   },
 }
