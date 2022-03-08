@@ -57,7 +57,13 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    extend(config, ctx) {
+      config.node = {
+        fs: 'empty',
+      }
+    },
+  },
 
   ssr: false,
 
@@ -67,5 +73,11 @@ export default {
 
   publicRuntimeConfig: {
     webSocketBaseUrl: 'wss://api.emom.ee/ws/room/',
+  },
+
+  watchers: {
+    webpack: {
+      ignored: /.git/,
+    },
   },
 }
