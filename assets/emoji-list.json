@@ -1,57 +1,46 @@
 {
   "neutral": [
-    { "id": "neutral-0", "path": "face/neutral/neutral_face.png" },
-    {
-      "id": "neutral-1",
-      "path": "face/neutral/face_without_mouth.png"
-    },
-    {
-      "id": "neutral-2",
-      "path": "face/neutral/expressionless_face.png"
-    }
+    "pigeon/neutral.gif",
+    "face/neutral/neutral_face.png",
+    "face/neutral/face_without_mouth.png",
+    "face/neutral/expressionless_face.png"
   ],
   "happy": [
-    { "id": "smile-0", "path": "face/smile/smile1.gif" },
-    { "id": "smile-1", "path": "face/smile/smile2.gif" },
-    { "id": "smile-2", "path": "face/smile/smile3.gif" },
-    { "id": "smile-3", "path": "face/smile/smile4.gif" },
-    { "id": "smile-4", "path": "face/smile/smile5.gif" }
+    "pigeon/happy.gif",
+    "face/happy/happy1.gif",
+    "face/happy/happy2.gif",
+    "face/happy/happy3.gif",
+    "face/happy/happy4.gif",
+    "face/happy/happy5.gif"
   ],
   "sad": [
-    { "id": "sad-0", "path": "face/sad/pleading_face.gif" },
-    { "id": "sad-1", "path": "face/sad/crying_face.gif" },
-    { "id": "sad-2", "path": "face/sad/weary_face.gif" },
-    { "id": "sad-3", "path": "face/sad/loudly_crying_face.gif" }
+    "pigeon/sad.gif",
+    "face/sad/pleading_face.gif",
+    "face/sad/crying_face.gif",
+    "face/sad/weary_face.gif",
+    "face/sad/loudly_crying_face.gif"
   ],
   "surprised": [
-    { "id": "surprise-0", "path": "face/surprise/surprised.gif" },
-    { "id": "surprise-1", "path": "face/surprise/hushed_face.gif" },
-    { "id": "surprise-2", "path": "face/surprise/flushed_face.gif" }
+    "pigeon/surprised.gif",
+    "face/surprised/surprised.gif",
+    "face/surprised/hushed_face.gif",
+    "face/surprised/flushed_face.gif"
   ],
   "disgusted": [
-    {
-      "id": "disgusted-0",
-      "path": "face/disgusted/unamused_face.gif"
-    },
-    { "id": "disgusted-1", "path": "face/disgusted/face_vomiting.gif" }
+    "pigeon/disgusted.gif",
+    "face/disgusted/unamused_face.gif",
+    "face/disgusted/face_vomiting.gif"
   ],
   "angry": [
-    { "id": "angry-0", "path": "face/angry/pouting_face.gif" },
-    {
-      "id": "angry-1",
-      "path": "face/angry/face_with_steam_from_nose.gif"
-    },
-    {
-      "id": "angry-2",
-      "path": "face/angry/face_with_symbols_on_mouth.gif"
-    },
-    { "id": "angry-3", "path": "face/angry/exploding_head.gif" }
+    "pigeon/angry.gif",
+    "face/angry/pouting_face.gif",
+    "face/angry/face_with_steam_from_nose.gif",
+    "face/angry/face_with_symbols_on_mouth.gif",
+    "face/angry/exploding_head.gif"
   ],
   "fearful": [
-    {
-      "id": "angry-0",
-      "path": "face/fearful/face_screaming_in_fear.gif"
-    },
-    { "id": "angry-0", "path": "face/fearful/cold_face.gif" }
+    "pigeon/fearful.gif",
+    "face/fearful/face_screaming_in_fear.gif",
+    "face/fearful/cold_face.gif"
   ]
 }

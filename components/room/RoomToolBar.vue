@@ -2,24 +2,30 @@
   <div
     class="w-full flex items-center justify-between px-8 select-none absolute bottom-4"
   >
-    <RoomStatusButton :is-afk="isAfk" @click="isAfk = !isAfk" />
+    <RoomStatusButton :is-afk="isAfk" @click="sendAfkStatus()" />
     <div class="flex items-center">
-      <RoomFaceModal />
+      <RoomFaceModal
+        @send-emoji-setting="(event) => $emit('sendEmojiSetting')"
+      />
       <RoomBaseButton class="mx-5">
         <div class="flex">
           <img
-            v-for="(reactionIcon, i) in reactionIcons"
-            :key="i"
-            :src="reactionIcon"
-            alt=""
+            v-for="reaction in reactions"
+            :key="reaction.name"
+            :src="reaction.icon"
+            :alt="reaction.name"
             class="w-14 mx-2 p-1.5 rounded-full cursor-pointer scale-95 hover:bg-gray-100 hover:scale-100"
+            @click="(event) => $emit('sendReaction', reaction.name)"
           />
           <RoomReactionModal />
         </div>
       </RoomBaseButton>
       <RoomMenuModal />
     </div>
-    <RoomBaseButton class="cursor-pointer bg-yellow-100 hover:bg-yellow-200">
+    <RoomBaseButton
+      class="cursor-pointer bg-yellow-100 hover:bg-yellow-200"
+      @click="(event) => $emit('leavingRoom')"
+    >
       <p class="text-xl">退室</p>
     </RoomBaseButton>
   </div>
@@ -29,15 +35,36 @@
 export default {
   data() {
     return {
-      reactionIcons: [
-        require('@/assets/reaction/png/thumbsup.png'),
-        require('@/assets/reaction/png/raised-hand.png'),
-        require('@/assets/reaction/png/clap.png'),
-        require('@/assets/reaction/png/pray.png'),
-        require('@/assets/reaction/png/heart.png'),
+      reactions: [
+        {
+          name: 'thumbsup',
+          icon: require('@/assets/reaction/png/thumbsup.png'),
+        },
+        {
+          name: 'raised-hand',
+          icon: require('@/assets/reaction/png/raised-hand.png'),
+        },
+        {
+          name: 'clap',
+          icon: require('@/assets/reaction/png/clap.png'),
+        },
+        {
+          name: 'pray',
+          icon: require('@/assets/reaction/png/pray.png'),
+        },
+        {
+          name: 'heart',
+          icon: require('@/assets/reaction/png/heart.png'),
+        },
       ],
       isAfk: false,
     }
+  },
+  methods: {
+    sendAfkStatus() {
+      this.isAfk = !this.isAfk
+      this.$emit('sendAfkStatus', this.isAfk)
+    },
   },
 }
 </script>
