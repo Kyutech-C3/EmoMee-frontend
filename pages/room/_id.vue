@@ -366,39 +366,6 @@ export default {
         this.ws.send(JSON.stringify(message))
       }
     },
-    closeWebSocket() {
-      if (this.ws !== null) {
-        this.ws.close()
-      }
-    },
-    sendEmotion(emotion) {
-      const message = {
-        event: 'change_emotion',
-        emotion,
-      }
-      if (this.ws !== null) {
-        this.ws.send(JSON.stringify(message))
-      }
-    },
-    sendEmojiSetting(emotion, emoji) {
-      const message = {
-        event: 'change_setting_emoji',
-        emotion,
-        emoji,
-      }
-      if (this.ws !== null) {
-        this.ws.send(JSON.stringify(message))
-      }
-    },
-    sendAfkStatus(isAfk) {
-      const message = {
-        event: 'switch_afk',
-        isAfk,
-      }
-      if (this.ws !== null) {
-        this.ws.send(JSON.stringify(message))
-      }
-    },
     closeModal() {
       this.headerOpen = false
       this.selectBaseFaceBarOpen = false
