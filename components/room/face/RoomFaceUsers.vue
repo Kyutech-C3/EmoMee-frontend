@@ -21,6 +21,7 @@
 
 <script>
 import emojiList from '@/assets/emoji-list.json'
+
 export default {
   props: {
     users: {
