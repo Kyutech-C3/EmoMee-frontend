@@ -21,6 +21,30 @@
 <script>
 import * as faceapi from 'face-api.js'
 
+/*
+  type Users = {
+      user_id: string
+      name: string
+      is_speaking: boolean  // 喋っているかどうか
+      is_afk: boolean  // 離席中かどうか
+      emotion: string  // 表情の種類
+      emoji: {
+        angry: number
+        disgusted: number
+        fearful: number
+        happy: number
+        neutral: number
+        sad: number
+        surprised: number
+      }
+    }
+
+  type RoomInfomation = {
+    room_id: string
+    users: Users[]
+  }
+*/
+
 export default {
   data() {
     return {
@@ -38,12 +62,24 @@ export default {
       userName: '',
       userId: '',
       prevStatus: 'neutral',
-      roomInformation: {},
+      roomInformation: {
+        room_id: '',
+        users: [],
+      },
       video: null,
       stream: null,
-      inferenceInterval: 100,
+      inferenceInterval: 500,
     }
   },
+  // watch: {
+  //   roomInformation: {
+  //     handler(val, oldVal) {
+  //       console.log('val', val)
+  //       console.log('oldVal', oldVal)
+  //     },
+  //     deep: true,
+  //   },
+  // },
   mounted() {
     this.loadModels()
     this.video = document.createElement('video')
@@ -69,50 +105,73 @@ export default {
         const json = JSON.parse(event.data)
         if (json.event === 'join_new_user') {
           if (this.userId === '' && json.user.name === this.userName) {
+            // 自分がルームに入室した時
             this.userId = json.user.user_id
           } else if (this.userId !== json.user.user_id) {
+            // 他人がルームに入室した時
             const users = this.roomInformation.users
             users.push(json.user)
             Object.assign(this.roomInformation, users)
             this.key++
           }
         }
+        // ルームの情報を取得する
         if (json.event === 'room_info') {
           Object.assign(this.roomInformation, json.room)
           this.key++
         }
-        if (json.event === 'changed_user') {
-          if (this.roomInformation)
-            for (const index in this.roomInformation.users) {
-              if (
-                this.roomInformation.users[index].user_id ===
-                json.changed_user.user_id
-              ) {
-                Object.assign(
-                  this.roomInformation.users[index],
-                  json.changed_user
-                )
-                this.key++
-                break
-              }
+        // 表情の変化時
+        if (json.event === 'change_emotion' && this.roomInformation) {
+          for (const index in this.roomInformation.users) {
+            if (this.roomInformation.users[index].user_id === json.user_id) {
+              this.roomInformation.users[index].emotion = json.emotion
+              break
             }
+          }
         }
-        if (json.event === 'exit_user') {
-          if (this.roomInformation) {
-            let deleteUserIndex = -1
-            for (const [user, index] of Object.entries(
-              this.roomInformation.users
-            )) {
-              if (user.user_id === json.user.user_id) {
-                deleteUserIndex = index
-                break
-              }
+        // 音声認識時
+        if (json.event === 'switch_speaking' && this.roomInformation) {
+          for (const index in this.roomInformation.users) {
+            if (this.roomInformation.users[index].user_id === json.user_id) {
+              this.roomInformation.users[index].isSpeaking = json.is_speaking
+              break
             }
+          }
+        }
+        // リアクション時
+        if (json.event === 'reaction' && this.roomInformation) {
+          for (const index in this.roomInformation.users) {
+            if (this.roomInformation.users[index].user_id === json.user_id) {
+              this.roomInformation.users[index].reaction = json.reaction
+              this.roomInformation.users[index].is_animation = json.is_animation
+              break
+            }
+          }
+        }
+        // 離席時
+        if (json.event === 'switch_afk' && this.roomInformation) {
+          for (const index in this.roomInformation.users) {
+            if (this.roomInformation.users[index].user_id === json.user_id) {
+              this.roomInformation.users[index].is_afk = json.is_afk
+              break
+            }
+          }
+        }
+        // 他人がルームから退出した時
+        if (json.event === 'exit_user' && this.roomInformation) {
+          let deleteUserIndex = -1
+          for (const [user, index] of Object.entries(
+            this.roomInformation.users
+          )) {
+            if (user.user_id === json.user.user_id) {
+              deleteUserIndex = index
+              break
+            }
+          }
 
-            if (deleteUserIndex < 0) {
-              this.roomInformation.users.splice(deleteUserIndex, 1)
-              this.key++
-            }
+          if (deleteUserIndex < 0) {
+            this.roomInformation.users.splice(deleteUserIndex, 1)
+            this.key++
           }
         }
       }
@@ -300,10 +359,11 @@ export default {
       }
     },
     // リアクションの送信
-    sendReaction(reactionName) {
+    sendReaction(reactionName, isAnimation) {
       const message = {
         event: 'reaction',
         reaction: reactionName,
+        is_animation: isAnimation,
       }
       if (this.ws !== null) {
         this.ws.send(JSON.stringify(message))

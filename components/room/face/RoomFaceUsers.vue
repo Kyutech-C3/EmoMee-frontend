@@ -12,7 +12,11 @@
       v-for="user in users"
       :key="user.user_id"
       :name="user.name"
-      :face-image-src="getFaceGif(user.emotion, user.emoji)"
+      :face-image-src="
+        user.is_afk
+          ? require('@/assets/pigeon/riseki_sleep.git.png')
+          : getFaceGif(user.emotion, user.emoji)
+      "
       :is-speaking="user.is_speaking"
       class="m-2"
     />
@@ -33,6 +37,7 @@ export default {
             user_id: '001',
             name: 'テスト',
             emotion: 'neutral',
+            is_afk: false,
             emoji: {
               neutral: 0,
               happy: 0,
