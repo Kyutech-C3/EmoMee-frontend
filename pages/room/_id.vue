@@ -8,7 +8,12 @@
       <p>volume: {{ volume }}</p>
     </div>
     <RoomFaceUsers :key="key" :users="room_information.users" />
-    <RoomToolBar />
+    <RoomToolBar
+      @sendAfkStatus="sendAfkStatus"
+      @sendEmojiSetting="sendEmojiSetting"
+      @sendReaction="sendReaction"
+      @leavingRoom="leavingRoom"
+    />
   </div>
 </template>
 
@@ -221,11 +226,11 @@ export default {
       this.isEnabledFaceFeature = false
       this.isEnabledAudioFeature = false
       if (this.stream !== null) {
-        this.stream.getVideoTracks().forEach((track) => {
-          track.stop()
+        this.stream.getVideoTracks().forEach(async (track) => {
+          await track.stop()
         })
-        this.stream.getAudioTracks().forEach((track) => {
-          track.stop()
+        this.stream.getAudioTracks().forEach(async (track) => {
+          await track.stop()
         })
       }
     },
@@ -366,45 +371,19 @@ export default {
         this.ws.send(JSON.stringify(message))
       }
     },
-    closeModal() {
-      this.headerOpen = false
-      this.selectBaseFaceBarOpen = false
-      this.$refs.child.openSelectFaceModal('')
-      if (this.smallWind) {
-        this.selectReactionBarOpen = false
+    // リアクションの送信
+    sendReaction(reactionName) {
+      const message = {
+        event: 'reaction',
+        reaction: reactionName,
+      }
+      if (this.ws !== null) {
+        this.ws.send(JSON.stringify(message))
       }
     },
-    generateUUID() {
-      return uuidv4()
-    },
-    updateWindowSize() {
-      this.width = window.innerWidth
-      this.height = window.innerHeight
-    },
-    handleResize() {
-      this.updateWindowSize()
-      if (this.height <= 730) {
-        document.getElementById('selectBaseFaceBer').classList.add('faceBar')
-      } else {
-        document.getElementById('selectBaseFaceBer').classList.remove('faceBar')
-      }
-      if (this.height <= 590) {
-        this.smallWind = true
-        this.selectReactionBarOpen = false
-        document.getElementById('faceWindows').classList.add('windows')
-        document
-          .getElementById('hoverReactionBarId')
-          .classList.add('hoverReactionBar')
-      } else {
-        this.smallWind = false
-        this.selectReactionBarOpen = true
-        document.getElementById('faceWindows').classList.remove('windows')
-        document
-          .getElementById('hoverReactionBarId')
-          .classList.remove('hoverReactionBar')
-      }
-      // eslint-disable-next-line no-console
-      console.log(this.width + ',' + this.height)
+    leavingRoom() {
+      this.stopMedia()
+      this.$router.push('/')
     },
   },
 }
