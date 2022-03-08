@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-200 drop-shadow">
+  <div class="bg-sky-50 shadow-xl">
     <slot></slot>
   </div>
 </template>
