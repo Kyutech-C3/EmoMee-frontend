@@ -20,7 +20,7 @@
             @click="changeBarTranslate('neutral', 'translate-x-0')"
           />
           <img
-            src="@/assets/face/smile/smile1.gif"
+            src="@/assets/face/happy/happy1.gif"
             alt="SmileFace"
             class="w-12 mx-2 cursor-pointer scale-95 hover:scale-100"
             @click="changeBarTranslate('happy', 'translate-x-[-4rem]')"
@@ -44,7 +44,7 @@
             @click="changeBarTranslate('fearful', 'translate-x-[-16rem]')"
           />
           <img
-            src="@/assets/face/surprise/hushed_face.gif"
+            src="@/assets/face/surprised/hushed_face.gif"
             alt="SurpriseFace"
             class="w-12 mx-2 cursor-pointer scale-95 hover:scale-100"
             @click="changeBarTranslate('surprise', 'translate-x-[-20rem]')"
@@ -53,19 +53,19 @@
       </RoomBaseModal>
       <RoomBaseModal class="absolute bottom-40 w-fit z-10">
         <img
-          src="@/assets/face/smile/smile1.gif"
+          src="@/assets/face/happy/happy1.gif"
           alt="SmileFace"
           class="w-12 m-2 cursor-pointer scale-95 hover:scale-100"
           @click="(event) => $emit('sendEmojiSetting', selectedEmotion, 0)"
         />
         <img
-          src="@/assets/face/smile/smile1.gif"
+          src="@/assets/face/happy/happy1.gif"
           alt="SmileFace"
           class="w-12 m-2 cursor-pointer scale-95 hover:scale-100"
           @click="(event) => $emit('sendEmojiSetting', selectedEmotion, 1)"
         />
         <img
-          src="@/assets/face/smile/smile1.gif"
+          src="@/assets/face/happy/happy1.gif"
           alt="SmileFace"
           class="w-12 m-2 cursor-pointer scale-95 hover:scale-100"
           @click="(event) => $emit('sendEmojiSetting', selectedEmotion, 2)"
