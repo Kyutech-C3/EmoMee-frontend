@@ -61,4 +61,8 @@ export default {
   generate: {
     fallback: true,
   },
+
+  publicRuntimeConfig: {
+    webSocketBaseUrl: 'wss://api.emom.ee/ws/room/',
+  },
 }
