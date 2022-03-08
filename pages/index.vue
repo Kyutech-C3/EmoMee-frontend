@@ -1,8 +1,18 @@
 <template>
-  <div class="container">
-    <div>
+  <div>
+    <header>
+      <button class="e1k2d9zh3 css-15nidrm">
+        <span
+          class="ttfont ttfont-hamburger css-9ynm7a e1oc5ub40"
+          aria-label="menu"
+        >
+          🍔
+        </span>
+      </button>
+      <img :src="require('@/assets/top/EmoMee_logo.png')" width="20%" />
+    </header>
+    <!-- <div>
       <RoomFrame :tiny-model="false" />
-      <h1 class="title">EmoMee-frontend</h1>
       <div class="links">
         <a
           href="https://nuxtjs.org/"
@@ -21,7 +31,7 @@
           GitHub
         </a>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -30,14 +40,21 @@ export default {}
 </script>
 
 <style>
-.container {
+img {
+  /* position: relative; */
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  /* text-align: center; */
+}
+
+/* .container {
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
-  justify-content: center;
   align-items: center;
   text-align: center;
-}
+} */
 
 .title {
   font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
