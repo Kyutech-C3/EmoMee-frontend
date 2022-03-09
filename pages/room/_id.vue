@@ -8,7 +8,10 @@
       <p>inference_interval: {{ interval * faceInferenceTimes }}ms</p>
       <p>volume: {{ volume }}</p>
     </div>
-    <RoomFaceUsers :users="roomInformation.users" />
+    <RoomFaceUsers
+      :users="roomInformation.users"
+      :reaction-info="reactionInfo"
+    />
     <RoomToolBar
       @sendAfkStatus="sendAfkStatus"
       @sendEmojiSetting="sendEmojiSetting"
@@ -66,6 +69,12 @@ export default {
         room_id: '',
         users: [],
       },
+      reactionInfo: {
+        user_id: '',
+        reaction: '',
+        is_animation: false,
+      },
+      reactionTimeout: null,
       video: null,
       stream: null,
       interval: 100,
@@ -181,16 +190,16 @@ export default {
           // リアクション時
           case 'reaction':
             if (this.roomInformation) {
-              for (const index in this.roomInformation.users) {
-                if (
-                  this.roomInformation.users[index].user_id === json.user_id
-                ) {
-                  this.roomInformation.users[index].reaction = json.reaction
-                  this.roomInformation.users[index].is_animation =
-                    json.is_animation
-                  break
+              const { event, ...reaction } = json
+              this.reactionInfo = reaction
+              clearTimeout(this.reactionTimeout)
+              this.reactionTimeout = setTimeout(() => {
+                this.reactionInfo = {
+                  user_id: '',
+                  reaction: '',
+                  is_animation: false,
                 }
-              }
+              }, 4000)
             }
             break
           /*

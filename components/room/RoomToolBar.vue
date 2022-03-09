@@ -16,7 +16,8 @@
             :alt="reaction.name"
             class="w-14 mx-2 p-1.5 rounded-full cursor-pointer scale-95 hover:bg-gray-100 hover:scale-100"
             @click="
-              (event) => $emit('sendReaction', reaction.name, isAnimation)
+              (event) =>
+                $emit('sendReaction', reaction.name, reaction.isAnimation)
             "
           />
           <RoomReactionModal />
