@@ -21,7 +21,7 @@ export default {
       ownerInfo: {
         roomId: '',
       },
-      show: false,
+      hasError: false,
     }
   },
   methods: {
@@ -34,9 +34,7 @@ export default {
         console.log(response)
         this.$store.commit('setOwnerInfo', this.ownerInfo.roomId)
         console.log(this.$store.state.isOwner)
-      } catch (error) {
-        this.hasError = true
-      }
+      } catch (error) {}
     },
   },
 }

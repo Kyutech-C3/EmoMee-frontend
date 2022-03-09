@@ -1,22 +1,59 @@
 <template>
   <div
-    class="flex items-center justify-center w-full h-screen flex-col relative"
+    class="flex items-center justify-center w-screen h-screen flex-col relative"
   >
-    <div class="absolute bg-red-200 w-2/5 h-80 right-0 top-0 z-0"></div>
-    <div class="absolute bg-orange-200 w-2/4 h-80 left-0 z-0"></div>
-    <room-setting-form class="w-192 h-80 z-10" />
-    <base-button class="m-12 px-16 py-5 text-3xl">作成</base-button>
+    <CreateModal />
+    <button
+      class="m-12 px-16 py-5 text-3xl shadow-xl bg-orange-50 rounded-2xl font-semibold"
+      @click="createRoom()"
+    >
+      参加
+    </button>
+    <div v-if="hasError" class="text-red-600 font-semibold text-xl">
+      ルームを作成出来ませんでした．
+    </div>
   </div>
 </template>
 
 <script>
-import RoomSettingForm from '../../components/room/RoomSettingForm.vue'
-import BaseButton from '../../components/BaseButton.vue'
+import axios from 'axios'
 
 export default {
-  components: {
-    RoomSettingForm,
-    BaseButton,
+  setup() {},
+  data() {
+    return {
+      roomId: '',
+      timeLimit: 0,
+      hasError: false,
+      responseCopy: {},
+    }
+  },
+  methods: {
+    sleep(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms))
+    },
+    async createRoom() {
+      try {
+        console.log('test')
+        const response = await axios.post(
+          'https://api.emom.ee/api/v1/room',
+          null,
+          { limit: this.timeLimit }
+        )
+        console.log(response)
+        this.roomId = response.data.room_id
+        this.responseCopy = response
+        this.$store.commit('setOwnerInfo', this.roomId)
+        console.log(this.$store.state.isOwner)
+        this.$router.push('/join')
+      } catch (error) {
+        this.hasError = true
+        await this.sleep(2000)
+        this.hasError = this.$nuxt.error({
+          message: 'サーバーエラー　後ほどお試しください',
+        })
+      }
+    },
   },
 }
 </script>
