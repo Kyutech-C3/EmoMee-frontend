@@ -6,10 +6,10 @@
       <img
         src="@/assets/pigeon/sad.gif"
         alt="sad pigeon"
-        class="absolute -bottom-10 -right-10 w-28"
+        class="absolute -bottom-20 -right-10 w-28"
       />
-      <p class="w-full">ステータスコード：{{ error.statusCode }}</p>
-      <p class="break-words w-full">メッセージ：{{ error.message }}</p>
+      <p class="w-full">{{ error.statusCode }}</p>
+      <p class="break-words w-full">{{ error.message }}</p>
     </div>
   </div>
 </template>
