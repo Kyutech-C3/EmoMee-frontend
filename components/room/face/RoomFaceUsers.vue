@@ -15,7 +15,7 @@
       :face-image-src="
         user.is_afk
           ? require('@/assets/pigeon/riseki_sleep.git.png')
-          : getFaceGif(user.emotion, user.emoji)
+          : getFaceGif(user.user_id, user.emotion, user.emoji)
       "
       :is-speaking="user.is_speaking"
       class="m-2"
@@ -32,23 +32,18 @@ export default {
       type: Array,
       required: true,
       default() {
-        return [
-          {
-            user_id: '001',
-            name: 'テスト',
-            emotion: 'neutral',
-            is_afk: false,
-            emoji: {
-              neutral: 0,
-              happy: 0,
-              sad: 0,
-              angry: 0,
-              fearful: 0,
-              disgusted: 0,
-              surprised: 0,
-            },
-          },
-        ]
+        return []
+      },
+    },
+    reactionInfo: {
+      type: Object,
+      required: true,
+      default() {
+        return {
+          user_id: '',
+          reaction: '',
+          is_animation: false,
+        }
       },
     },
   },
@@ -58,9 +53,13 @@ export default {
     }
   },
   methods: {
-    getFaceGif(emotion, emoji) {
-      const path = this.emojis[emotion][emoji[emotion]]
-      return require('@/assets/' + path)
+    getFaceGif(id, emotion, emoji) {
+      if (this.reactionInfo.user_id === id) {
+        const type = this.reactionInfo.is_animation ? 'gif' : 'png'
+        return require(`@/assets/reaction/${type}/${this.reactionInfo.reaction}.${type}`)
+      } else {
+        return require(`@/assets/${this.emojis[emotion][emoji[emotion]]}`)
+      }
     },
   },
 }
