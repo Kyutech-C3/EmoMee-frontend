@@ -25,7 +25,7 @@
           />
         </div>
       </RoomBaseButton>
-      <RoomMenuModal />
+      <RoomMenuModal @updateMenuValues="updateMenuValues" />
     </div>
     <RoomBaseButton
       class="cursor-pointer bg-yellow-100 hover:bg-yellow-200"
@@ -74,6 +74,13 @@ export default {
     sendAfkStatus() {
       this.isAfk = !this.isAfk
       this.$emit('sendAfkStatus', this.isAfk)
+    },
+    updateMenuValues(isFaceDetectorEnabled, isAudioDetectorEnabled) {
+      this.$emit(
+        'updateMenuValues',
+        isFaceDetectorEnabled,
+        isAudioDetectorEnabled
+      )
     },
   },
 }
