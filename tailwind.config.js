@@ -14,6 +14,9 @@ module.exports = {
         18: '4.5rem',
         100: '25rem',
       },
+      boxShadow: {
+        'inner-xl': 'inset 0 0 7px 0 rgba(0, 0, 0, 0.3)',
+      },
     },
   },
   plugins: [],
