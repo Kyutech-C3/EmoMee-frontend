@@ -17,6 +17,7 @@
       @sendEmojiSetting="sendEmojiSetting"
       @sendReaction="sendReaction"
       @leavingRoom="leavingRoom"
+      @updateMenuValues="updateMenuValues"
     />
   </div>
 </template>
@@ -458,6 +459,10 @@ export default {
       } else {
         this.faceInferenceCount++
       }
+    },
+    updateMenuValues(isFaceDetectorEnabled, isAudioDetectorEnabled) {
+      console.log([isFaceDetectorEnabled, isAudioDetectorEnabled])
+      this.startMedia(isFaceDetectorEnabled, isAudioDetectorEnabled)
     },
   },
 }

@@ -3,14 +3,14 @@
     <button
       class="w-1/2"
       :class="value ? 'bg-slate-300' : 'bg-white'"
-      @click="value = true"
+      @click="updateValue(true)"
     >
       ON
     </button>
     <button
       class="w-1/2"
       :class="value ? 'bg-white' : 'bg-slate-300'"
-      @click="value = false"
+      @click="updateValue(false)"
     >
       OFF
     </button>
@@ -21,8 +21,21 @@
 export default {
   data() {
     return {
-      value: true,
+      value: this.parentValue,
     }
+  },
+  props: {
+    parentValue: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
+  },
+  methods: {
+    updateValue(v) {
+      this.value = v
+      this.$emit('updateValue', v)
+    },
   },
 }
 </script>

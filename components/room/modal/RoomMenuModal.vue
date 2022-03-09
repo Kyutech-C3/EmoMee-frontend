@@ -11,11 +11,27 @@
       <ul>
         <li class="flex justify-between items-center my-3">
           <p>表情検知</p>
-          <BaseToggleButton />
+          <BaseToggleButton
+            :parentValue="isFaceDetectorEnabled"
+            @updateValue="
+              (v) => {
+                isFaceDetectorEnabled = v
+                updateMenuValues()
+              }
+            "
+          />
         </li>
         <li class="flex justify-between items-center my-3">
           <p>音声検知</p>
-          <BaseToggleButton />
+          <BaseToggleButton
+            :parentValue="isAudioDetectorEnabled"
+            @updateValue="
+              (v) => {
+                isAudioDetectorEnabled = v
+                updateMenuValues()
+              }
+            "
+          />
         </li>
         <li class="flex justify-between items-center my-3">
           <p>リンクのコピー</p>
@@ -48,6 +64,8 @@ export default {
   data() {
     return {
       showModal: false,
+      isFaceDetectorEnabled: true,
+      isAudioDetectorEnabled: true,
     }
   },
   methods: {
@@ -63,6 +81,13 @@ export default {
       if (this.showModal) {
         this.showModal = !this.showModal
       }
+    },
+    updateMenuValues() {
+      this.$emit(
+        'updateMenuValues',
+        this.isFaceDetectorEnabled,
+        this.isAudioDetectorEnabled
+      )
     },
   },
 }
