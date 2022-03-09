@@ -6,10 +6,12 @@
           class="ttfont ttfont-hamburger css-9ynm7a e1oc5ub40"
           aria-label="menu"
         >
-          🍔
+          <img :src="require('@/assets/top/bars_24.png')" width="10%" />
         </span>
       </button>
-      <img :src="require('@/assets/top/EmoMee_logo.png')" width="20%" />
+      <title>
+        <img :src="require('@/assets/top/EmoMee_logo.png')" width="20%" />
+      </title>
     </header>
     <!-- <div>
       <RoomFrame :tiny-model="false" />
@@ -40,7 +42,7 @@ export default {}
 </script>
 
 <style>
-img {
+title {
   /* position: relative; */
   margin: 0 auto;
   display: flex;
@@ -56,7 +58,7 @@ img {
   text-align: center;
 } */
 
-.title {
+/* .title {
   font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
     'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   display: block;
@@ -64,7 +66,7 @@ img {
   font-size: 100px;
   color: #35495e;
   letter-spacing: 1px;
-}
+} */
 
 .subtitle {
   font-weight: 300;
