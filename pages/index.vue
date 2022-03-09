@@ -124,7 +124,7 @@ button {
 }
 .css-1b7y32o video {
   position: absolute;
-  top: 23%;
+  top: 15%;
   left: 50%;
   min-width: 100%;
   min-height: 100%;
