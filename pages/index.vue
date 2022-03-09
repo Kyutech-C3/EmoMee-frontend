@@ -1,49 +1,56 @@
 <template>
   <div>
-    <header class="css-g1d4iy e1k2d9zh0">
-      <button class="e1k2d9zh3 css-15nidrm">
-        <span aria-label="menu">
-          <img :src="require('@/assets/top/bars_24.png')" width="20%%" />
-        </span>
-      </button>
+    <header class="css-g1d4iy">
       <h1>
         <img :src="require('@/assets/top/EmoMee_logo.png')" width="200px" />
       </h1>
+      <button
+        class="css-15nidrm css-11eqmph hover:bg-white hover:bg-opacity-40"
+      >
+        <span aria-label="create">
+          <nuxt-link to="/create"><h1>create room</h1></nuxt-link>
+        </span>
+      </button>
     </header>
     <main>
-      <div data-content-style="dark" class="css-11apsez eeucsiq6">
-        <div class="eeucsiq5 css-1b7y32o e19mb7dd3">
+      <div data-content-style="dark" class="css-11apsez">
+        <div class="css-1b7y32o">
           <video
             class="e19mb7dd0 css-1vd2dbe e1yswsx0"
             playsinline
             autoplay
             loop
             src="@/assets/top/top_movie.mp4"
+            type="video/mp4"
+            muted
           ></video>
         </div>
       </div>
+      <section class="css-1ahkxzr">
+        <div data-gatsby-image-wrapper class="gatsby-image-wrapper css-fjkzxp">
+          <div aria-hidden="true" style="padding-top: 62.5%"></div>
+          <picture>
+            <img :src="require('@/assets/top/PCwindow_image.png')" />
+          </picture>
+        </div>
+      </section>
+      <section id="about EmoMee">
+        <header class="css-1k7gt20">
+          <h2 class="css-11pvt2h">EmoMeeとは</h2>
+          <h3 class="css-1cmp5qk">
+            表情を検知し、感情(Emotion)を絵文字(Emoji)で共有できる<b
+              >Meeting用Webアプリケーション
+            </b>
+          </h3>
+          <p class="css-g79a2p">
+            EmoMeeは、「ビデオ通話はちょっと、、」といった【カメラに顔を映したくない】【周りはどんな感情で聞いているのかわからない】などの声にお応えしました！ボイスチャットでの会話が増えた今、声だけでは伝わりにくいニュアンスをカメラをオンをせず、手軽に相手の表情を見ながら会話したいときに「EmoMee」‼
+          </p>
+        </header>
+        <article></article>
+        <article></article>
+        <article></article>
+      </section>
     </main>
-    <!-- <div>
-      <RoomFrame :tiny-model="false" />
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div> -->
   </div>
 </template>
 
@@ -52,11 +59,12 @@ export default {}
 </script>
 
 <style>
+/* header */
 .css-g1d4iy {
   z-index: 100;
   position: fixed;
   left: 24px;
-  top: 0;
+  top: 15px;
   width: 100%;
   height: 65px;
   display: -webkit-box;
@@ -64,14 +72,6 @@ export default {}
   display: -ms-flexbox;
   display: flex;
   box-sizing: border-box;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
-  justify-content: center;
   color: #fff;
   -webkit-transition: 0.25s ease-in-out;
   transition: 0.25s ease-in-out;
@@ -79,86 +79,97 @@ export default {}
   pointer-events: none;
   margin-top: 8px;
 }
+/* button */
 .css-15nidrm {
-  border-radius: 4px;
+  font-size: 20px;
   display: inline-block;
-  /* padding: 0.75rem 1.125rem; */
-  /* font-size: 0.75rem; */
-  line-height: 2;
-  border: solid 1px transparent;
   color: #fff;
-  -webkit-transition: none;
   transition: none;
   position: absolute;
-  left: 16px;
+  right: 65px;
   top: 50%;
-  margin-top: -28px;
+  margin-top: -36px;
   pointer-events: auto;
 }
-button {
-  -webkit-tap-highlight-color: initial;
+.css-11eqmph {
+  border-radius: 4px;
+  display: inline-block;
+  padding: 0.5rem 2.25rem;
+  line-height: 2;
+  border: solid 1px #fff;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.3);
+  -webkit-transition: none;
+  transition: none;
 }
-
-/* title {
-  position: relative;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-} */
 /* main */
-.css-11apsez {
-  height: 100vh;
-}
 .css-11apsez {
   position: relative;
   overflow: hidden;
   width: 100vw;
-  height: calc(100vw * 1.4814);
 }
 /* video */
 .css-1b7y32o {
   position: relative;
   width: 100%;
+  height: auto;
+}
+/* first picture */
+.gatsby-image-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+.gatsby-image-wrapper [data-main-image] {
+  opacity: 0;
+  transform: translateZ(0);
+  transition: opacity 0.25s linear;
+  will-change: opacity;
+}
+.gatsby-image-wrapper img {
+  bottom: 0;
+  height: 100%;
+  left: 0;
+  margin: 0;
+  /* max-width: none; */
+  padding: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  object-fit: cover;
+}
+.css-1ahkxzr {
+  height: 800px;
+  position: relative;
+  background-color: #f7f7f7;
+}
+.css-fjkzxp {
   height: 100%;
 }
-.css-1b7y32o video {
-  position: absolute;
-  top: 15%;
-  left: 50%;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  -webkit-transform: translateX(-50%) translateY(-50%);
-  -moz-transform: translateX(-50%) translateY(-50%);
-  -ms-transform: translateX(-50%) translateY(-50%);
-  transform: translateX(-50%) translateY(-50%);
+
+/* explanation */
+.css-1k7gt20 {
+  margin: 64px auto 0;
+  width: 84vw;
 }
-/* .container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
+.css-11pvt2h {
+  line-height: 1;
   text-align: center;
-} */
-
-/* .title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-} */
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
+  font-size: 1rem;
+  line-height: 2;
+  font-weight: 700;
+}
+.css-1cmp5qk {
+  margin: 16px auto 0;
+  text-align: center;
+  font-size: 1.125rem;
+  line-height: 1.3;
+  font-weight: 700;
+}
+.css-g79a2p {
+  margin: 16px auto 0;
+  font-size: 0.85rem;
+  line-height: 2;
 }
 
 .links {
