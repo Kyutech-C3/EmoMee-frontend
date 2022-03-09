@@ -6,67 +6,26 @@
     >
       <FontAwesomeIcon :icon="['fas', 'plus']" class="w-9 mx-auto my-2" />
     </div>
-    <RoomBaseModal v-if="showModal" class="absolute bottom-24 w-56">
-      <p class="font-bold">リアクション1</p>
-      <ul>
-        <li>
-          <div class="w-full flex flex-wrap">
-            <img
-              src="@/assets/reaction/png/clap.png"
-              class="w-8 mx-1 cursor-pointer scale-95 hover:scale-100"
-            />
-            <img
-              src="@/assets/reaction/png/clap.png"
-              class="w-8 mx-1 cursor-pointer scale-95 hover:scale-100"
-            />
-            <img
-              src="@/assets/reaction/png/clap.png"
-              class="w-8 mx-1 cursor-pointer scale-95 hover:scale-100"
-            />
-            <img
-              src="@/assets/reaction/png/clap.png"
-              class="w-8 mx-1 cursor-pointer scale-95 hover:scale-100"
-            />
-            <img
-              src="@/assets/reaction/png/clap.png"
-              class="w-8 mx-1 cursor-pointer scale-95 hover:scale-100"
-            />
-            <img
-              src="@/assets/reaction/png/clap.png"
-              class="w-8 mx-1 cursor-pointer scale-95 hover:scale-100"
-            />
-          </div>
-        </li>
-      </ul>
-      <p class="font-bold mt-2">リアクション2</p>
-      <ul>
-        <li>
-          <div class="w-full flex flex-wrap">
-            <img
-              src="@/assets/reaction/png/clap.png"
-              class="w-8 mx-1 cursor-pointer scale-95 hover:scale-100"
-            />
-            <img
-              src="@/assets/reaction/png/clap.png"
-              class="w-8 mx-1 cursor-pointer scale-95 hover:scale-100"
-            />
-            <img
-              src="@/assets/reaction/png/clap.png"
-              class="w-8 mx-1 cursor-pointer scale-95 hover:scale-100"
-            />
-            <img
-              src="@/assets/reaction/png/clap.png"
-              class="w-8 mx-1 cursor-pointer scale-95 hover:scale-100"
-            />
-          </div>
-        </li>
-      </ul>
+    <RoomBaseModal v-if="showModal" class="absolute bottom-24 w-48">
+      <div v-for="(reaction, i) in reactionJson.reactions" :key="i">
+        <p class="font-bold">{{ reaction.title }}</p>
+        <div class="w-full flex flex-wrap">
+          <img
+            v-for="(source, j) in reaction.sources"
+            :key="j"
+            :src="getReactionGif(source)"
+            class="w-8 cursor-pointer scale-95 hover:scale-100"
+            @click="sendReaction(source)"
+          />
+        </div>
+      </div>
     </RoomBaseModal>
   </div>
 </template>
 
 <script>
 import ClickOutside from 'vue-click-outside'
+import reactionJson from '@/assets/reaction/reactions.json'
 
 export default {
   directives: {
@@ -75,6 +34,8 @@ export default {
   data() {
     return {
       showModal: false,
+      reactionJson,
+      reactionSources: [],
     }
   },
   methods: {
@@ -82,6 +43,13 @@ export default {
       if (this.showModal) {
         this.showModal = !this.showModal
       }
+    },
+    getReactionGif(reaction) {
+      return require(`@/assets/reaction/gif/${reaction}.gif`)
+    },
+    sendReaction(source) {
+      this.$emit('sendReaction', { reactionName: source, isAnimation: true })
+      this.showModal = !this.showModal
     },
   },
 }

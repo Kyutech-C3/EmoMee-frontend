@@ -284,7 +284,7 @@ export default {
       this.sendWebSocket(message)
     },
     // リアクションの送信
-    sendReaction(reactionName, isAnimation) {
+    sendReaction({ reactionName, isAnimation }) {
       const message = {
         event: 'reaction',
         reaction: reactionName,

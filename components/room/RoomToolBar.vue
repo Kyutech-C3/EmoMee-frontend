@@ -4,9 +4,7 @@
   >
     <RoomStatusButton :is-afk="isAfk" @click="sendAfkStatus()" />
     <div class="flex items-center">
-      <RoomFaceModal
-        @send-emoji-setting="(event) => $emit('sendEmojiSetting')"
-      />
+      <RoomFaceModal @sendEmojiSetting="$emit('sendEmojiSetting')" />
       <RoomBaseButton class="mx-5">
         <div class="flex">
           <img
@@ -16,18 +14,22 @@
             :alt="reaction.name"
             class="w-14 mx-2 p-1.5 rounded-full cursor-pointer scale-95 hover:bg-gray-100 hover:scale-100"
             @click="
-              (event) =>
-                $emit('sendReaction', reaction.name, reaction.isAnimation)
+              $emit('sendReaction', {
+                reactionName: reaction.name,
+                isAnimation: reaction.isAnimation,
+              })
             "
           />
-          <RoomReactionModal />
+          <RoomReactionModal
+            @sendReaction="(event) => $emit('sendReaction', event)"
+          />
         </div>
       </RoomBaseButton>
       <RoomMenuModal />
     </div>
     <RoomBaseButton
       class="cursor-pointer bg-yellow-100 hover:bg-yellow-200"
-      @click="(event) => $emit('leavingRoom')"
+      @click="$emit('leavingRoom')"
     >
       <p class="text-xl">退室</p>
     </RoomBaseButton>
