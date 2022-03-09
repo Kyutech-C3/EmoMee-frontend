@@ -5,7 +5,7 @@
       <p>{{ top }}</p>
       <p>face_detected: {{ faceDetected }}</p>
       <p>is_tiny_model: {{ tinyModel }}</p>
-      <p>inference_interval: {{ inferenceInterval }}ms</p>
+      <p>inference_interval: {{ interval * faceInferenceTimes }}ms</p>
       <p>volume: {{ volume }}</p>
     </div>
     <RoomFaceUsers :users="roomInformation.users" />
@@ -61,13 +61,16 @@ export default {
       userName: '',
       userId: '',
       prevStatus: 'neutral',
+      prevSpeakingStatus: false,
       roomInformation: {
         room_id: '',
         users: [],
       },
       video: null,
       stream: null,
-      inferenceInterval: 500,
+      interval: 100,
+      faceInferenceTimes: 5,
+      faceInferenceCount: 0,
     }
   },
   // watch: {
@@ -168,7 +171,7 @@ export default {
                 if (
                   this.roomInformation.users[index].user_id === json.user_id
                 ) {
-                  this.roomInformation.users[index].isSpeaking =
+                  this.roomInformation.users[index].is_speaking =
                     json.is_speaking
                   break
                 }
@@ -314,7 +317,7 @@ export default {
               this.video.srcObject = this.stream
               this.video.play()
               this.loadAudioAnalyser(this.stream)
-              setInterval(this.analysys, this.inferenceInterval, this.video)
+              setInterval(this.analysys, this.interval, this.video)
             })
         } else {
           navigator.mediaDevices
@@ -323,7 +326,7 @@ export default {
               this.stream = stream
               this.video.srcObject = this.stream
               this.video.play()
-              setInterval(this.analysys, this.inferenceInterval, this.video)
+              setInterval(this.analysys, this.interval, this.video)
             })
         }
       }
@@ -365,7 +368,10 @@ export default {
         faceDetectorOptions = new faceapi.TinyFaceDetectorOptions()
       }
 
-      if (this.isEnabledFaceFeature) {
+      if (
+        this.isEnabledFaceFeature &&
+        this.faceInferenceCount === this.faceInferenceTimes
+      ) {
         const detectionWithExpression = await faceapi
           .detectSingleFace(img, faceDetectorOptions)
           .withFaceExpressions()
@@ -426,10 +432,22 @@ export default {
         this.volume = Math.min(Math.round(average / 10), 9)
 
         if (this.volume > 5) {
-          this.sendSpeakingStatus(true)
+          if (!this.prevSpeakingStatus) {
+            this.sendSpeakingStatus(true)
+          }
+          this.prevSpeakingStatus = true
         } else {
-          this.sendSpeakingStatus(false)
+          if (this.prevSpeakingStatus) {
+            this.sendSpeakingStatus(false)
+          }
+          this.prevSpeakingStatus = false
         }
+      }
+
+      if (this.faceInferenceCount >= this.faceInferenceTimes) {
+        this.faceInferenceCount = 0
+      } else {
+        this.faceInferenceCount++
       }
     },
   },
