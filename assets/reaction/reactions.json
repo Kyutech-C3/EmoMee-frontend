@@ -1,0 +1,75 @@
+{
+  "reactions": [
+    {
+      "title": "人物",
+      "sources": [
+        "backhand_index_pointing_up",
+        "backhand_index_pointing_right",
+        "backhand_index_pointing_down",
+        "backhand_index_pointing_left",
+        "crossed_fingers",
+        "flexed_biceps",
+        "handshake",
+        "waving_hand",
+        "love_you_gesture",
+        "raising_hands",
+        "middle_finger",
+        "thumbs_down",
+        "oncoming_fist",
+        "writing_hand",
+        "eyes",
+        "kiss_mark"
+      ]
+    },
+    {
+      "title": "自然",
+      "sources": ["teddy_bear", "collision", "fire", "snowman", "sparkles"]
+    },
+    {
+      "title": "食べ物",
+      "sources": [
+        "birthday_cake",
+        "bottle_with_popping_cork",
+        "clinking_beer_mugs",
+        "clinking_glasses"
+      ]
+    },
+    {
+      "title": "アクティビティ",
+      "sources": [
+        "clapper_board",
+        "direct_hit",
+        "fireworks",
+        "musical_notes",
+        "person_juggling",
+        "slot_machine"
+      ]
+    },
+    {
+      "title": "オブジェクト",
+      "sources": [
+        "bomb",
+        "camera_with_flash",
+        "pistol",
+        "light_bulb",
+        "money_with_wings",
+        "confetti_ball",
+        "party_popper",
+        "police_car_light"
+      ]
+    },
+    {
+      "title": "記号",
+      "sources": [
+        "broken_heart",
+        "growing_heart",
+        "heart_with_arrow",
+        "check_mark_button",
+        "warning",
+        "hundred_points",
+        "prohibited",
+        "thought_balloon"
+      ]
+    }
+  ]
+}
