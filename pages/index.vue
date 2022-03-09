@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header>
+    <header class="css-g1d4iy e1k2d9zh0">
       <button class="e1k2d9zh3 css-15nidrm">
         <span
           class="ttfont ttfont-hamburger css-9ynm7a e1oc5ub40"
@@ -42,6 +42,14 @@ export default {}
 </script>
 
 <style>
+button {
+  /* position: relative; */
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  /* text-align: center; */
+}
+
 title {
   /* position: relative; */
   margin: 0 auto;
