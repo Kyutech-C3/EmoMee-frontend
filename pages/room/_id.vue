@@ -1,25 +1,61 @@
 <template>
   <div class="relative h-screen overflow-hidden">
-    <div class="absolute -z-10">
-      <p>{{ emotionList }}</p>
-      <p>{{ top }}</p>
-      <p>face_detected: {{ faceDetected }}</p>
-      <p>is_tiny_model: {{ tinyModel }}</p>
-      <p>inference_interval: {{ inferenceInterval }}ms</p>
-      <p>volume: {{ volume }}</p>
-    </div>
-    <RoomFaceUsers :key="key" :users="roomInformation.users" />
+    <RoomDebugModal
+      v-if="showDebugLog"
+      :contents="[
+        { name: 'emotion_list', value: emotionList },
+        { name: 'top_emotion', value: top },
+        { name: 'face_detected', value: faceDetected },
+        { name: 'is_tiny_model', value: tinyModel },
+        {
+          name: 'inference_interval',
+          value: `${interval * faceInferenceTimes}ms`,
+        },
+        { name: 'volume', value: volume },
+      ]"
+    />
+    <RoomFaceUsers
+      :users="roomInformation.users"
+      :reaction-info="reactionInfo"
+    />
     <RoomToolBar
+      :show-debug-log="showDebugLog"
       @sendAfkStatus="sendAfkStatus"
       @sendEmojiSetting="sendEmojiSetting"
       @sendReaction="sendReaction"
       @leavingRoom="leavingRoom"
+      @updateMenuValues="updateMenuValues"
+      @showDebugLog="(event) => (showDebugLog = event)"
     />
   </div>
 </template>
 
 <script>
 import * as faceapi from 'face-api.js'
+
+/*
+  type Users = {
+      user_id: string
+      name: string
+      is_speaking: boolean  // 喋っているかどうか
+      is_afk: boolean  // 離席中かどうか
+      emotion: string  // 表情の種類
+      emoji: {
+        angry: number
+        disgusted: number
+        fearful: number
+        happy: number
+        neutral: number
+        sad: number
+        surprised: number
+      }
+    }
+
+  type RoomInfomation = {
+    room_id: string
+    users: Users[]
+  }
+*/
 
 export default {
   data() {
@@ -31,18 +67,34 @@ export default {
       emotionList: {},
       volume: 0,
       analyser: null,
-      key: 0,
       isEnabledFaceFeature: false,
       isEnabledAudioFeature: false,
       ws: null,
       userName: '',
       userId: '',
       prevStatus: 'neutral',
-      roomInformation: {},
+      prevSpeakingStatus: false,
+      roomInformation: {
+        room_id: '',
+        users: [],
+      },
+      reactionInfo: {
+        user_id: '',
+        reaction: '',
+        is_animation: false,
+      },
+      reactionTimeout: null,
       video: null,
       stream: null,
-      inferenceInterval: 100,
+      interval: 100,
+      faceInferenceTimes: 5,
+      faceInferenceCount: 0,
+      showDebugLog: false,
     }
+  },
+  created() {
+    this.userName = this.$route.query.user_name
+    this.showDebugLog = this.$route.query.debug
   },
   mounted() {
     this.loadModels()
@@ -52,73 +104,230 @@ export default {
       this.startMedia(true, true)
     }
 
-    this.userName = this.$route.query.user_name
     this.ws = new WebSocket(
       `${this.$config.webSocketBaseUrl}${this.$route.params.id}?user_name=${this.userName}`
     )
 
     if (this.ws !== null) {
+      this.ws.onopen = (event) => {
+        // eslint-disable-next-line no-console
+        console.log('🎉 WebSocket is connected')
+        // eslint-disable-next-line no-console
+        console.log(`🔗 Target URL: ${event.target.url}`)
+      }
       this.ws.onerror = (err) => {
         // eslint-disable-next-line no-console
         console.error(err)
       }
       this.ws.onmessage = (event) => {
-        if (this.key >= 10) {
-          this.key = 1
-        }
         const json = JSON.parse(event.data)
-        if (json.event === 'join_new_user') {
-          if (this.userId === '' && json.user.name === this.userName) {
-            this.userId = json.user.user_id
-          } else if (this.userId !== json.user.user_id) {
-            const users = this.roomInformation.users
-            users.push(json.user)
-            Object.assign(this.roomInformation, users)
-            this.key++
-          }
-        }
-        if (json.event === 'room_info') {
-          Object.assign(this.roomInformation, json.room)
-          this.key++
-        }
-        if (json.event === 'changed_user') {
-          if (this.roomInformation)
-            for (const index in this.roomInformation.users) {
-              if (
-                this.roomInformation.users[index].user_id ===
-                json.changed_user.user_id
-              ) {
-                Object.assign(
-                  this.roomInformation.users[index],
-                  json.changed_user
-                )
-                this.key++
-                break
-              }
-            }
-        }
-        if (json.event === 'exit_user') {
-          if (this.roomInformation) {
-            let deleteUserIndex = -1
-            for (const [user, index] of Object.entries(
-              this.roomInformation.users
-            )) {
-              if (user.user_id === json.user.user_id) {
-                deleteUserIndex = index
-                break
-              }
-            }
 
-            if (deleteUserIndex < 0) {
-              this.roomInformation.users.splice(deleteUserIndex, 1)
-              this.key++
+        // eslint-disable-next-line no-console
+        console.log(json)
+        switch (json.event) {
+          /*
+            ルーム入室時
+            {
+              event: 'init_info'
+              user_id: string
+              room: {
+                room_id: string
+                users: [{
+                  user_id: string
+                  name: string
+                  emoji: Emoji
+                  emotion: string
+                  is_afk: boolean
+                  is_speaking: boolean
+                }]
+              }
             }
-          }
+          */
+          case 'init_info':
+            this.userId = json.user_id
+            this.roomInformation = json.room
+            break
+          /*
+            新規ルームメンバー参加時
+            {
+              event: 'join_user'
+              users: {
+                user_id: string
+                name: string
+                emoji: Emoji
+                emotion: string
+                is_afk: boolean
+                is_speaking: boolean
+              }
+            }
+          */
+          case 'join_user':
+            this.roomInformation.users.push(json.user)
+            break
+          // 表情の変化時
+          case 'change_emotion':
+            if (this.roomInformation) {
+              for (const index in this.roomInformation.users) {
+                if (
+                  this.roomInformation.users[index].user_id === json.user_id
+                ) {
+                  this.roomInformation.users[index].emotion = json.emotion
+                  break
+                }
+              }
+            }
+            break
+          // 表情ごとに使用する絵文字の変更時
+          case 'change_setting_emoji':
+            if (this.roomInformation) {
+              for (const index in this.roomInformation.users) {
+                if (
+                  this.roomInformation.users[index].user_id === json.user_id
+                ) {
+                  this.roomInformation.users[index].emoji[json.emotion] =
+                    json.emoji
+                  break
+                }
+              }
+            }
+            break
+          // 音声認識時
+          case 'switch_speaking':
+            if (this.roomInformation) {
+              for (const index in this.roomInformation.users) {
+                if (
+                  this.roomInformation.users[index].user_id === json.user_id
+                ) {
+                  this.roomInformation.users[index].is_speaking =
+                    json.is_speaking
+                  break
+                }
+              }
+            }
+            break
+          // リアクション時
+          case 'reaction':
+            if (this.roomInformation) {
+              const { event, ...reaction } = json
+              this.reactionInfo = reaction
+              clearTimeout(this.reactionTimeout)
+              this.reactionTimeout = setTimeout(() => {
+                this.reactionInfo = {
+                  user_id: '',
+                  reaction: '',
+                  is_animation: false,
+                }
+              }, 4000)
+            }
+            break
+          /*
+            離席時
+            {
+              event: 'switch_afk'
+              is_afk: boolean
+              user_id: string
+            }
+          */
+          case 'switch_afk':
+            if (this.roomInformation) {
+              for (const index in this.roomInformation.users) {
+                if (
+                  this.roomInformation.users[index].user_id === json.user_id
+                ) {
+                  this.roomInformation.users[index].is_afk = json.is_afk
+                  break
+                }
+              }
+            }
+            break
+          /* 
+            他人がルームから退出した時
+            {
+              event: 'exit_user'
+              user: {
+                name: string
+                user_id: string
+              }
+            }
+          */
+          case 'exit_user':
+            if (this.roomInformation) {
+              for (const index in this.roomInformation.users) {
+                if (
+                  this.roomInformation.users[index].user_id ===
+                  json.user.user_id
+                ) {
+                  this.roomInformation.users.splice(index, 1)
+                  break
+                }
+              }
+            }
+            break
         }
       }
     }
   },
   methods: {
+    // 感情の送信
+    sendEmotion(emotion) {
+      const message = {
+        event: 'change_emotion',
+        emotion,
+      }
+      this.sendWebSocket(message)
+    },
+    // 絵文字の設定
+    sendEmojiSetting({ emotion, emoji }) {
+      const message = {
+        event: 'change_setting_emoji',
+        emotion,
+        emoji,
+      }
+      this.sendWebSocket(message)
+    },
+    // 離席状態の送信
+    sendAfkStatus(isAfk) {
+      const message = {
+        event: 'switch_afk',
+        is_afk: isAfk,
+      }
+      this.sendWebSocket(message)
+    },
+    // 発話状態の送信
+    sendSpeakingStatus(isSpeaking) {
+      const message = {
+        event: 'switch_speaking',
+        is_speaking: isSpeaking,
+      }
+      this.sendWebSocket(message)
+    },
+    // リアクションの送信
+    sendReaction({ reactionName, isAnimation }) {
+      const message = {
+        event: 'reaction',
+        reaction: reactionName,
+        is_animation: isAnimation,
+      }
+      this.sendWebSocket(message)
+    },
+    // WebSocketでデータを送信する
+    sendWebSocket(data) {
+      if (this.ws !== null) {
+        this.ws.send(JSON.stringify(data))
+      }
+    },
+    // WebSocketの通信を切断する
+    closeWebSocket() {
+      if (this.ws !== null) {
+        this.ws.close()
+      }
+    },
+    // 退室
+    leavingRoom() {
+      this.closeWebSocket()
+      this.stopMedia()
+      this.$router.push('/')
+    },
     startMedia(isCamera, isMicrophone) {
       this.stopMedia()
       this.isEnabledFaceFeature = isCamera
@@ -135,7 +344,7 @@ export default {
               this.video.srcObject = this.stream
               this.video.play()
               this.loadAudioAnalyser(this.stream)
-              setInterval(this.analysys, this.inferenceInterval, this.video)
+              setInterval(this.analysys, this.interval, this.video)
             })
         } else {
           navigator.mediaDevices
@@ -144,7 +353,7 @@ export default {
               this.stream = stream
               this.video.srcObject = this.stream
               this.video.play()
-              setInterval(this.analysys, this.inferenceInterval, this.video)
+              setInterval(this.analysys, this.interval, this.video)
             })
         }
       }
@@ -186,7 +395,10 @@ export default {
         faceDetectorOptions = new faceapi.TinyFaceDetectorOptions()
       }
 
-      if (this.isEnabledFaceFeature) {
+      if (
+        this.isEnabledFaceFeature &&
+        this.faceInferenceCount === this.faceInferenceTimes
+      ) {
         const detectionWithExpression = await faceapi
           .detectSingleFace(img, faceDetectorOptions)
           .withFaceExpressions()
@@ -247,72 +459,27 @@ export default {
         this.volume = Math.min(Math.round(average / 10), 9)
 
         if (this.volume > 5) {
-          this.sendSpeakingStatus(true)
+          if (!this.prevSpeakingStatus) {
+            this.sendSpeakingStatus(true)
+          }
+          this.prevSpeakingStatus = true
         } else {
-          this.sendSpeakingStatus(false)
+          if (this.prevSpeakingStatus) {
+            this.sendSpeakingStatus(false)
+          }
+          this.prevSpeakingStatus = false
         }
       }
-    },
-    closeWebSocket() {
-      if (this.ws !== null) {
-        this.ws.close()
+
+      if (this.faceInferenceCount >= this.faceInferenceTimes) {
+        this.faceInferenceCount = 0
+      } else {
+        this.faceInferenceCount++
       }
     },
-    // 感情の送信
-    sendEmotion(emotion) {
-      const message = {
-        event: 'change_emotion',
-        emotion,
-      }
-      if (this.ws !== null) {
-        this.ws.send(JSON.stringify(message))
-      }
-    },
-    // 絵文字の設定
-    sendEmojiSetting(emotion, emoji) {
-      const message = {
-        event: 'change_setting_emoji',
-        emotion,
-        emoji,
-      }
-      if (this.ws !== null) {
-        this.ws.send(JSON.stringify(message))
-      }
-    },
-    // 離席状態の送信
-    sendAfkStatus(isAfk) {
-      const message = {
-        event: 'switch_afk',
-        is_afk: isAfk,
-      }
-      if (this.ws !== null) {
-        this.ws.send(JSON.stringify(message))
-      }
-    },
-    // 発話状態の送信
-    sendSpeakingStatus(isSpeaking) {
-      const message = {
-        event: 'switch_speaking',
-        is_speaking: isSpeaking,
-      }
-      if (this.ws !== null) {
-        this.ws.send(JSON.stringify(message))
-      }
-    },
-    // リアクションの送信
-    sendReaction(reactionName) {
-      const message = {
-        event: 'reaction',
-        reaction: reactionName,
-      }
-      if (this.ws !== null) {
-        this.ws.send(JSON.stringify(message))
-      }
-    },
-    // 退室
-    leavingRoom() {
-      this.stopMedia()
-      this.$router.push('/')
+    updateMenuValues(isFaceDetectorEnabled, isAudioDetectorEnabled) {
+      console.log([isFaceDetectorEnabled, isAudioDetectorEnabled])
+      this.startMedia(isFaceDetectorEnabled, isAudioDetectorEnabled)
     },
   },
 }
