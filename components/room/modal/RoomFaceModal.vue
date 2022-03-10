@@ -10,7 +10,7 @@
     <div v-if="showModal">
       <RoomBaseModal
         class="absolute bottom-24 w-fit z-20"
-        :class="translateClass"
+        :class="faceBarTranslate"
       >
         <div class="flex items-center">
           <img
@@ -19,9 +19,7 @@
             :src="getFaceGif(faceList.faces[index].paths[value])"
             :alt="`${index}: ${key} face`"
             class="w-10 h-10 mx-3 cursor-pointer scale-95 hover:scale-100"
-            @click="
-              changeBarTranslate(index, key, `translate-x-[${index * -4}rem]`)
-            "
+            @click="changeBarTranslate(index, key)"
           />
         </div>
       </RoomBaseModal>
@@ -55,7 +53,6 @@ export default {
   data() {
     return {
       showModal: false,
-      translateClass: 'translate-x-0',
       selectedEmotion: '',
       selectedEmotionIndex: 0,
       faceList,
@@ -70,16 +67,35 @@ export default {
       },
     }
   },
+  computed: {
+    faceBarTranslate() {
+      switch (this.selectedEmotionIndex) {
+        case 1:
+          return '-translate-x-16'
+        case 2:
+          return '-translate-x-32'
+        case 3:
+          return '-translate-x-48'
+        case 4:
+          return '-translate-x-64'
+        case 5:
+          return '-translate-x-80'
+        case 6:
+          return '-translate-x-96'
+        default:
+          return 'translate-x-0'
+      }
+    },
+  },
   methods: {
     onOutsideClick() {
       if (this.showModal) {
         this.showModal = !this.showModal
       }
     },
-    changeBarTranslate(index, emotion, tailwindClass) {
+    changeBarTranslate(index, emotion) {
       this.selectedEmotionIndex = index
       this.selectedEmotion = emotion
-      this.translateClass = tailwindClass
     },
     getFaceGif(path) {
       return require(`@/assets/face/${path}`)
