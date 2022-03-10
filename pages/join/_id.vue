@@ -34,6 +34,15 @@ export default {
     getOwnerInfo() {
       return this.$store.state.roomId
     },
+    getName() {
+      return this.$store.state.name
+    },
+    getFaseSwitch() {
+      return this.$store.state.faceSwitch
+    },
+    getVoiceSwitch() {
+      return this.$store.state.voiceSwitch
+    },
   },
   async mounted() {
     this.getInfo()
@@ -68,7 +77,13 @@ export default {
       }
     },
     getRoomUrl() {
-      this.$router.push({ path: '../room/' + this.roomId })
+      const name = this.getName
+      const faceSwitch = this.getFaseSwitch
+      const voiceSwitch = this.getVoiceSwitch
+      this.$router.push({
+        path: '../room/' + this.roomId,
+        query: { user_name: name, em: faceSwitch, voice: voiceSwitch },
+      })
     },
   },
 }

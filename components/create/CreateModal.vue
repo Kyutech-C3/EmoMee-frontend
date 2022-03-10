@@ -3,15 +3,22 @@
     class="rounded-2xl bg-orange-50 shadow-xl w-192 h-80 z-10 p-9 text-center"
   >
     <p class="my-8 text-3xl font-bold">ルーム設定</p>
-    <div class="my-10 text-2xl">
+    <div class="mt-20 text-2xl">
       <span class="font-semibold">有効期限</span>
-      <input
-        class="mx-5 bg-orange-50 text-xl w-80 text-center text-gray-500"
-        value="12時"
-      />
-      <button @click="copyId()">
-        <FontAwesomeIcon :icon="['fas', 'copy']" class="w-5" />
-      </button>
+      <label>
+        <select
+          class="px-2 bg-inherit border-b-2 border-slate-700 outline-none"
+          @input="setRoomLimit"
+        >
+          <option
+            v-for="(option, index) in options"
+            :key="index"
+            :value="option.value"
+          >
+            {{ option.name }}
+          </option>
+        </select>
+      </label>
     </div>
   </div>
 </template>
@@ -19,6 +26,34 @@
 <script>
 export default {
   props: {},
-  methods: {},
+  data() {
+    return {
+      options: [
+        {
+          name: '12時間',
+          value: 12,
+        },
+        {
+          name: '24時間',
+          value: 24,
+        },
+        {
+          name: '36時間',
+          value: 36,
+        },
+        {
+          name: '48時間',
+          value: 48,
+        },
+      ],
+      toggleStatus: true,
+    }
+  },
+  methods: {
+    setRoomLimit($event) {
+      this.$store.commit('updateRoomLimit', $event.target.value)
+      console.log('event')
+    },
+  },
 }
 </script>
