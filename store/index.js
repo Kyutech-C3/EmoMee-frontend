@@ -1,9 +1,9 @@
 export const state = () => ({
-  isOwner: '',
+  roomId: '',
 })
 
 export const mutations = {
-  setOwnerInfo(state, isOwner) {
-    state.isOwner = isOwner
+  setOwnerInfo(state, isRoomId) {
+    state.roomId = isRoomId
   },
 }
