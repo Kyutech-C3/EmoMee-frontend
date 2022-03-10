@@ -7,15 +7,15 @@
     >
       <FontAwesomeIcon :icon="['fas', 'ellipsis-vertical']" class="w-2" />
     </RoomBaseButton>
-    <RoomBaseModal v-if="showModal" class="absolute bottom-20 w-56">
+    <RoomBaseModal v-if="showModal" class="absolute bottom-20 w-64">
       <ul>
         <li class="flex justify-between items-center my-3">
           <p>表情検知</p>
           <BaseToggleButton
-            :parentValue="isFaceDetectorEnabled"
-            @updateValue="
-              (v) => {
-                isFaceDetectorEnabled = v
+            :current-value="isFaceDetectorEnabled"
+            @changeValue="
+              (event) => {
+                isFaceDetectorEnabled = event
                 updateMenuValues()
               }
             "
@@ -24,20 +24,27 @@
         <li class="flex justify-between items-center my-3">
           <p>音声検知</p>
           <BaseToggleButton
-            :parentValue="isAudioDetectorEnabled"
-            @updateValue="
-              (v) => {
-                isAudioDetectorEnabled = v
+            :current-value="isAudioDetectorEnabled"
+            @changeValue="
+              (event) => {
+                isAudioDetectorEnabled = event
                 updateMenuValues()
               }
             "
           />
         </li>
         <li class="flex justify-between items-center my-3">
-          <p>リンクのコピー</p>
+          <p>デバックログの表示</p>
+          <BaseToggleButton
+            :current-value="showDebugLog"
+            @changeValue="(event) => $emit('showDebugLog', event)"
+          />
+        </li>
+        <li class="flex justify-between items-center my-3">
+          <p>招待リンクのコピー</p>
           <div
             class="px-5 py-1 hover:bg-gray-100 cursor-pointer"
-            @click="copyLink(linkUrl)"
+            @click="copyLink()"
           >
             <FontAwesomeIcon :icon="['fas', 'copy']" class="w-5" />
           </div>
@@ -60,6 +67,11 @@ export default {
       required: false,
       default: '',
     },
+    showDebugLog: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   data() {
     return {
@@ -69,9 +81,15 @@ export default {
     }
   },
   methods: {
-    async copyLink(linkUrl) {
+    async copyLink() {
       try {
-        await navigator.clipboard.writeText(linkUrl)
+        const url = `join/${this.$route.params.id}`
+        const { protocol, hostname, host } = window.location
+        if (hostname !== 'localhost') {
+          await navigator.clipboard.writeText(`https://emom.ee/${url}`)
+        } else {
+          await navigator.clipboard.writeText(`${protocol}//${host}/${url}`)
+        }
         alert('リンクをコピーしました')
       } catch (err) {
         alert('コピーに失敗しました')

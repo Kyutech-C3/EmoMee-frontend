@@ -27,7 +27,11 @@
           />
         </div>
       </RoomBaseButton>
-      <RoomMenuModal @updateMenuValues="updateMenuValues" />
+      <RoomMenuModal
+        :show-debug-log="showDebugLog"
+        @updateMenuValues="updateMenuValues"
+        @showDebugLog="(event) => $emit('showDebugLog', event)"
+      />
     </div>
     <RoomBaseButton
       class="cursor-pointer bg-yellow-100 hover:bg-yellow-200"
@@ -40,6 +44,13 @@
 
 <script>
 export default {
+  props: {
+    showDebugLog: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+  },
   data() {
     return {
       reactions: [
