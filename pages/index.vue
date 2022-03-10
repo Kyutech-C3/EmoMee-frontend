@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div class="font-family">
     <header class="css-g1d4iy">
       <h1>
         <img :src="require('@/assets/top/EmoMee_logo.png')" width="200px" />
       </h1>
       <button
-        class="css-15nidrm css-11eqmph hover:bg-white hover:bg-opacity-40"
+        class="css-15nidrm css-11eqmph hover:bg-black hover:bg-opacity-40"
       >
         <span aria-label="create">
           <nuxt-link to="/create"><h1>create room</h1></nuxt-link>
@@ -16,7 +16,7 @@
       <div data-content-style="dark" class="css-11apsez">
         <div class="css-1b7y32o">
           <video
-            class="e19mb7dd0 css-1vd2dbe e1yswsx0"
+            class="css-1vd2dbe"
             playsinline
             autoplay
             loop
@@ -36,7 +36,7 @@
       </section>
       <section id="about EmoMee">
         <header class="css-1k7gt20">
-          <h2 class="css-11pvt2h">--EmoMeeとは--</h2>
+          <h2 class="css-11pvt2h">--<b>EmoMeeとは</b>--</h2>
           <h3 class="css-1cmp5qk">
             表情を検知し、感情(Emotion)を絵文字(Emoji)で共有できるMeeting用Webアプリケーション
           </h3>
@@ -46,35 +46,89 @@
         </header>
         <article class="css-1sf2xcr">
           <div class="css-1ezjlpa">
-            <h2 class="css-11pvt2h">表情伝達</h2>
-            <h3 class="css-0cmp5qk">POPなアイコンで表情を伝えよう</h3>
+            <h2 class="css-11pvt2h"><b>表情伝達</b></h2>
+            <h3 class="css-0cmp5qk"><b>POPなアイコンで表情を伝えよう</b></h3>
             <p class="css-g79a2p">
               カメラから表情の検出が行われ、その表情に応じたアイコンがあなたの表情を伝えてくれます。それぞれの表情をアイコンをカスタマイズすることで、あなたらしい表情を使えることができます。
               感情が伝えられることで、<b>コミュニケーションをより円滑に楽しく</b>行うことができます。
             </p>
           </div>
+          <div class="css-18ypf3t">
+            <div class="css-zxsb69">
+              <!-- <a
+                class="css-9r1sq9"
+                role="button"
+                aria-label="replay"
+                aria-hidden="true"
+              ></a> -->
+              <video
+                class="css-1vd2dbe"
+                src="@/assets/top/top_movie.mp4"
+                type="video/mp4"
+                playsinline
+                autoplay
+                muted
+              ></video>
+            </div>
+          </div>
         </article>
-        <article class="css-2sf2xcr">
+        <article class="css-1sf2xcr">
+          <div class="css-18ypf4t">
+            <div class="css-zxsb69">
+              <!-- <a
+                class="css-9r1sq9"
+                role="button"
+                aria-label="replay"
+                aria-hidden="true"
+              ></a> -->
+              <video
+                class="css-1vd2dbe"
+                src="@/assets/top/top_movie.mp4"
+                type="video/mp4"
+                playsinline
+                autoplay
+                muted
+              ></video>
+            </div>
+          </div>
           <div class="css-2ezjlpa">
-            <h2 class="css-11pvt2h">手軽</h2>
-            <h3 class="css-2cmp5qk">面倒な手順とさよなら</h3>
+            <h2 class="css-11pvt2h"><b>手軽</b></h2>
+            <h3 class="css-2cmp5qk"><b>面倒な手順は不要</b></h3>
             <p class="css-g79a2p">
               EmoMeeはブラウザベースのアプリケーションのため、ダウンロードやインストール、ユーザ認証なしで利用することができます。
               普段のオンラインコミュニケーションからオンライン発表など、様々なオンラインコミュニケーション場面で簡単に使うことができます。
             </p>
           </div>
         </article>
-        <article class="css-1sf3xcr">
+        <article class="css-1sf2xcr">
           <div class="css-1ezjlpa">
-            <h2 class="css-11pvt2h">連携</h2>
+            <h2 class="css-11pvt2h"><b>連携</b></h2>
             <h3 class="css-0cmp5qk">
-              いつものオンラインコミュニケーションツールと共に
+              <b>いつものオンラインコミュニケーションツールと共に</b>
             </h3>
             <p class="css-g79a2p">
               日頃のオンラインコミュにきエーションにemotionを追加することができます。
               連帯用のDiscode
               Botが用意されているので、Botを自身のサーバに追加することで、DiscodeでのコミュニケーションにEmotionをプラスすることができます。
             </p>
+          </div>
+          <div class="css-18ypf3t">
+            <div class="css-zxsb69">
+              <!-- <a
+                class="css-9r1sq9"
+                role="button"
+                aria-label="replay"
+                aria-hidden="true"
+              ></a> -->
+              <video
+                class="css-1vd2dbe"
+                src="@/assets/top/top_movie.mp4"
+                type="video/mp4"
+                playsinline
+                autoplay
+                muted
+              ></video>
+            </div>
           </div>
         </article>
       </section>
@@ -87,6 +141,11 @@ export default {}
 </script>
 
 <style>
+.font-family {
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
+    'Hiragino Sans', '游ゴシック Medium', YuGothic, YuGothicM, 'メイリオ',
+    Meiryo, sans-serif;
+}
 /* header */
 .css-g1d4iy {
   z-index: 100;
@@ -111,7 +170,7 @@ export default {}
 .css-15nidrm {
   font-size: 20px;
   display: inline-block;
-  color: #fff;
+  color: inherit;
   transition: none;
   position: absolute;
   right: 65px;
@@ -124,9 +183,9 @@ export default {}
   display: inline-block;
   padding: 0.5rem 2.25rem;
   line-height: 2;
-  border: solid 1px #fff;
-  color: #fff;
-  background: rgba(255, 255, 255, 0.3);
+  border: solid 1px rgb(63, 68, 87);
+  color: rgb(255, 255, 255);
+  background: rgba(63, 68, 87, 0.3);
   -webkit-transition: none;
   transition: none;
 }
@@ -136,11 +195,16 @@ export default {}
   overflow: hidden;
   width: 100vw;
 }
-/* video */
+/* EmoMee-image video */
 .css-1b7y32o {
   position: relative;
   width: 100%;
   height: auto;
+}
+.css-1vd2dbe {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 /* first picture */
 .gatsby-image-wrapper {
@@ -177,23 +241,23 @@ export default {}
 
 /* explanation -EmoMee- */
 .css-1k7gt20 {
-  margin: 64px auto 0;
-  width: 84vw;
+  margin: 224px auto 0;
+  margin-bottom: 100px auto 0;
+  /* width: 84vw; */
 }
 .css-11pvt2h {
   line-height: 1;
   text-align: center;
-  font-size: 1rem;
+  font-size: 0.85rem;
   line-height: 2;
-  font-weight: 700;
 }
 .css-1cmp5qk {
   margin: 16px auto 0;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.85rem;
   line-height: 1.3;
   font-weight: 700;
-  width: 510px;
+  width: 650px;
 }
 .css-g79a2p {
   margin: 16px auto 0;
@@ -203,55 +267,90 @@ export default {}
 }
 /* explanation -point1、3- */
 .css-1sf2xcr {
-  /* point1 */
-  margin-top: 145px;
-  width: calc(100% -45px);
-  max-width: 65%;
-}
-.css-1sf3xcr {
-  /* point3 */
-  margin-top: 145px;
-  margin-bottom: 145px;
-  width: calc(100% -45px);
-  max-width: 65%;
+  margin: 224px auto 0;
+  margin-bottom: 180px;
+  margin-left: auto 0;
+  margin-right: auto 0;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  width: 84vw;
 }
 .css-1ezjlpa {
-  -webkit-flex: 1;
-  -ms-flex: 1;
   flex: 1;
   margin-top: 0;
-  margin-right: 64px;
+  margin-right: 24px;
   margin-left: 64px;
 }
 .css-0cmp5qk {
   margin: 10px auto 0;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.85rem;
   line-height: 1.3;
-  font-weight: 700;
-  /* width: 510px; */
 }
 /* explanation -point2- */
-.css-2sf2xcr {
-  margin-top: 145px;
-  width: calc(100% -45px);
-  max-width: 65%;
-}
 .css-2ezjlpa {
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
   margin-top: 0;
   margin-right: 64px;
-  margin-left: 64px;
+  margin-left: 24px;
 }
 .css-2cmp5qk {
   margin: 10px auto 0;
   text-align: center;
   font-size: 1.5rem;
   line-height: 1.3;
-  font-weight: 700;
-  /* width: 510px; */
+}
+/* video */
+.css-18ypf3t {
+  flex: 1;
+  margin: 0 auto;
+  margin-top: auto;
+  /* justify-content: center; */
+  /* margin-left: 20px; */
+}
+.css-18ypf4t {
+  flex: 1;
+  margin: 0 auto;
+  margin-top: auto;
+  /* justify-content: center; */
+  margin-right: 0%;
+  /* right: 20px; */
+}
+.css-18ypf3t > div {
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 13px 20px 67px 0 rgb(0 0 0 / 40%);
+}
+.css-18ypf4t > div {
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 13px 20px 67px 0 rgb(0 0 0 / 40%);
+}
+/* .css-9r1sq9 {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background: url(@/assets/top/replay.png) center center / 90px 90px no-repeat;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  animation-play-state: running;
+  z-index: 1;
+  cursor: pointer;
+  opacity: 1;
+} */
+
+.css-zxsb69 {
+  position: relative;
+  max-width: 680px;
+  min-width: 420px;
 }
 
 .links {
