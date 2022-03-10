@@ -36,19 +36,47 @@
       </section>
       <section id="about EmoMee">
         <header class="css-1k7gt20">
-          <h2 class="css-11pvt2h">EmoMeeとは</h2>
+          <h2 class="css-11pvt2h">--EmoMeeとは--</h2>
           <h3 class="css-1cmp5qk">
-            表情を検知し、感情(Emotion)を絵文字(Emoji)で共有できる<b
-              >Meeting用Webアプリケーション
-            </b>
+            表情を検知し、感情(Emotion)を絵文字(Emoji)で共有できるMeeting用Webアプリケーション
           </h3>
           <p class="css-g79a2p">
             EmoMeeは、「ビデオ通話はちょっと、、」といった【カメラに顔を映したくない】【周りはどんな感情で聞いているのかわからない】などの声にお応えしました！ボイスチャットでの会話が増えた今、声だけでは伝わりにくいニュアンスをカメラをオンをせず、手軽に相手の表情を見ながら会話したいときに「EmoMee」‼
           </p>
         </header>
-        <article></article>
-        <article></article>
-        <article></article>
+        <article class="css-1sf2xcr">
+          <div class="css-1ezjlpa">
+            <h2 class="css-11pvt2h">表情伝達</h2>
+            <h3 class="css-0cmp5qk">POPなアイコンで表情を伝えよう</h3>
+            <p class="css-g79a2p">
+              カメラから表情の検出が行われ、その表情に応じたアイコンがあなたの表情を伝えてくれます。それぞれの表情をアイコンをカスタマイズすることで、あなたらしい表情を使えることができます。
+              感情が伝えられることで、<b>コミュニケーションをより円滑に楽しく</b>行うことができます。
+            </p>
+          </div>
+        </article>
+        <article class="css-2sf2xcr">
+          <div class="css-2ezjlpa">
+            <h2 class="css-11pvt2h">手軽</h2>
+            <h3 class="css-2cmp5qk">面倒な手順とさよなら</h3>
+            <p class="css-g79a2p">
+              EmoMeeはブラウザベースのアプリケーションのため、ダウンロードやインストール、ユーザ認証なしで利用することができます。
+              普段のオンラインコミュニケーションからオンライン発表など、様々なオンラインコミュニケーション場面で簡単に使うことができます。
+            </p>
+          </div>
+        </article>
+        <article class="css-1sf3xcr">
+          <div class="css-1ezjlpa">
+            <h2 class="css-11pvt2h">連携</h2>
+            <h3 class="css-0cmp5qk">
+              いつものオンラインコミュニケーションツールと共に
+            </h3>
+            <p class="css-g79a2p">
+              日頃のオンラインコミュにきエーションにemotionを追加することができます。
+              連帯用のDiscode
+              Botが用意されているので、Botを自身のサーバに追加することで、DiscodeでのコミュニケーションにEmotionをプラスすることができます。
+            </p>
+          </div>
+        </article>
       </section>
     </main>
   </div>
@@ -147,7 +175,7 @@ export default {}
   height: 100%;
 }
 
-/* explanation */
+/* explanation -EmoMee- */
 .css-1k7gt20 {
   margin: 64px auto 0;
   width: 84vw;
@@ -162,14 +190,68 @@ export default {}
 .css-1cmp5qk {
   margin: 16px auto 0;
   text-align: center;
-  font-size: 1.125rem;
+  font-size: 1.5rem;
   line-height: 1.3;
   font-weight: 700;
+  width: 510px;
 }
 .css-g79a2p {
   margin: 16px auto 0;
-  font-size: 0.85rem;
+  font-size: 1rem;
   line-height: 2;
+  width: 420px;
+}
+/* explanation -point1、3- */
+.css-1sf2xcr {
+  /* point1 */
+  margin-top: 145px;
+  width: calc(100% -45px);
+  max-width: 65%;
+}
+.css-1sf3xcr {
+  /* point3 */
+  margin-top: 145px;
+  margin-bottom: 145px;
+  width: calc(100% -45px);
+  max-width: 65%;
+}
+.css-1ezjlpa {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  margin-top: 0;
+  margin-right: 64px;
+  margin-left: 64px;
+}
+.css-0cmp5qk {
+  margin: 10px auto 0;
+  text-align: center;
+  font-size: 1.5rem;
+  line-height: 1.3;
+  font-weight: 700;
+  /* width: 510px; */
+}
+/* explanation -point2- */
+.css-2sf2xcr {
+  margin-top: 145px;
+  width: calc(100% -45px);
+  max-width: 65%;
+}
+.css-2ezjlpa {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  margin-top: 0;
+  margin-right: 64px;
+  margin-left: 64px;
+}
+.css-2cmp5qk {
+  margin: 10px auto 0;
+  text-align: center;
+  font-size: 1.5rem;
+  line-height: 1.3;
+  font-weight: 700;
+  /* width: 510px; */
 }
 
 .links {
