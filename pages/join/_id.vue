@@ -26,7 +26,7 @@ export default {
       hasError: false,
       responseCopy: {},
       isOwner: false,
-      url: 'https://emom.ee/join?id=',
+      url: 'https://emom.ee/join/',
       getRoomInfoUrl: 'https://api.emom.ee/api/v1/room/',
     }
   },
