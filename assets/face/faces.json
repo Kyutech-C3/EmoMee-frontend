@@ -1,0 +1,68 @@
+{
+  "faces": [
+    {
+      "title": "neutral",
+      "paths": [
+        "pigeon/neutral.gif",
+        "emoji/neutral/neutral_face.png",
+        "emoji/neutral/face_without_mouth.png",
+        "emoji/neutral/expressionless_face.png"
+      ]
+    },
+    {
+      "title": "happy",
+      "paths": [
+        "pigeon/happy.gif",
+        "emoji/happy/happy1.gif",
+        "emoji/happy/happy2.gif",
+        "emoji/happy/happy3.gif",
+        "emoji/happy/happy4.gif",
+        "emoji/happy/happy5.gif"
+      ]
+    },
+    {
+      "title": "sad",
+      "paths": [
+        "pigeon/sad.gif",
+        "emoji/sad/pleading_face.gif",
+        "emoji/sad/crying_face.gif",
+        "emoji/sad/weary_face.gif",
+        "emoji/sad/loudly_crying_face.gif"
+      ]
+    },
+    {
+      "title": "surprised",
+      "paths": [
+        "pigeon/surprised.gif",
+        "emoji/surprised/hushed_face.gif",
+        "emoji/surprised/flushed_face.gif"
+      ]
+    },
+    {
+      "title": "disgusted",
+      "paths": [
+        "pigeon/disgusted.gif",
+        "emoji/disgusted/unamused_face.gif",
+        "emoji/disgusted/face_vomiting.gif"
+      ]
+    },
+    {
+      "title": "angry",
+      "paths": [
+        "pigeon/angry.gif",
+        "emoji/angry/pouting_face.gif",
+        "emoji/angry/face_with_steam_from_nose.gif",
+        "emoji/angry/face_with_symbols_on_mouth.gif",
+        "emoji/angry/exploding_head.gif"
+      ]
+    },
+    {
+      "title": "fearful",
+      "paths": [
+        "pigeon/fearful.gif",
+        "emoji/fearful/face_screaming_in_fear.gif",
+        "emoji/fearful/cold_face.gif"
+      ]
+    }
+  ]
+}

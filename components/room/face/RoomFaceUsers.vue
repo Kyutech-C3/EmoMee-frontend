@@ -14,7 +14,7 @@
       :name="user.name"
       :face-image-src="
         user.is_afk
-          ? require('@/assets/pigeon/riseki_sleep.git.png')
+          ? require('@/assets/face/pigeon/riseki_sleep.git.png')
           : getFaceGif(user.user_id, user.emotion, user.emoji)
       "
       :is-speaking="user.is_speaking"
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import emojiList from '@/assets/emoji-list.json'
+import faceJson from '@/assets/face/faces.json'
 
 export default {
   props: {
@@ -49,7 +49,7 @@ export default {
   },
   data() {
     return {
-      emojis: emojiList,
+      faceJson,
     }
   },
   methods: {
@@ -58,7 +58,10 @@ export default {
         const type = this.reactionInfo.is_animation ? 'gif' : 'png'
         return require(`@/assets/reaction/${type}/${this.reactionInfo.reaction}.${type}`)
       } else {
-        return require(`@/assets/${this.emojis[emotion][emoji[emotion]]}`)
+        const matchFace = this.faceJson.faces.find(
+          (value) => value.title === emotion
+        )
+        return require(`@/assets/face/${matchFace.paths[emoji[emotion]]}`)
       }
     },
   },

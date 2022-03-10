@@ -14,69 +14,39 @@
       >
         <div class="flex items-center">
           <img
-            src="@/assets/face/neutral/neutral_face.png"
-            alt="NeutralFace"
+            v-for="(value, key, index) in myFaceSettings"
+            :key="index"
+            :src="getFaceGif(faceList.faces[index].paths[value])"
+            :alt="`${index}: ${key} face`"
             class="w-10 h-10 mx-3 cursor-pointer scale-95 hover:scale-100"
-            @click="changeBarTranslate('neutral', 'translate-x-0')"
-          />
-          <img
-            src="@/assets/face/happy/happy1.gif"
-            alt="SmileFace"
-            class="w-12 mx-2 cursor-pointer scale-95 hover:scale-100"
-            @click="changeBarTranslate('happy', 'translate-x-[-4rem]')"
-          />
-          <img
-            src="@/assets/face/angry/pouting_face.gif"
-            alt="AngryFace"
-            class="w-12 mx-2 cursor-pointer scale-95 hover:scale-100"
-            @click="changeBarTranslate('angry', 'translate-x-[-8rem]')"
-          />
-          <img
-            src="@/assets/face/disgusted/unamused_face.gif"
-            alt="DisgustedFace"
-            class="w-12 mx-2 cursor-pointer scale-95 hover:scale-100"
-            @click="changeBarTranslate('disgusted', 'translate-x-[-12rem]')"
-          />
-          <img
-            src="@/assets/face/fearful/face_screaming_in_fear.gif"
-            alt="FearfulFace"
-            class="w-12 mx-2 cursor-pointer scale-95 hover:scale-100"
-            @click="changeBarTranslate('fearful', 'translate-x-[-16rem]')"
-          />
-          <img
-            src="@/assets/face/surprised/hushed_face.gif"
-            alt="SurpriseFace"
-            class="w-12 mx-2 cursor-pointer scale-95 hover:scale-100"
-            @click="changeBarTranslate('surprise', 'translate-x-[-20rem]')"
+            @click="
+              changeBarTranslate(index, key, `translate-x-[${index * -4}rem]`)
+            "
           />
         </div>
       </RoomBaseModal>
-      <RoomBaseModal class="absolute bottom-40 w-fit z-10">
-        <img
-          src="@/assets/face/happy/happy1.gif"
-          alt="SmileFace"
-          class="w-12 m-2 cursor-pointer scale-95 hover:scale-100"
-          @click="(event) => $emit('sendEmojiSetting', selectedEmotion, 0)"
-        />
-        <img
-          src="@/assets/face/happy/happy1.gif"
-          alt="SmileFace"
-          class="w-12 m-2 cursor-pointer scale-95 hover:scale-100"
-          @click="(event) => $emit('sendEmojiSetting', selectedEmotion, 1)"
-        />
-        <img
-          src="@/assets/face/happy/happy1.gif"
-          alt="SmileFace"
-          class="w-12 m-2 cursor-pointer scale-95 hover:scale-100"
-          @click="(event) => $emit('sendEmojiSetting', selectedEmotion, 2)"
-        />
-      </RoomBaseModal>
+      <div v-for="(faces, i) in faceList.faces" :key="i">
+        <RoomBaseModal
+          v-if="selectedEmotionIndex === i"
+          class="absolute bottom-40 w-fit z-10 flex flex-col-reverse"
+        >
+          <img
+            v-for="(path, j) in faces.paths"
+            :key="j"
+            :src="getFaceGif(path)"
+            alt="SmileFace"
+            class="w-12 m-2 cursor-pointer scale-95 hover:scale-100"
+            @click="sendEmojiSetting(faces.title, j)"
+          />
+        </RoomBaseModal>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import ClickOutside from 'vue-click-outside'
+import faceList from '@/assets/face/faces.json'
 
 export default {
   directives: {
@@ -87,6 +57,17 @@ export default {
       showModal: false,
       translateClass: 'translate-x-0',
       selectedEmotion: '',
+      selectedEmotionIndex: 0,
+      faceList,
+      myFaceSettings: {
+        neutral: 0,
+        happy: 0,
+        sad: 0,
+        surprised: 0,
+        disgusted: 0,
+        angry: 0,
+        fearful: 0,
+      },
     }
   },
   methods: {
@@ -95,9 +76,17 @@ export default {
         this.showModal = !this.showModal
       }
     },
-    changeBarTranslate(emotion, tailwindClass) {
+    changeBarTranslate(index, emotion, tailwindClass) {
+      this.selectedEmotionIndex = index
       this.selectedEmotion = emotion
       this.translateClass = tailwindClass
+    },
+    getFaceGif(path) {
+      return require(`@/assets/face/${path}`)
+    },
+    sendEmojiSetting(emotion, index) {
+      this.myFaceSettings[emotion] = index
+      this.$emit('sendEmojiSetting', { emotion, emoji: index })
     },
   },
 }

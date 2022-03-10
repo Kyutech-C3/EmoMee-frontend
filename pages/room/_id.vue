@@ -174,6 +174,20 @@ export default {
               }
             }
             break
+          // 表情ごとに使用する絵文字の変更時
+          case 'change_setting_emoji':
+            if (this.roomInformation) {
+              for (const index in this.roomInformation.users) {
+                if (
+                  this.roomInformation.users[index].user_id === json.user_id
+                ) {
+                  this.roomInformation.users[index].emoji[json.emotion] =
+                    json.emoji
+                  break
+                }
+              }
+            }
+            break
           // 音声認識時
           case 'switch_speaking':
             if (this.roomInformation) {
@@ -260,7 +274,7 @@ export default {
       this.sendWebSocket(message)
     },
     // 絵文字の設定
-    sendEmojiSetting(emotion, emoji) {
+    sendEmojiSetting({ emotion, emoji }) {
       const message = {
         event: 'change_setting_emoji',
         emotion,
