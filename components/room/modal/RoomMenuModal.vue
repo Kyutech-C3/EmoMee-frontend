@@ -7,15 +7,15 @@
     >
       <FontAwesomeIcon :icon="['fas', 'ellipsis-vertical']" class="w-2" />
     </RoomBaseButton>
-    <RoomBaseModal v-if="showModal" class="absolute bottom-20 w-60">
+    <RoomBaseModal v-if="showModal" class="absolute bottom-20 w-64">
       <ul>
         <li class="flex justify-between items-center my-3">
           <p>表情検知</p>
           <BaseToggleButton
-            :parentValue="isFaceDetectorEnabled"
-            @updateValue="
-              (v) => {
-                isFaceDetectorEnabled = v
+            :current-value="isFaceDetectorEnabled"
+            @changeValue="
+              (event) => {
+                isFaceDetectorEnabled = event
                 updateMenuValues()
               }
             "
@@ -24,13 +24,20 @@
         <li class="flex justify-between items-center my-3">
           <p>音声検知</p>
           <BaseToggleButton
-            :parentValue="isAudioDetectorEnabled"
-            @updateValue="
-              (v) => {
-                isAudioDetectorEnabled = v
+            :current-value="isAudioDetectorEnabled"
+            @changeValue="
+              (event) => {
+                isAudioDetectorEnabled = event
                 updateMenuValues()
               }
             "
+          />
+        </li>
+        <li class="flex justify-between items-center my-3">
+          <p>デバックログの表示</p>
+          <BaseToggleButton
+            :current-value="showDebugLog"
+            @changeValue="(event) => $emit('showDebugLog', event)"
           />
         </li>
         <li class="flex justify-between items-center my-3">
@@ -60,6 +67,11 @@ export default {
       required: false,
       default: '',
     },
+    showDebugLog: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
   },
   data() {
     return {
@@ -70,7 +82,6 @@ export default {
   },
   methods: {
     async copyLink() {
-      // console.log(window.location.host)
       try {
         const url = `join/${this.$route.params.id}`
         const { protocol, hostname, host } = window.location
@@ -81,7 +92,6 @@ export default {
         }
         alert('リンクをコピーしました')
       } catch (err) {
-        console.error(err)
         alert('コピーに失敗しました')
       }
     },

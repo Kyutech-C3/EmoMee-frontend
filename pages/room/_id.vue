@@ -1,23 +1,31 @@
 <template>
   <div class="relative h-screen overflow-hidden">
-    <div class="absolute -z-10">
-      <p>{{ emotionList }}</p>
-      <p>{{ top }}</p>
-      <p>face_detected: {{ faceDetected }}</p>
-      <p>is_tiny_model: {{ tinyModel }}</p>
-      <p>inference_interval: {{ interval * faceInferenceTimes }}ms</p>
-      <p>volume: {{ volume }}</p>
-    </div>
+    <RoomDebugModal
+      v-if="showDebugLog"
+      :contents="[
+        { name: 'emotion_list', value: emotionList },
+        { name: 'top_emotion', value: top },
+        { name: 'face_detected', value: faceDetected },
+        { name: 'is_tiny_model', value: tinyModel },
+        {
+          name: 'inference_interval',
+          value: `${interval * faceInferenceTimes}ms`,
+        },
+        { name: 'volume', value: volume },
+      ]"
+    />
     <RoomFaceUsers
       :users="roomInformation.users"
       :reaction-info="reactionInfo"
     />
     <RoomToolBar
+      :show-debug-log="showDebugLog"
       @sendAfkStatus="sendAfkStatus"
       @sendEmojiSetting="sendEmojiSetting"
       @sendReaction="sendReaction"
       @leavingRoom="leavingRoom"
       @updateMenuValues="updateMenuValues"
+      @showDebugLog="(event) => (showDebugLog = event)"
     />
   </div>
 </template>
@@ -81,17 +89,13 @@ export default {
       interval: 100,
       faceInferenceTimes: 5,
       faceInferenceCount: 0,
+      showDebugLog: false,
     }
   },
-  // watch: {
-  //   roomInformation: {
-  //     handler(val, oldVal) {
-  //       console.log('val', val)
-  //       console.log('oldVal', oldVal)
-  //     },
-  //     deep: true,
-  //   },
-  // },
+  created() {
+    this.userName = this.$route.query.user_name
+    this.showDebugLog = this.$route.query.debug
+  },
   mounted() {
     this.loadModels()
     this.video = document.createElement('video')
@@ -100,7 +104,6 @@ export default {
       this.startMedia(true, true)
     }
 
-    this.userName = this.$route.query.user_name
     this.ws = new WebSocket(
       `${this.$config.webSocketBaseUrl}${this.$route.params.id}?user_name=${this.userName}`
     )
