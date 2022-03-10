@@ -78,18 +78,16 @@ export default {
         room_id: '',
         users: [],
       },
-      reactionInfo: {
-        user_id: '',
-        reaction: '',
-        is_animation: false,
-      },
+      reactionInfo: [],
       reactionTimeout: null,
+      reactionQueue: [],
       video: null,
       stream: null,
       interval: 100,
       faceInferenceTimes: 5,
       faceInferenceCount: 0,
       showDebugLog: false,
+      reactionWaitSeconds: 4,
     }
   },
   created() {
@@ -121,48 +119,20 @@ export default {
       }
       this.ws.onmessage = (event) => {
         const json = JSON.parse(event.data)
-
-        // eslint-disable-next-line no-console
         console.log(json)
+
         switch (json.event) {
-          /*
-            ルーム入室時
-            {
-              event: 'init_info'
-              user_id: string
-              room: {
-                room_id: string
-                users: [{
-                  user_id: string
-                  name: string
-                  emoji: Emoji
-                  emotion: string
-                  is_afk: boolean
-                  is_speaking: boolean
-                }]
-              }
-            }
-          */
+          // ルーム入室時
           case 'init_info':
             this.userId = json.user_id
             this.roomInformation = json.room
+            this.reactionQueue = Array(this.roomInformation.users.length)
+            this.reactionQueue.fill(0)
             break
-          /*
-            新規ルームメンバー参加時
-            {
-              event: 'join_user'
-              users: {
-                user_id: string
-                name: string
-                emoji: Emoji
-                emotion: string
-                is_afk: boolean
-                is_speaking: boolean
-              }
-            }
-          */
+          // 新規ルームメンバー参加時
           case 'join_user':
             this.roomInformation.users.push(json.user)
+            this.reactionQueue.push(0)
             break
           // 表情の変化時
           case 'change_emotion':
@@ -209,25 +179,49 @@ export default {
           case 'reaction':
             if (this.roomInformation) {
               const { event, ...reaction } = json
-              this.reactionInfo = reaction
-              clearTimeout(this.reactionTimeout)
-              this.reactionTimeout = setTimeout(() => {
-                this.reactionInfo = {
-                  user_id: '',
-                  reaction: '',
-                  is_animation: false,
+
+              const queueIndex = this.roomInformation.users.findIndex(
+                (user) => {
+                  return user.user_id === json.user_id
                 }
-              }, 4000)
+              )
+              const reactionIndex = this.reactionInfo.findIndex((reaction) => {
+                return reaction.user_id === json.user_id
+              })
+
+              if (queueIndex !== -1) {
+                this.reactionQueue[queueIndex]++
+              }
+              if (reactionIndex !== -1) {
+                this.reactionInfo.splice(reactionIndex, 1)
+              }
+              this.reactionInfo.push(reaction)
             }
             break
-          /*
-            離席時
-            {
-              event: 'switch_afk'
-              is_afk: boolean
-              user_id: string
+          // リアクション終了時
+          case 'finish_reaction':
+            if (this.roomInformation) {
+              const queueIndex = this.roomInformation.users.findIndex(
+                (user) => {
+                  return user.user_id === json.user_id
+                }
+              )
+              const reactionIndex = this.reactionInfo.findIndex((reaction) => {
+                return reaction.user_id === json.user_id
+              })
+
+              if (queueIndex !== -1) {
+                this.reactionQueue[queueIndex]--
+              }
+              if (
+                reactionIndex !== -1 &&
+                this.reactionQueue[queueIndex] === 0
+              ) {
+                this.reactionInfo.splice(reactionIndex, 1)
+              }
             }
-          */
+            break
+          // 離席時
           case 'switch_afk':
             if (this.roomInformation) {
               for (const index in this.roomInformation.users) {
@@ -240,16 +234,7 @@ export default {
               }
             }
             break
-          /* 
-            他人がルームから退出した時
-            {
-              event: 'exit_user'
-              user: {
-                name: string
-                user_id: string
-              }
-            }
-          */
+          // 他人がルームから退出した時
           case 'exit_user':
             if (this.roomInformation) {
               for (const index in this.roomInformation.users) {
@@ -307,6 +292,7 @@ export default {
         event: 'reaction',
         reaction: reactionName,
         is_animation: isAnimation,
+        wait_seconds: this.reactionWaitSeconds,
       }
       this.sendWebSocket(message)
     },
