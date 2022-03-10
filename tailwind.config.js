@@ -14,7 +14,38 @@ module.exports = {
         18: '4.5rem',
         100: '25rem',
       },
+      boxShadow: {
+        'inner-xl': 'inset 0 0 7px 0 rgba(0, 0, 0, 0.3)',
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.text-shadow-sm': {
+          textShadow: '0px 1px 1px darkgrey',
+        },
+        '.text-shadow': {
+          textShadow: '0px 2px 3px darkgrey',
+        },
+        '.text-shadow-md': {
+          textShadow: '0px 3px 3px darkgrey',
+        },
+        '.text-shadow-lg': {
+          textShadow: '0px 5px 3px darkgrey',
+        },
+        '.text-shadow-xl': {
+          textShadow: '0px 7px 3px darkgrey',
+        },
+        '.text-shadow-2xl': {
+          textShadow: '0px 10px 3px darkgrey',
+        },
+        '.text-shadow-none': {
+          textShadow: 'none',
+        },
+      }
+
+      addUtilities(newUtilities)
+    },
+  ],
 }

@@ -12,7 +12,11 @@
       v-for="user in users"
       :key="user.user_id"
       :name="user.name"
-      :face-image-src="getFaceGif(user.emotion, user.emoji)"
+      :face-image-src="
+        user.is_afk
+          ? require('@/assets/face/pigeon/riseki_sleep.git.png')
+          : getFaceGif(user.user_id, user.emotion, user.emoji)
+      "
       :is-speaking="user.is_speaking"
       class="m-2"
     />
@@ -20,42 +24,47 @@
 </template>
 
 <script>
-import emojiList from '@/assets/emoji-list.json'
+import faceJson from '@/assets/face/faces.json'
 
 export default {
   props: {
     users: {
       type: Array,
       required: true,
-      default() {
-        return [
-          {
-            user_id: '001',
-            name: 'テスト',
-            emotion: 'neutral',
-            emoji: {
-              neutral: 0,
-              happy: 0,
-              sad: 0,
-              angry: 0,
-              fearful: 0,
-              disgusted: 0,
-              surprised: 0,
-            },
-          },
-        ]
-      },
+      default: () => [],
+    },
+    reactionInfo: {
+      type: Array,
+      required: true,
+      default: () => [
+        {
+          user_id: '',
+          reaction: '',
+          is_animation: false,
+        },
+      ],
     },
   },
   data() {
     return {
-      emojis: emojiList,
+      faceJson,
     }
   },
   methods: {
-    getFaceGif(emotion, emoji) {
-      const path = this.emojis[emotion][emoji[emotion]]
-      return require('@/assets/' + path)
+    getFaceGif(id, emotion, emoji) {
+      if (this.reactionInfo.length !== 0) {
+        const index = this.reactionInfo.findIndex((reaction) => {
+          return reaction.user_id === id
+        })
+        if (index !== -1 && this.reactionInfo[index].user_id === id) {
+          const type = this.reactionInfo[index].is_animation ? 'gif' : 'png'
+          return require(`@/assets/reaction/${type}/${this.reactionInfo[index].reaction}.${type}`)
+        }
+      }
+      const matchFace = this.faceJson.faces.find(
+        (value) => value.title === emotion
+      )
+      return require(`@/assets/face/${matchFace.paths[emoji[emotion]]}`)
     },
   },
 }
