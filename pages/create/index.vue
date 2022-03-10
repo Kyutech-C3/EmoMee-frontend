@@ -29,6 +29,11 @@ export default {
       responseCopy: {},
     }
   },
+  computed: {
+    getRoomLimitInfo() {
+      return this.$store.state.roomLimit
+    },
+  },
   methods: {
     sleep(ms) {
       return new Promise((resolve) => setTimeout(resolve, ms))
@@ -36,12 +41,12 @@ export default {
     async createRoom() {
       try {
         // API叩く
+        this.timeLimit = this.getRoomLimitInfo
+        console.log(this.getRoomLimitInfo)
         console.log('test')
-        const response = await axios.post(
-          'https://api.emom.ee/api/v1/room',
-          null,
-          { limit: this.timeLimit }
-        )
+        const response = await axios.post('https://api.emom.ee/api/v1/room', {
+          limit: this.timeLimit,
+        })
         console.log(response)
         // データ確認
         this.roomId = response.data.room_id
