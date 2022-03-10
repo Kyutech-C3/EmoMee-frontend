@@ -4,7 +4,9 @@
   >
     <RoomStatusButton :is-afk="isAfk" @click="sendAfkStatus()" />
     <div class="flex items-center">
-      <RoomFaceModal @sendEmojiSetting="$emit('sendEmojiSetting')" />
+      <RoomFaceModal
+        @sendEmojiSetting="(event) => $emit('sendEmojiSetting', event)"
+      />
       <RoomBaseButton class="mx-5">
         <div class="flex">
           <img
