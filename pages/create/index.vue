@@ -55,7 +55,7 @@ export default {
         // ストアに保存
         this.$store.commit('setOwnerInfo', this.roomId)
         console.log(this.$store.roomId)
-        this.$router.push({ path: 'join/' + this.roomId })
+        this.$router.push({ path: '../join/' + this.roomId })
       } catch (error) {
         this.hasError = true
         await this.sleep(2000)
