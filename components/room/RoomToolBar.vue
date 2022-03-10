@@ -35,7 +35,7 @@
     </div>
     <RoomBaseButton
       class="cursor-pointer bg-yellow-100 hover:bg-yellow-200"
-      @click="$emit('leavingRoom')"
+      @click="$router.push('/')"
     >
       <p class="text-xl">退室</p>
     </RoomBaseButton>

@@ -23,7 +23,6 @@
       @sendAfkStatus="sendAfkStatus"
       @sendEmojiSetting="sendEmojiSetting"
       @sendReaction="sendReaction"
-      @leavingRoom="leavingRoom"
       @updateMenuValues="updateMenuValues"
       @showDebugLog="(event) => (showDebugLog = event)"
     />
@@ -252,6 +251,10 @@ export default {
       }
     }
   },
+  beforeDestroy() {
+    this.closeWebSocket()
+    this.stopMedia()
+  },
   methods: {
     // 感情の送信
     sendEmotion(emotion) {
@@ -307,12 +310,6 @@ export default {
       if (this.ws !== null) {
         this.ws.close()
       }
-    },
-    // 退室
-    leavingRoom() {
-      this.closeWebSocket()
-      this.stopMedia()
-      this.$router.push('/')
     },
     startMedia(isCamera, isMicrophone) {
       this.stopMedia()
