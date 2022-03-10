@@ -95,8 +95,8 @@ export default {
   data() {
     return {
       name: '',
-      faceSwitch: false,
-      voiceSwitch: false,
+      faceSwitch: true,
+      voiceSwitch: true,
     }
   },
   methods: {

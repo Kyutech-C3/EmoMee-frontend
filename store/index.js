@@ -1,8 +1,8 @@
 export const state = () => ({
   roomId: '',
   name: '',
-  faceSwitch: false,
-  voiceSwitch: false,
+  faceSwitch: true,
+  voiceSwitch: true,
   roomLimit: 0,
 })
 
