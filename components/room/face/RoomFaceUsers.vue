@@ -31,20 +31,18 @@ export default {
     users: {
       type: Array,
       required: true,
-      default() {
-        return []
-      },
+      default: () => [],
     },
     reactionInfo: {
-      type: Object,
+      type: Array,
       required: true,
-      default() {
-        return {
+      default: () => [
+        {
           user_id: '',
           reaction: '',
           is_animation: false,
-        }
-      },
+        },
+      ],
     },
   },
   data() {
@@ -54,15 +52,19 @@ export default {
   },
   methods: {
     getFaceGif(id, emotion, emoji) {
-      if (this.reactionInfo.user_id === id) {
-        const type = this.reactionInfo.is_animation ? 'gif' : 'png'
-        return require(`@/assets/reaction/${type}/${this.reactionInfo.reaction}.${type}`)
-      } else {
-        const matchFace = this.faceJson.faces.find(
-          (value) => value.title === emotion
-        )
-        return require(`@/assets/face/${matchFace.paths[emoji[emotion]]}`)
+      if (this.reactionInfo.length !== 0) {
+        const index = this.reactionInfo.findIndex((reaction) => {
+          return reaction.user_id === id
+        })
+        if (index !== -1 && this.reactionInfo[index].user_id === id) {
+          const type = this.reactionInfo[index].is_animation ? 'gif' : 'png'
+          return require(`@/assets/reaction/${type}/${this.reactionInfo[index].reaction}.${type}`)
+        }
       }
+      const matchFace = this.faceJson.faces.find(
+        (value) => value.title === emotion
+      )
+      return require(`@/assets/face/${matchFace.paths[emoji[emotion]]}`)
     },
   },
 }
