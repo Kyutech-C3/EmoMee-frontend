@@ -7,7 +7,7 @@
     >
       <FontAwesomeIcon :icon="['fas', 'ellipsis-vertical']" class="w-2" />
     </RoomBaseButton>
-    <RoomBaseModal v-if="showModal" class="absolute bottom-20 w-56">
+    <RoomBaseModal v-if="showModal" class="absolute bottom-20 w-60">
       <ul>
         <li class="flex justify-between items-center my-3">
           <p>表情検知</p>
@@ -34,10 +34,10 @@
           />
         </li>
         <li class="flex justify-between items-center my-3">
-          <p>リンクのコピー</p>
+          <p>招待リンクのコピー</p>
           <div
             class="px-5 py-1 hover:bg-gray-100 cursor-pointer"
-            @click="copyLink(linkUrl)"
+            @click="copyLink()"
           >
             <FontAwesomeIcon :icon="['fas', 'copy']" class="w-5" />
           </div>
@@ -69,11 +69,19 @@ export default {
     }
   },
   methods: {
-    async copyLink(linkUrl) {
+    async copyLink() {
+      // console.log(window.location.host)
       try {
-        await navigator.clipboard.writeText(linkUrl)
+        const url = `join/${this.$route.params.id}`
+        const { protocol, hostname, host } = window.location
+        if (hostname !== 'localhost') {
+          await navigator.clipboard.writeText(`https://emom.ee/${url}`)
+        } else {
+          await navigator.clipboard.writeText(`${protocol}//${host}/${url}`)
+        }
         alert('リンクをコピーしました')
       } catch (err) {
+        console.error(err)
         alert('コピーに失敗しました')
       }
     },
