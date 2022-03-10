@@ -57,6 +57,10 @@ import * as faceapi from 'face-api.js'
 */
 
 export default {
+  beforeRouteLeave(to, from, next) {
+    this.closeWebSocket()
+    next()
+  },
   data() {
     return {
       tinyModel: false,
