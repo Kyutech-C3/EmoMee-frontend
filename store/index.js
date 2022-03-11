@@ -6,6 +6,12 @@ export const state = () => ({
   roomLimit: 0,
 })
 
+export const getters = {
+  getName(state) {
+    return state.name
+  },
+}
+
 export const mutations = {
   setOwnerInfo(state, isRoomId) {
     state.roomId = isRoomId

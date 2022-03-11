@@ -90,7 +90,11 @@ export default {
     }
   },
   created() {
-    this.userName = this.$route.query.user_name
+    if (this.$route.query.user_name !== undefined) {
+      this.userName = this.$route.query.user_name
+    } else {
+      this.userName = this.$store.getters.getName
+    }
     this.showDebugLog = this.$route.query.debug
   },
   mounted() {

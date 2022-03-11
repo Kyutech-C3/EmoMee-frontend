@@ -77,13 +77,7 @@ export default {
       }
     },
     getRoomUrl() {
-      const name = this.getName
-      const faceSwitch = this.getFaseSwitch
-      const voiceSwitch = this.getVoiceSwitch
-      this.$router.push({
-        path: '../room/' + this.roomId,
-        query: { user_name: name, em: faceSwitch, voice: voiceSwitch },
-      })
+      this.$router.push(`/room/${this.roomId}`)
     },
   },
 }
