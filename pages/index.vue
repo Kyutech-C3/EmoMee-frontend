@@ -2,7 +2,7 @@
   <div class="font-family">
     <header class="css-g1d4iy">
       <h1>
-        <img :src="require('@/assets/top/EmoMee_logo.png')" width="200px" />
+        <img :src="require('@/assets/top/EmoMee_logo.png')" width="30%%" />
       </h1>
       <button
         class="css-15nidrm css-11eqmph hover:bg-black hover:bg-opacity-40"
@@ -27,25 +27,27 @@
         </div>
       </div>
       <section class="css-1ahkxzr">
-        <div data-gatsby-image-wrapper class="gatsby-image-wrapper css-fjkzxp">
-          <div aria-hidden="true" style="padding-top: 62.5%"></div>
-          <picture>
+        <div data-gatsby-image-wrapper class="css-fjkzxp">
+          <div aria-hidden="true"></div>
+          <picture class="gatsby-image-wrapper">
             <img :src="require('@/assets/top/PCwindow_image.png')" />
           </picture>
         </div>
       </section>
       <section id="about EmoMee">
-        <header class="css-1k7gt20 slide">
-          <h2 class="css-11pvt2h">--<b>EmoMeeとは</b>--</h2>
-          <h3 class="css-1cmp5qk">
-            表情を検知し、感情(Emotion)を絵文字(Emoji)で共有できるMeeting用Webアプリケーション
-          </h3>
-          <p class="css-g79a2p">
-            EmoMeeは、「ビデオ通話はちょっと、、」といった【カメラに顔を映したくない】【周りはどんな感情で聞いているのかわからない】などの声にお応えしました！ボイスチャットでの会話が増えた今、声だけでは伝わりにくいニュアンスをカメラをオンをせず、手軽に相手の表情を見ながら会話したいときに「EmoMee」‼
-          </p>
+        <header class="css-1k7gt20">
+          <div :class="visible0 ? 'slide02' : 'opacity-0'">
+            <h2 class="css-11pvt2h">--<b>EmoMeeとは</b>--</h2>
+            <h3 class="css-1cmp5qk">
+              表情を検知し、感情(Emotion)を絵文字(Emoji)で共有できるMeeting用Webアプリケーション
+            </h3>
+            <p class="css-g79a2p">
+              EmoMeeは、「ビデオ通話はちょっと、、」といった【カメラに顔を映したくない】【周りはどんな感情で聞いているのかわからない】などの声にお応えしました！ボイスチャットでの会話が増えた今、声だけでは伝わりにくいニュアンスをカメラをオンをせず、手軽に相手の表情を見ながら会話したいときに「EmoMee」‼
+            </p>
+          </div>
         </header>
         <article class="css-1sf2xcr">
-          <div class="css-1ezjlpa slide">
+          <div class="css-1ezjlpa" :class="visible1 ? 'slide13' : 'opacity-0'">
             <h2 class="css-11pvt2h"><b>表情伝達</b></h2>
             <h3 class="css-0cmp5qk"><b>POPなアイコンで表情を伝えよう</b></h3>
             <p class="css-g79a2p">
@@ -62,7 +64,7 @@
                 aria-hidden="true"
               ></a> -->
               <video
-                class="css-1vd2dbe"
+                class="css-1vd2db0"
                 src="@/assets/top/top_movie.mp4"
                 type="video/mp4"
                 playsinline
@@ -82,7 +84,7 @@
                 aria-hidden="true"
               ></a> -->
               <video
-                class="css-1vd2dbe"
+                class="css-1vd2db0"
                 src="@/assets/top/top_movie.mp4"
                 type="video/mp4"
                 playsinline
@@ -91,7 +93,7 @@
               ></video>
             </div>
           </div>
-          <div class="css-2ezjlpa slide">
+          <div class="css-2ezjlpa" :class="visible2 ? 'slide02' : 'opacity-0'">
             <h2 class="css-11pvt2h"><b>手軽</b></h2>
             <h3 class="css-2cmp5qk"><b>面倒な手順は不要</b></h3>
             <p class="css-g79a2p">
@@ -101,7 +103,7 @@
           </div>
         </article>
         <article class="css-1sf2xcr">
-          <div class="css-1ezjlpa slide">
+          <div class="css-1ezjlpa" :class="visible3 ? 'slide13' : 'opacity-0'">
             <h2 class="css-11pvt2h"><b>連携</b></h2>
             <h3 class="css-0cmp5qk">
               <b>いつものオンラインコミュニケーションツールと共に</b>
@@ -121,7 +123,7 @@
                 aria-hidden="true"
               ></a> -->
               <video
-                class="css-1vd2dbe"
+                class="css-1vd2db0"
                 src="@/assets/top/top_movie.mp4"
                 type="video/mp4"
                 playsinline
@@ -137,7 +139,48 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      visible0: false,
+      visible1: false,
+      visible2: false,
+      visible3: false,
+    }
+  },
+  mounted() {
+    window.addEventListener('scroll', this.handleScroll)
+  },
+  methods: {
+    handleScroll() {
+      console.log(window.scrollY)
+      const contentHeight = 555
+      if (!this.visible0) {
+        this.visible0 = window.scrollY > window.innerHeight + contentHeight / 2
+      } else if (window.scrollY <= window.innerHeight + contentHeight / 2) {
+        this.visible0 = !this.visible0
+      }
+
+      if (!this.visible1) {
+        this.visible1 = window.scrollY > window.innerHeight + contentHeight * 2
+      } else if (window.scrollY <= window.innerHeight + contentHeight / 2) {
+        this.visible1 = !this.visible1
+      }
+
+      if (!this.visible2) {
+        this.visible2 = window.scrollY > window.innerHeight + contentHeight * 3
+      } else if (window.scrollY <= window.innerHeight + contentHeight / 2) {
+        this.visible2 = !this.visible2
+      }
+
+      if (!this.visible3) {
+        this.visible3 = window.scrollY > window.innerHeight + contentHeight * 4
+      } else if (window.scrollY < window.innerHeight + contentHeight / 2) {
+        this.visible3 = !this.visible3
+      }
+    },
+  },
+}
 </script>
 
 <style>
@@ -175,7 +218,7 @@ export default {}
   position: absolute;
   right: 65px;
   top: 50%;
-  margin-top: -36px;
+  margin-top: -20px;
   pointer-events: auto;
 }
 .css-11eqmph {
@@ -193,18 +236,20 @@ export default {}
 .css-11apsez {
   position: relative;
   overflow: hidden;
-  width: 100vw;
+  width: 100%;
 }
 /* EmoMee-image video */
 .css-1b7y32o {
   position: relative;
   width: 100%;
-  height: auto;
+  height: 100%;
 }
 .css-1vd2dbe {
   display: block;
+  justify-items: center;
+  align-items: center;
   width: 100%;
-  height: 100%;
+  /* height: 100vh; */
 }
 /* first picture */
 .gatsby-image-wrapper {
@@ -218,8 +263,11 @@ export default {}
   will-change: opacity;
 }
 .gatsby-image-wrapper img {
+  align-items: center;
+  justify-items: center;
   bottom: 0;
-  height: 100%;
+  width: 100%;
+  height: 100vh;
   left: 0;
   margin: 0;
   /* max-width: none; */
@@ -227,61 +275,89 @@ export default {}
   position: absolute;
   right: 0;
   top: 0;
-  width: 100%;
   object-fit: cover;
 }
 .css-1ahkxzr {
-  height: 800px;
+  width: 100%;
+  height: 100vh;
+  justify-items: center;
+  align-items: center;
   position: relative;
   background-color: #f7f7f7;
 }
-.css-fjkzxp {
+/* .css-fjkzxp {
   height: 100%;
-}
+} */
 
 /* explanation -EmoMee- */
-.slide {
+.slide02 {
   /* overflow: hidden; */
-  animation: slideIn 1s 1;
+  animation-delay: 1s;
+  animation: slideIn02 2s 1;
 }
-@keyframes slideIn {
-  from {
+@keyframes slideIn02 {
+  /* from {
     transform: translateX(180px);
     opacity: 0;
   }
   to {
     transform: translateX(0);
+  } */
+  0% {
+    transform: translateX(180px);
+    opacity: 0;
   }
-  40%,
   100% {
+    transform: translateX(0);
     opacity: 1;
   }
 }
-
+.slide13 {
+  /* overflow: hidden; */
+  animation-delay: 1s;
+  animation: slideIn13 2s 1;
+}
+@keyframes slideIn13 {
+  /* from {
+    transform: translateX(180px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+  } */
+  0% {
+    transform: translateX(-180px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
 .css-1k7gt20 {
   margin: 224px auto 0;
   margin-bottom: 100px auto 0;
-  /* width: 84vw; */
+  width: 100%;
 }
 .css-11pvt2h {
   line-height: 1;
   text-align: center;
-  font-size: 0.85rem;
+  font-size: 100%;
   line-height: 2;
 }
 .css-1cmp5qk {
   margin: 16px auto 0;
   text-align: center;
-  font-size: 1.85rem;
+  font-size: 180%;
   line-height: 1.3;
   font-weight: 700;
-  width: 650px;
+  max-width: 650px;
 }
 .css-g79a2p {
   margin: 16px auto 0;
-  font-size: 1rem;
+  font-size: 100%;
   line-height: 2;
-  width: 420px;
+  max-width: 420px;
 }
 /* explanation -point1、3- */
 .css-1sf2xcr {
@@ -292,7 +368,7 @@ export default {}
   align-items: center;
   display: flex;
   flex-direction: row;
-  width: 84vw;
+  width: 100%;
 }
 .css-1ezjlpa {
   flex: 1;
@@ -303,8 +379,9 @@ export default {}
 .css-0cmp5qk {
   margin: 10px auto 0;
   text-align: center;
-  font-size: 1.85rem;
+  font-size: 180%;
   line-height: 1.3;
+  max-width: 520px;
 }
 /* explanation -point2- */
 .css-2ezjlpa {
@@ -318,22 +395,33 @@ export default {}
 .css-2cmp5qk {
   margin: 10px auto 0;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 180%;
   line-height: 1.3;
 }
 /* video */
+.css-1vd2db0 {
+  display: block;
+  justify-items: center;
+  align-items: center;
+  width: 100%;
+  /* height: 100vh; */
+}
 .css-18ypf3t {
   flex: 1;
   margin: 0 auto;
   margin-top: auto;
-  /* justify-content: center; */
+  margin-right: 5%;
+  /* width: 80%; */
+  justify-content: center;
   /* margin-left: 20px; */
 }
 .css-18ypf4t {
   flex: 1;
   margin: 0 auto;
   margin-top: auto;
-  /* justify-content: center; */
+  margin-left: 5%;
+  /* width: 80%; */
+  justify-content: center;
   margin-right: 0%;
   /* right: 20px; */
 }
@@ -347,31 +435,10 @@ export default {}
   border-radius: 10px;
   box-shadow: 13px 20px 67px 0 rgb(0 0 0 / 40%);
 }
-/* .css-9r1sq9 {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 100%;
-  height: 100%;
-  background: url(@/assets/top/replay.png) center center / 90px 90px no-repeat;
-  display: flex;
-  -webkit-box-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  align-items: center;
-  animation-play-state: running;
-  z-index: 1;
-  cursor: pointer;
-  opacity: 1;
-} */
 
 .css-zxsb69 {
   position: relative;
   max-width: 680px;
-  min-width: 420px;
-}
-
-.links {
-  padding-top: 15px;
+  min-width: 240px;
 }
 </style>
