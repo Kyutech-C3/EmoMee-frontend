@@ -90,6 +90,12 @@ export default {
     }
   },
   created() {
+    if (this.$store.getters.getName === '') {
+      this.$nuxt.error({
+        message: 'Invalid URL',
+      })
+    }
+
     const { name, debug } = this.$route.query
     if (name !== undefined) {
       this.userName = name
@@ -99,15 +105,6 @@ export default {
     this.showDebugLog = debug
   },
   mounted() {
-    this.loadModels()
-    this.video = document.createElement('video')
-    this.video.muted = true
-
-    const { analysys } = this.$route.query
-    if (analysys === 'true' || analysys === undefined) {
-      this.startMedia(true, true)
-    }
-
     const webSocketBaseUrl = this.$config.webSocketBaseUrl
     const discordUserId = this.$store.getters.getDiscordUserId
     if (discordUserId !== '') {
@@ -126,10 +123,20 @@ export default {
         console.log('🎉 WebSocket is connected')
         // eslint-disable-next-line no-console
         console.log(`🔗 Target URL: ${event.target.url}`)
+        this.loadModels()
+        this.video = document.createElement('video')
+        this.video.muted = true
+
+        const { analysys } = this.$route.query
+        if (analysys === 'true' || analysys === undefined) {
+          this.startMedia(true, true)
+        }
       }
       this.ws.onerror = (err) => {
         // eslint-disable-next-line no-console
         console.error(err)
+        this.closeWebSocket()
+        this.stopMedia()
         this.$nuxt.error({
           message: 'WebSocket connection failed',
         })
