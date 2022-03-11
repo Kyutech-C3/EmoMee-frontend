@@ -5,7 +5,7 @@
     <img src="../../assets/top/EmoMee_logo.png" class="w-1/4 mb-10" />
     <JoinModal :roomid="roomId" :isowner="isOwner" :url="url" />
     <button
-      class="m-12 px-18 py-7 text-3xl shadow-inner-xl bg-orange-50 rounded-2xl font-semibold text-shadow-sm"
+      class="m-8 px-18 py-7 text-3xl shadow-inner-xl bg-orange-50 rounded-2xl font-semibold text-shadow-sm"
       @click="getRoomUrl()"
     >
       参加
