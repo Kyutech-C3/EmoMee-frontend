@@ -1,140 +1,134 @@
 <template>
-  <div class="font-family">
-    <header class="css-g1d4iy">
-      <h1>
-        <img :src="require('@/assets/top/EmoMee_logo.png')" width="30%%" />
-      </h1>
-      <button
-        class="css-15nidrm css-11eqmph hover:bg-black hover:bg-opacity-40"
-      >
-        <span aria-label="create">
-          <nuxt-link to="/create"><h1>create room</h1></nuxt-link>
-        </span>
-      </button>
-    </header>
-    <main>
-      <div data-content-style="dark" class="css-11apsez">
-        <div class="css-1b7y32o">
-          <video
-            class="css-1vd2dbe"
-            playsinline
-            autoplay
-            loop
-            src="@/assets/top/top_movie.mp4"
-            type="video/mp4"
-            muted
-          ></video>
-        </div>
+  <div>
+    <div class="h-screen overflow-hidden">
+      <video
+        class="w-screen"
+        playsinline
+        autoplay
+        loop
+        src="@/assets/top/top_movie.mp4"
+        type="video/mp4"
+        muted
+      />
+      <div class="w-100 absolute top-1/2 left-1/2">
+        <img
+          src="@/assets/top/EmoMee_logo.png"
+          alt="logo"
+          class="-translate-x-1/2 -translate-y-1/2"
+        />
       </div>
-      <section class="css-1ahkxzr">
-        <div data-gatsby-image-wrapper class="css-fjkzxp">
-          <div aria-hidden="true"></div>
-          <picture class="gatsby-image-wrapper">
-            <img :src="require('@/assets/top/PCwindow_image.png')" />
-          </picture>
-        </div>
-      </section>
-      <section id="about EmoMee">
-        <header class="css-1k7gt20">
-          <div :class="visible0 ? 'slide02' : 'opacity-0'">
-            <h2 class="css-11pvt2h">--<b>EmoMeeとは</b>--</h2>
-            <h3 class="css-1cmp5qk">
-              表情を検知し、感情(Emotion)を絵文字(Emoji)で共有できるMeeting用Webアプリケーション
-            </h3>
-            <p class="css-g79a2p">
-              EmoMeeは、「ビデオ通話はちょっと、、」といった【カメラに顔を映したくない】【周りはどんな感情で聞いているのかわからない】などの声にお応えしました！ボイスチャットでの会話が増えた今、声だけでは伝わりにくいニュアンスをカメラをオンをせず、手軽に相手の表情を見ながら会話したいときに「EmoMee」‼
-            </p>
-          </div>
-        </header>
-        <article class="css-1sf2xcr">
-          <div class="css-1ezjlpa" :class="visible1 ? 'slide13' : 'opacity-0'">
-            <h2 class="css-11pvt2h"><b>表情伝達</b></h2>
-            <h3 class="css-0cmp5qk"><b>POPなアイコンで表情を伝えよう</b></h3>
-            <p class="css-g79a2p">
-              カメラから表情の検出が行われ、その表情に応じたアイコンがあなたの表情を伝えてくれます。それぞれの表情をアイコンをカスタマイズすることで、あなたらしい表情を使えることができます。
-              感情が伝えられることで、<b>コミュニケーションをより円滑に楽しく</b>行うことができます。
-            </p>
-          </div>
-          <div class="css-18ypf3t">
-            <div class="css-zxsb69">
-              <!-- <a
-                class="css-9r1sq9"
-                role="button"
-                aria-label="replay"
-                aria-hidden="true"
-              ></a> -->
-              <video
-                class="css-1vd2db0"
-                src="@/assets/top/top_movie.mp4"
-                type="video/mp4"
-                playsinline
-                autoplay
-                muted
-              ></video>
-            </div>
-          </div>
-        </article>
-        <article class="css-1sf2xcr">
-          <div class="css-18ypf4t">
-            <div class="css-zxsb69">
-              <!-- <a
-                class="css-9r1sq9"
-                role="button"
-                aria-label="replay"
-                aria-hidden="true"
-              ></a> -->
-              <video
-                class="css-1vd2db0"
-                src="@/assets/top/top_movie.mp4"
-                type="video/mp4"
-                playsinline
-                autoplay
-                muted
-              ></video>
-            </div>
-          </div>
-          <div class="css-2ezjlpa" :class="visible2 ? 'slide02' : 'opacity-0'">
-            <h2 class="css-11pvt2h"><b>手軽</b></h2>
-            <h3 class="css-2cmp5qk"><b>面倒な手順は不要</b></h3>
-            <p class="css-g79a2p">
-              EmoMeeはブラウザベースのアプリケーションのため、ダウンロードやインストール、ユーザ認証なしで利用することができます。
-              普段のオンラインコミュニケーションからオンライン発表など、様々なオンラインコミュニケーション場面で簡単に使うことができます。
-            </p>
-          </div>
-        </article>
-        <article class="css-1sf2xcr">
-          <div class="css-1ezjlpa" :class="visible3 ? 'slide13' : 'opacity-0'">
-            <h2 class="css-11pvt2h"><b>連携</b></h2>
-            <h3 class="css-0cmp5qk">
-              <b>いつものオンラインコミュニケーションツールと共に</b>
-            </h3>
-            <p class="css-g79a2p">
-              日頃のオンラインコミュにきエーションにemotionを追加することができます。
-              連帯用のDiscode
-              Botが用意されているので、Botを自身のサーバに追加することで、DiscodeでのコミュニケーションにEmotionをプラスすることができます。
-            </p>
-          </div>
-          <div class="css-18ypf3t">
-            <div class="css-zxsb69">
-              <!-- <a
-                class="css-9r1sq9"
-                role="button"
-                aria-label="replay"
-                aria-hidden="true"
-              ></a> -->
-              <video
-                class="css-1vd2db0"
-                src="@/assets/top/top_movie.mp4"
-                type="video/mp4"
-                playsinline
-                autoplay
-                muted
-              ></video>
-            </div>
-          </div>
-        </article>
-      </section>
-    </main>
+    </div>
+    <div class="h-screen overflow-hidden">
+      <img class="w-screen" src="@/assets/emomee-pc.jpg" />
+    </div>
+    <div
+      class="text-center h-screen flex flex-col justify-center items-center"
+      :class="visible0 ? 'right-slide' : 'opacity-0'"
+    >
+      <p class="text-sm">--<b>EmoMeeとは</b>--</p>
+      <p class="text-3xl font-bold m-5">
+        表情を検知し、感情(Emotion)を絵文字(Emoji)で<br />共有できるMeeting用Webアプリケーション
+      </p>
+      <p class="w-100 mx-auto leading-8 text-left">
+        EmoMeeは、「ビデオ通話はちょっと、、」といった【カメラに顔を映したくない】【周りはどんな感情で聞いているのかわからない】などの声にお応えしました！<br />
+        ボイスチャットでの会話が増えた今、声だけでは伝わりにくいニュアンスをカメラをオンをせず、手軽に相手の表情を見ながら会話したいときに「EmoMee」！！
+      </p>
+    </div>
+    <div class="absolute w-screen">
+      <img
+        src="@/assets/face/pigeon/neutral.gif"
+        class="w-28 mx-auto -translate-y-1/2"
+        alt="pigeon neutral"
+      />
+    </div>
+    <div class="h-screen flex items-center justify-evenly">
+      <div
+        class="text-center h-screem flex flex-col justify-center items-center"
+        :class="visible1 ? 'left-slide' : 'opacity-0'"
+      >
+        <p class="text-sm text-bold">表情伝達</p>
+        <p class="text-3xl font-bold m-5">POPなアイコンで表情を伝えよう</p>
+        <p class="w-100 mx-auto leading-8 text-left">
+          カメラから表情の検出が行われ、その表情に応じたアイコンがあなたの表情を伝えてくれます。それぞれの表情をアイコンをカスタマイズすることで、あなたらしい表情を使えることができます。<br />
+          感情が伝えられることで、<b>コミュニケーションをより円滑に楽しく</b>行うことができます。
+        </p>
+      </div>
+      <video
+        class="h-80 border-0 rounded-xl overflow-hidden shadow-2xl"
+        src="@/assets/top/top_movie.mp4"
+        type="video/mp4"
+        playsinline
+        autoplay
+        muted
+      />
+    </div>
+    <div class="absolute w-screen">
+      <img
+        src="@/assets/face/pigeon/happy.gif"
+        class="w-28 mx-auto -translate-y-1/2"
+        alt="pigeon happy"
+      />
+    </div>
+    <div class="h-screen flex items-center justify-evenly">
+      <video
+        class="h-80 border-0 rounded-xl overflow-hidden shadow-2xl"
+        src="@/assets/top/top_movie.mp4"
+        type="video/mp4"
+        playsinline
+        autoplay
+        muted
+      />
+      <div
+        class="text-center h-screem flex flex-col justify-center items-center"
+        :class="visible2 ? 'right-slide' : 'opacity-0'"
+      >
+        <p class="text-sm text-bold">手軽</p>
+        <p class="text-3xl font-bold m-5">面倒な手順は不要</p>
+        <p class="w-100 mx-auto leading-8 text-left">
+          日頃のオンラインコミュニケーションにEmotionを追加することができます。<br />
+          連携用のDiscordBotが用意されているので、Botを自身のサーバに追加することで、DiscordでのコミュニケーションにEmotionをプラスすることができます。
+        </p>
+      </div>
+    </div>
+    <div class="absolute w-screen">
+      <img
+        src="@/assets/face/pigeon/sleep.gif"
+        class="w-28 mx-auto -translate-y-1/2"
+        alt="pigeon sleep"
+      />
+    </div>
+    <div class="h-screen flex items-center justify-evenly">
+      <div
+        class="text-center h-screem flex flex-col justify-center items-center"
+        :class="visible3 ? 'left-slide' : 'opacity-0'"
+      >
+        <p class="text-sm text-bold">連携</p>
+        <p class="text-3xl font-bold m-5">
+          いつものオンライン<br />コミュニケーションツールと共に
+        </p>
+        <p class="w-100 mx-auto leading-8 text-left">
+          EmoMeeはブラウザベースのアプリケーションのため、ダウンロードやインストール、ユーザ認証なしで利用することができます。<br />
+          普段のオンラインコミュニケーションからオンライン発表など、様々なオンラインコミュニケーションの場面で簡単に使うことができます。
+        </p>
+      </div>
+      <video
+        class="h-80 border-0 rounded-xl overflow-hidden shadow-2xl"
+        src="@/assets/top/top_movie.mp4"
+        type="video/mp4"
+        playsinline
+        autoplay
+        muted
+      />
+    </div>
+    <div class="text-center h-screen flex flex-col justify-center items-center">
+      <p class="my-6 text-4xl font-bold">さあ、はじめよう</p>
+      <nuxt-link
+        to="/create"
+        class="my-6 text-3xl text-white bg-slate-500 px-9 py-2 hover:bg-slate-600 border border-slate-600 rounded"
+      >
+        ルーム作成
+      </nuxt-link>
+    </div>
   </div>
 </template>
 
@@ -154,29 +148,29 @@ export default {
   },
   methods: {
     handleScroll() {
-      console.log(window.scrollY)
-      const contentHeight = 555
+      const { scrollY, innerHeight } = window
+
       if (!this.visible0) {
-        this.visible0 = window.scrollY > window.innerHeight + contentHeight / 2
-      } else if (window.scrollY <= window.innerHeight + contentHeight / 2) {
+        this.visible0 = scrollY > innerHeight * 1.5
+      } else if (scrollY <= innerHeight * 1.5) {
         this.visible0 = !this.visible0
       }
 
       if (!this.visible1) {
-        this.visible1 = window.scrollY > window.innerHeight + contentHeight * 2
-      } else if (window.scrollY <= window.innerHeight + contentHeight / 2) {
+        this.visible1 = scrollY > innerHeight * 2.5
+      } else if (scrollY <= innerHeight * 2.5) {
         this.visible1 = !this.visible1
       }
 
       if (!this.visible2) {
-        this.visible2 = window.scrollY > window.innerHeight + contentHeight * 3
-      } else if (window.scrollY <= window.innerHeight + contentHeight / 2) {
+        this.visible2 = scrollY > innerHeight * 3.5
+      } else if (scrollY <= innerHeight * 3.5) {
         this.visible2 = !this.visible2
       }
 
       if (!this.visible3) {
-        this.visible3 = window.scrollY > window.innerHeight + contentHeight * 4
-      } else if (window.scrollY < window.innerHeight + contentHeight / 2) {
+        this.visible3 = scrollY > innerHeight * 4.5
+      } else if (scrollY < innerHeight * 4.5) {
         this.visible3 = !this.visible3
       }
     },
@@ -184,126 +178,12 @@ export default {
 }
 </script>
 
-<style>
-.font-family {
-  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue',
-    'Hiragino Sans', '游ゴシック Medium', YuGothic, YuGothicM, 'メイリオ',
-    Meiryo, sans-serif;
-}
-/* header */
-.css-g1d4iy {
-  z-index: 10;
-  position: fixed;
-  left: 24px;
-  top: 15px;
-  width: 100%;
-  height: 65px;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  box-sizing: border-box;
-  color: #fff;
-  -webkit-transition: 0.25s ease-in-out;
-  transition: 0.25s ease-in-out;
-  transition-property: background-color, box-shadow, color;
-  pointer-events: none;
-  margin-top: 8px;
-}
-/* button */
-.css-15nidrm {
-  font-size: 20px;
-  display: inline-block;
-  color: inherit;
-  transition: none;
-  position: absolute;
-  right: 65px;
-  top: 50%;
-  margin-top: -20px;
-  pointer-events: auto;
-}
-.css-11eqmph {
-  border-radius: 4px;
-  display: inline-block;
-  padding: 0.5rem 2.25rem;
-  line-height: 2;
-  border: solid 1px rgb(63, 68, 87);
-  color: rgb(255, 255, 255);
-  background: rgba(63, 68, 87, 0.3);
-  -webkit-transition: none;
-  transition: none;
-}
-/* main */
-.css-11apsez {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-}
-/* EmoMee-image video */
-.css-1b7y32o {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-.css-1vd2dbe {
-  display: block;
-  justify-items: center;
-  align-items: center;
-  width: 100%;
-  /* height: 100vh; */
-}
-/* first picture */
-.gatsby-image-wrapper {
-  position: relative;
-  overflow: hidden;
-}
-.gatsby-image-wrapper [data-main-image] {
-  opacity: 0;
-  transform: translateZ(0);
-  transition: opacity 0.25s linear;
-  will-change: opacity;
-}
-.gatsby-image-wrapper img {
-  align-items: center;
-  justify-items: center;
-  bottom: 0;
-  width: 100%;
-  height: 100vh;
-  left: 0;
-  margin: 0;
-  /* max-width: none; */
-  padding: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  object-fit: cover;
-}
-.css-1ahkxzr {
-  width: 100%;
-  height: 100vh;
-  justify-items: center;
-  align-items: center;
-  position: relative;
-  background-color: #f7f7f7;
-}
-/* .css-fjkzxp {
-  height: 100%;
-} */
-
-/* explanation -EmoMee- */
-.slide02 {
-  /* overflow: hidden; */
+<style scoped>
+.right-slide {
   animation-delay: 1s;
-  animation: slideIn02 2s 1;
+  animation: right-animation 2s 1;
 }
-@keyframes slideIn02 {
-  /* from {
-    transform: translateX(180px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-  } */
+@keyframes right-animation {
   0% {
     transform: translateX(180px);
     opacity: 0;
@@ -313,19 +193,11 @@ export default {
     opacity: 1;
   }
 }
-.slide13 {
-  /* overflow: hidden; */
+.left-slide {
   animation-delay: 1s;
-  animation: slideIn13 2s 1;
+  animation: left-animation 2s 1;
 }
-@keyframes slideIn13 {
-  /* from {
-    transform: translateX(180px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-  } */
+@keyframes left-animation {
   0% {
     transform: translateX(-180px);
     opacity: 0;
@@ -334,112 +206,5 @@ export default {
     transform: translateX(0);
     opacity: 1;
   }
-}
-.css-1k7gt20 {
-  margin: 224px auto 0;
-  margin-bottom: 100px auto 0;
-  width: 100%;
-}
-.css-11pvt2h {
-  line-height: 1;
-  text-align: center;
-  font-size: 100%;
-  line-height: 2;
-}
-.css-1cmp5qk {
-  margin: 16px auto 0;
-  text-align: center;
-  font-size: 180%;
-  line-height: 1.3;
-  font-weight: 700;
-  max-width: 650px;
-}
-.css-g79a2p {
-  margin: 16px auto 0;
-  font-size: 100%;
-  line-height: 2;
-  max-width: 420px;
-}
-/* explanation -point1、3- */
-.css-1sf2xcr {
-  margin: 224px auto 0;
-  margin-bottom: 180px;
-  margin-left: auto 0;
-  margin-right: auto 0;
-  align-items: center;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-}
-.css-1ezjlpa {
-  flex: 1;
-  margin-top: 0;
-  margin-right: 24px;
-  margin-left: 64px;
-}
-.css-0cmp5qk {
-  margin: 10px auto 0;
-  text-align: center;
-  font-size: 180%;
-  line-height: 1.3;
-  max-width: 520px;
-}
-/* explanation -point2- */
-.css-2ezjlpa {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  margin-top: 0;
-  margin-right: 64px;
-  margin-left: 24px;
-}
-.css-2cmp5qk {
-  margin: 10px auto 0;
-  text-align: center;
-  font-size: 180%;
-  line-height: 1.3;
-}
-/* video */
-.css-1vd2db0 {
-  display: block;
-  justify-items: center;
-  align-items: center;
-  width: 100%;
-  /* height: 100vh; */
-}
-.css-18ypf3t {
-  flex: 1;
-  margin: 0 auto;
-  margin-top: auto;
-  margin-right: 5%;
-  /* width: 80%; */
-  justify-content: center;
-  /* margin-left: 20px; */
-}
-.css-18ypf4t {
-  flex: 1;
-  margin: 0 auto;
-  margin-top: auto;
-  margin-left: 5%;
-  /* width: 80%; */
-  justify-content: center;
-  margin-right: 0%;
-  /* right: 20px; */
-}
-.css-18ypf3t > div {
-  overflow: hidden;
-  border-radius: 10px;
-  box-shadow: 13px 20px 67px 0 rgb(0 0 0 / 40%);
-}
-.css-18ypf4t > div {
-  overflow: hidden;
-  border-radius: 10px;
-  box-shadow: 13px 20px 67px 0 rgb(0 0 0 / 40%);
-}
-
-.css-zxsb69 {
-  position: relative;
-  max-width: 680px;
-  min-width: 240px;
 }
 </style>
