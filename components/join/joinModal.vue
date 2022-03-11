@@ -6,13 +6,15 @@
 
     <!-- 設定項目部分 -->
     <div class="my-9 text-3xl">
-      <!-- <span class="font-semibold">名前</span> -->
+      <span v-if="$store.getters.getNameState" class="text-red-500">*</span>
       <input
-        v-model="user_name"
+        v-model="_isName"
         type="text"
         placeholder="名前を入力"
-        :disabled="$store.getters.getDiscordUserId !== ''"
-        class="outline-none border-b-2 border-red-400 bg-orange-50 text-2xl py-2 my-1 text-center text-gray-700 font-semibold"
+        class="outline-none border-b-2 bg-orange-50 text-2xl py-2 my-1 text-center text-gray-700 font-semibold"
+        :class="
+          $store.getters.getNameState ? 'border-red-400' : 'border-gray-700'
+        "
         @input="inputNameValue"
       />
     </div>
@@ -91,14 +93,46 @@
 
 <script>
 export default {
+  model: {
+    prop: 'isName',
+    event: 'change',
+  },
   // eslint-disable-next-line vue/require-prop-types
-  props: ['roomid', 'isowner', 'url'],
+  // props: ['roomid', 'isowner', 'url'],
+  props: {
+    isName: {
+      type: String,
+      default: '',
+    },
+    roomid: {
+      type: String,
+      default: '',
+    },
+    isowner: {
+      type: Boolean,
+      default: false,
+    },
+    url: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
       user_name: '',
       faceSwitch: true,
       voiceSwitch: true,
     }
+  },
+  computed: {
+    _isName: {
+      get() {
+        return this.isName
+      },
+      set(value) {
+        this.$emit('change', value)
+      },
+    },
   },
   created() {
     if (this.$store.getters.getDiscordUserId !== '') {
