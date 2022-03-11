@@ -11,7 +11,7 @@
         v-model="user_name"
         type="text"
         placeholder="名前を入力"
-        :disabled="$store.getters.getUserId !== ''"
+        :disabled="$store.getters.getDiscordUserId !== ''"
         class="outline-none border-b-2 border-red-400 bg-orange-50 text-2xl py-2 my-1 text-center text-gray-700 font-semibold"
         @input="inputNameValue"
       />
