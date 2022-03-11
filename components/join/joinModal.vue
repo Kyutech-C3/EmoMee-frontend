@@ -1,6 +1,6 @@
 <template>
   <div
-    class="rounded-3xl bg-orange-50 shadow-2xl w-1/3 h-90 z-10 p-9 text-center text-shadow-sm"
+    class="rounded-3xl bg-orange-50 shadow-inner-xl w-192 h-90 z-10 py-6 px-9 text-center text-shadow-sm"
   >
     <p class="my-8 text-3xl font-bold">ルーム設定</p>
 
@@ -11,7 +11,7 @@
         v-model="name"
         type="text"
         placeholder="名前を入力"
-        class="border-b-2 border-gray-500 bg-orange-50 text-2xl px-1 py-1 text-center text-gray-700"
+        class="outline-none border-b-2 border-gray-500 bg-orange-50 text-2xl px-1 py-1 text-center text-gray-700"
         @input="inputNameValue"
       />
     </div>
@@ -67,7 +67,7 @@
         readonly
       />
       <button @click="copyId()">
-        <FontAwesomeIcon :icon="['fas', 'copy']" class="w-5" />
+        <FontAwesomeIcon :icon="['fas', 'copy']" class="w-7" />
       </button>
     </div>
     <div
@@ -82,7 +82,7 @@
         readonly
       />
       <button @click="copyUrl()">
-        <FontAwesomeIcon :icon="['fas', 'copy']" class="w-5" />
+        <FontAwesomeIcon :icon="['fas', 'copy']" class="w-7" />
       </button>
     </div>
   </div>
