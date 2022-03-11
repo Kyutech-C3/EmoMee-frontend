@@ -3,7 +3,7 @@
     class="cursor-pointer hover:bg-gray-100"
     @click="(event) => $emit('click', event)"
   >
-    <div class="flex min-w-[106px]">
+    <div class="flex min-w-[110px]">
       <FontAwesomeIcon
         :icon="['fas', 'circle']"
         class="w-5 mr-2"
