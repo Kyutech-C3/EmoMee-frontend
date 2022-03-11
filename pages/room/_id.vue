@@ -108,13 +108,15 @@ export default {
       this.startMedia(true, true)
     }
 
-    if (this.$store.getters.getUserId !== '') {
+    const webSocketBaseUrl = this.$config.webSocketBaseUrl
+    const discordUserId = this.$store.getters.getDiscordUserId
+    if (discordUserId !== '') {
       this.ws = new WebSocket(
-        `${this.$config.discordWebSocketBaseUrl}${this.$route.params.id}?user_id=${this.$store.getters.getUserId}`
+        `${webSocketBaseUrl}discord/room/${this.$route.params.id}?user_id=${discordUserId}`
       )
     } else {
       this.ws = new WebSocket(
-        `${this.$config.webSocketBaseUrl}${this.$route.params.id}?user_name=${this.userName}`
+        `${webSocketBaseUrl}room/${this.$route.params.id}?user_name=${this.userName}`
       )
     }
 

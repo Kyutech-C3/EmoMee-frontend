@@ -4,15 +4,15 @@ export const state = () => ({
   faceSwitch: true,
   voiceSwitch: true,
   roomLimit: 0,
-  userId: '',
+  discordUserId: '',
 })
 
 export const getters = {
   getName(state) {
     return state.name
   },
-  getUserId(state) {
-    return state.userId
+  getDiscordUserId(state) {
+    return state.discordUserId
   },
 }
 
@@ -23,8 +23,8 @@ export const mutations = {
   inputName(state, isName) {
     state.name = isName
   },
-  updateUserId(state, isUserId) {
-    state.userId = isUserId
+  setDiscordUserId(state, discordUserId) {
+    state.discordUserId = discordUserId
   },
   updateFaceSwitch(state, isFaceSwitch) {
     state.faceSwitch = isFaceSwitch

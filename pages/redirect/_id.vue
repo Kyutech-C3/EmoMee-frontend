@@ -8,7 +8,7 @@
         alt="sad pigeon"
         class="absolute -bottom-14 -right-14 w-28"
       />
-      <p class="w-full text-xl">ルームへGO〜</p>
+      <p class="w-full text-xl">Welcome EmoMee</p>
     </div>
   </div>
 </template>
@@ -22,7 +22,7 @@ export default {
       `${app.$config.baseUrl}user/${query.user_id}`
     )
     store.commit('inputName', data.name)
-    store.commit('updateUserId', query.user_id)
+    store.commit('setDiscordUserId', query.user_id)
   },
   created() {
     if (this.$store.getters.getName !== '') {

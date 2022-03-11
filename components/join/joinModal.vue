@@ -101,7 +101,7 @@ export default {
     }
   },
   created() {
-    if (this.$store.getters.getUserId !== '') {
+    if (this.$store.getters.getDiscordUserId !== '') {
       this.user_name = this.$store.getters.getName
     }
   },
