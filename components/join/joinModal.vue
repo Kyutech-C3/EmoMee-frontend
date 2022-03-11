@@ -1,6 +1,6 @@
 <template>
   <div
-    class="rounded-3xl bg-orange-50 shadow-inner-xl w-192 h-90 z-10 py-6 px-9 text-center text-shadow-sm"
+    class="rounded-3xl bg-orange-50 shadow-inner-xl w-192 h-81 z-10 py-6 px-9 text-center text-shadow-sm"
   >
     <p class="mb-8 mt-6 text-3xl font-semibold">ルーム設定</p>
 
@@ -63,7 +63,7 @@
       <input
         id="copyId"
         :value="roomid"
-        class="mx-5 font-semibold bg-orange-50 text-xl w-80 text-center text-gray-500"
+        class="outline-none mx-5 font-semibold bg-orange-50 text-xl w-80 text-center text-gray-500"
         readonly
       />
       <button @click="copyId()">
@@ -78,7 +78,7 @@
       <input
         id="copyUrl"
         :value="url"
-        class="mx-5 font-semibold bg-orange-50 text-xl w-80 text-center text-gray-500"
+        class="outline-none mx-5 font-semibold bg-orange-50 text-xl w-80 text-center text-gray-500"
         readonly
       />
       <button @click="copyUrl()">
