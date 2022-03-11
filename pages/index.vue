@@ -137,7 +137,9 @@
 </template>
 
 <script>
-export default {}
+export default {
+  layout: 'top',
+}
 </script>
 
 <style>
@@ -148,7 +150,7 @@ export default {}
 }
 /* header */
 .css-g1d4iy {
-  z-index: 100;
+  z-index: 10;
   position: fixed;
   left: 24px;
   top: 15px;
