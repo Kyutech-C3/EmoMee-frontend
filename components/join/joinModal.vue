@@ -119,7 +119,7 @@ export default {
   },
   data() {
     return {
-      name: '',
+      user_name: '',
       faceSwitch: true,
       voiceSwitch: true,
     }
@@ -133,6 +133,11 @@ export default {
         this.$emit('change', value)
       },
     },
+  },
+  created() {
+    if (this.$store.getters.getDiscordUserId !== '') {
+      this.user_name = this.$store.getters.getName
+    }
   },
   methods: {
     async copyId() {
@@ -152,7 +157,7 @@ export default {
       }
     },
     inputNameValue() {
-      this.$store.commit('inputName', this.name)
+      this.$store.commit('inputName', this.user_name)
     },
     changeFaceSwitch() {
       this.$store.commit('updateFaceSwitch', this.faceSwitch)

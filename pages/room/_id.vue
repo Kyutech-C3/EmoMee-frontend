@@ -104,13 +104,21 @@ export default {
     this.video.muted = true
 
     const { analysys } = this.$route.query
-    if (analysys === ('true' || undefined)) {
+    if (analysys === 'true' || analysys === undefined) {
       this.startMedia(true, true)
     }
 
-    this.ws = new WebSocket(
-      `${this.$config.webSocketBaseUrl}${this.$route.params.id}?user_name=${this.userName}`
-    )
+    const webSocketBaseUrl = this.$config.webSocketBaseUrl
+    const discordUserId = this.$store.getters.getDiscordUserId
+    if (discordUserId !== '') {
+      this.ws = new WebSocket(
+        `${webSocketBaseUrl}discord/room/${this.$route.params.id}?user_id=${discordUserId}`
+      )
+    } else {
+      this.ws = new WebSocket(
+        `${webSocketBaseUrl}room/${this.$route.params.id}?user_name=${this.userName}`
+      )
+    }
 
     if (this.ws !== null) {
       this.ws.onopen = (event) => {

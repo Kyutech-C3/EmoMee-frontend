@@ -72,7 +72,8 @@ export default {
   },
 
   publicRuntimeConfig: {
-    webSocketBaseUrl: 'wss://api.emom.ee/ws/room/',
+    webSocketBaseUrl: 'wss://api.emom.ee/ws/',
+    baseUrl: 'https://api.emom.ee/api/v1/',
   },
 
   watchers: {

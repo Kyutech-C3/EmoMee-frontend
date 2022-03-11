@@ -5,6 +5,7 @@ export const state = () => ({
   voiceSwitch: true,
   roomLimit: 0,
   nameState: false,
+  discordUserId: '',
 })
 
 export const getters = {
@@ -14,6 +15,9 @@ export const getters = {
   getNameState(state) {
     return state.nameState
   },
+  getDiscordUserId(state) {
+    return state.discordUserId
+  },
 }
 
 export const mutations = {
@@ -22,6 +26,9 @@ export const mutations = {
   },
   inputName(state, isName) {
     state.name = isName
+  },
+  setDiscordUserId(state, discordUserId) {
+    state.discordUserId = discordUserId
   },
   updateFaceSwitch(state, isFaceSwitch) {
     state.faceSwitch = isFaceSwitch
