@@ -17,7 +17,10 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/fontawesome.js'],
+  plugins: [
+    '~/plugins/fontawesome.js',
+    { src: '~/plugins/persistedstate.js', ssr: false },
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -72,7 +75,8 @@ export default {
   },
 
   publicRuntimeConfig: {
-    webSocketBaseUrl: 'wss://api.emom.ee/ws/room/',
+    webSocketBaseUrl: 'wss://api.emom.ee/ws/',
+    baseUrl: 'https://api.emom.ee/api/v1/',
   },
 
   watchers: {

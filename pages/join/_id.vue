@@ -1,15 +1,20 @@
 <template>
   <div
-    class="flex items-center justify-center w-screen h-screen flex-col relative bg-cyan-300"
+    class="flex items-center justify-center w-screen h-screen flex-col relative bg-slate-500"
   >
-    <JoinModal :roomid="roomId" :isowner="isOwner" :url="url" />
+    <img src="../../assets/top/EmoMee_logo.png" class="w-1/4 mb-5" />
+    <JoinModal v-model="name" :roomid="roomId" :isowner="isOwner" :url="url" />
+
+    <!-- nameの入力をフラグに表示内容を切り替え -->
     <button
-      class="m-12 px-18 py-7 text-3xl shadow-xl bg-orange-50 rounded-2xl font-semibold"
+      class="m-6 px-14 py-5 text-3xl shadow-inner-xl bg-orange-50 rounded-2xl font-semibold text-shadow-sm"
+      :class="$store.getters.getNameState ? 'text-red-500' : 'text-gray-700'"
       @click="getRoomUrl()"
     >
       参加
     </button>
-    <RoomToolBar class="opacity-50 pointer-events-none" />
+
+    <!-- <RoomToolBar class="opacity-10 pointer-events-none" /> -->
   </div>
 </template>
 
@@ -20,6 +25,7 @@ export default {
   setup() {},
   data() {
     return {
+      name: '',
       roomId: '',
       ownerRoomId: '',
       timeLimit: 0,
@@ -27,7 +33,6 @@ export default {
       responseCopy: {},
       isOwner: false,
       url: 'https://emom.ee/join/',
-      getRoomInfoUrl: 'https://api.emom.ee/api/v1/room/',
     }
   },
   computed: {
@@ -64,8 +69,9 @@ export default {
       try {
         // API叩く
         console.log('test')
-        this.getRoomInfoUrl = this.getRoomInfoUrl + this.roomId
-        const response = await axios.get(this.getRoomInfoUrl)
+        const response = await axios.get(
+          `${this.$config.baseUrl}room/${this.roomId}`
+        )
         // データ確認
         console.log(response)
       } catch (error) {
@@ -76,14 +82,14 @@ export default {
         })
       }
     },
-    getRoomUrl() {
-      const name = this.getName
-      const faceSwitch = this.getFaseSwitch
-      const voiceSwitch = this.getVoiceSwitch
-      this.$router.push({
-        path: '../room/' + this.roomId,
-        query: { user_name: name, em: faceSwitch, voice: voiceSwitch },
-      })
+    async getRoomUrl() {
+      if (this.name) {
+        this.$store.commit('updateNameState', false)
+        await this.$store.commit('inputName', this.name)
+        this.$router.push(`/room/${this.roomId}`)
+        return
+      }
+      this.$store.commit('updateNameState', true)
     },
   },
 }

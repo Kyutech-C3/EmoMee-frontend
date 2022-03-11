@@ -1,21 +1,24 @@
 <template>
   <div
-    class="rounded-3xl bg-orange-50 shadow-2xl w-1/3 h-90 z-10 p-9 text-center text-shadow-sm"
+    class="rounded-3xl bg-orange-50 shadow-inner-xl w-192 h-81 z-10 py-6 px-9 text-center text-shadow-sm"
   >
-    <p class="my-8 text-3xl font-bold">ルーム設定</p>
+    <p class="mb-8 mt-6 text-3xl font-semibold">ルーム設定</p>
 
     <!-- 設定項目部分 -->
     <div class="my-9 text-3xl">
-      <!-- <span class="font-semibold">名前</span> -->
+      <span v-if="$store.getters.getNameState" class="text-red-500">*</span>
       <input
-        v-model="name"
+        v-model="_isName"
         type="text"
         placeholder="名前を入力"
-        class="border-b-2 border-gray-500 bg-orange-50 text-2xl px-1 py-1 text-center text-gray-700"
+        class="outline-none border-b-2 bg-orange-50 text-2xl py-2 my-1 text-center text-gray-700 font-semibold"
+        :class="
+          $store.getters.getNameState ? 'border-red-400' : 'border-gray-700'
+        "
         @input="inputNameValue"
       />
     </div>
-    <div class="my-10 text-3xl flex justify-center">
+    <div class="my-5 text-2xl flex justify-center">
       <span class="font-semibold mr-18">表情検知</span>
       <div
         class="relative inline-block w-14 mr-2 mt-1 align-middle select-none transition duration-200 ease-in"
@@ -34,7 +37,7 @@
         ></label>
       </div>
     </div>
-    <div class="my-10 text-3xl flex justify-center">
+    <div class="my-5 text-2xl flex justify-center">
       <span class="font-semibold mr-18">音声検知</span>
       <div
         class="relative inline-block w-14 mr-2 mt-1 align-middle select-none transition duration-200 ease-in"
@@ -57,32 +60,32 @@
     <!-- Ownerか参加者かで表示を変える． -->
     <div
       v-if="!isowner"
-      class="mt-8 pt-8 mb-8 text-3xl border-t-4 border-gray-400 border-dotted"
+      class="mt-8 pt-8 mb-8 text-2xl border-t-4 border-gray-400 border-dotted"
     >
       <span class="font-semibold">ルームID</span>
       <input
         id="copyId"
         :value="roomid"
-        class="mx-5 bg-orange-50 text-2xl w-80 text-center text-gray-500"
+        class="outline-none mx-5 font-semibold bg-orange-50 text-xl w-80 text-center text-gray-500"
         readonly
       />
       <button @click="copyId()">
-        <FontAwesomeIcon :icon="['fas', 'copy']" class="w-5" />
+        <FontAwesomeIcon :icon="['fas', 'copy']" class="w-7" />
       </button>
     </div>
     <div
       v-if="isowner"
-      class="mt-8 pt-8 mb-8 text-3xl border-t-4 border-gray-400 border-dotted"
+      class="mt-8 pt-8 mb-8 text-2xl border-t-4 border-gray-400 border-dotted"
     >
       <span class="font-semibold">共有URL</span>
       <input
         id="copyUrl"
         :value="url"
-        class="mx-5 bg-orange-50 text-2xl w-80 text-center text-gray-500"
+        class="outline-none mx-5 font-semibold bg-orange-50 text-xl w-80 text-center text-gray-500"
         readonly
       />
       <button @click="copyUrl()">
-        <FontAwesomeIcon :icon="['fas', 'copy']" class="w-5" />
+        <FontAwesomeIcon :icon="['fas', 'copy']" class="w-7" />
       </button>
     </div>
   </div>
@@ -90,13 +93,50 @@
 
 <script>
 export default {
+  model: {
+    prop: 'isName',
+    event: 'change',
+  },
   // eslint-disable-next-line vue/require-prop-types
-  props: ['roomid', 'isowner', 'url'],
+  // props: ['roomid', 'isowner', 'url'],
+  props: {
+    isName: {
+      type: String,
+      default: '',
+    },
+    roomid: {
+      type: String,
+      default: '',
+    },
+    isowner: {
+      type: Boolean,
+      default: false,
+    },
+    url: {
+      type: String,
+      default: '',
+    },
+  },
   data() {
     return {
-      name: '',
+      user_name: '',
       faceSwitch: true,
       voiceSwitch: true,
+    }
+  },
+  computed: {
+    _isName: {
+      get() {
+        return this.isName
+      },
+      set(value) {
+        this.$emit('change', value)
+      },
+    },
+  },
+  created() {
+    if (this.$store.getters.getDiscordUserId !== '') {
+      this.user_name = this.$store.getters.getName
     }
   },
   methods: {
@@ -117,7 +157,7 @@ export default {
       }
     },
     inputNameValue() {
-      this.$store.commit('inputName', this.name)
+      this.$store.commit('inputName', this.user_name)
     },
     changeFaceSwitch() {
       this.$store.commit('updateFaceSwitch', this.faceSwitch)

@@ -4,7 +4,21 @@ export const state = () => ({
   faceSwitch: true,
   voiceSwitch: true,
   roomLimit: 0,
+  nameState: false,
+  discordUserId: '',
 })
+
+export const getters = {
+  getName(state) {
+    return state.name
+  },
+  getNameState(state) {
+    return state.nameState
+  },
+  getDiscordUserId(state) {
+    return state.discordUserId
+  },
+}
 
 export const mutations = {
   setOwnerInfo(state, isRoomId) {
@@ -12,6 +26,9 @@ export const mutations = {
   },
   inputName(state, isName) {
     state.name = isName
+  },
+  setDiscordUserId(state, discordUserId) {
+    state.discordUserId = discordUserId
   },
   updateFaceSwitch(state, isFaceSwitch) {
     state.faceSwitch = isFaceSwitch
@@ -21,5 +38,8 @@ export const mutations = {
   },
   updateRoomLimit(state, isRoomLimit) {
     state.roomLimit = isRoomLimit
+  },
+  updateNameState(state, isNameState) {
+    state.nameState = isNameState
   },
 }

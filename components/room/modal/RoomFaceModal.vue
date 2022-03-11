@@ -7,40 +7,40 @@
     >
       <FontAwesomeIcon :icon="['far', 'face-smile']" class="w-7" />
     </RoomBaseButton>
-    <div v-if="showModal">
-      <RoomBaseModal
-        class="absolute bottom-24 w-fit z-20"
-        :class="translateClass"
-      >
-        <div class="flex items-center">
-          <img
-            v-for="(value, key, index) in myFaceSettings"
-            :key="index"
-            :src="getFaceGif(faceList.faces[index].paths[value])"
-            :alt="`${index}: ${key} face`"
-            class="w-10 h-10 mx-3 cursor-pointer scale-95 hover:scale-100"
-            @click="
-              changeBarTranslate(index, key, `translate-x-[${index * -4}rem]`)
-            "
-          />
-        </div>
-      </RoomBaseModal>
-      <div v-for="(faces, i) in faceList.faces" :key="i">
+    <transition>
+      <div v-if="showModal">
         <RoomBaseModal
-          v-if="selectedEmotionIndex === i"
-          class="absolute bottom-40 w-fit z-10 flex flex-col-reverse"
+          class="absolute bottom-24 w-fit z-20 transition-transform"
+          :class="faceBarTranslate"
         >
-          <img
-            v-for="(path, j) in faces.paths"
-            :key="j"
-            :src="getFaceGif(path)"
-            alt="SmileFace"
-            class="w-12 m-2 cursor-pointer scale-95 hover:scale-100"
-            @click="sendEmojiSetting(faces.title, j)"
-          />
+          <div class="flex items-center">
+            <img
+              v-for="(value, key, index) in myFaceSettings"
+              :key="index"
+              :src="getFaceGif(faceList.faces[index].paths[value])"
+              :alt="`${index}: ${key} face`"
+              class="w-10 h-10 mx-3 cursor-pointer scale-95 hover:scale-100"
+              @click="changeBarTranslate(index, key)"
+            />
+          </div>
         </RoomBaseModal>
+        <div v-for="(faces, i) in faceList.faces" :key="i">
+          <RoomBaseModal
+            v-if="selectedEmotionIndex === i"
+            class="absolute bottom-40 w-fit z-10 flex flex-col-reverse"
+          >
+            <img
+              v-for="(path, j) in faces.paths"
+              :key="j"
+              :src="getFaceGif(path)"
+              alt="SmileFace"
+              class="w-12 m-2 cursor-pointer scale-95 hover:scale-100"
+              @click="sendEmojiSetting(faces.title, j)"
+            />
+          </RoomBaseModal>
+        </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -55,7 +55,6 @@ export default {
   data() {
     return {
       showModal: false,
-      translateClass: 'translate-x-0',
       selectedEmotion: '',
       selectedEmotionIndex: 0,
       faceList,
@@ -70,16 +69,35 @@ export default {
       },
     }
   },
+  computed: {
+    faceBarTranslate() {
+      switch (this.selectedEmotionIndex) {
+        case 1:
+          return '-translate-x-16'
+        case 2:
+          return '-translate-x-32'
+        case 3:
+          return '-translate-x-48'
+        case 4:
+          return '-translate-x-64'
+        case 5:
+          return '-translate-x-80'
+        case 6:
+          return '-translate-x-96'
+        default:
+          return 'translate-x-0'
+      }
+    },
+  },
   methods: {
     onOutsideClick() {
       if (this.showModal) {
         this.showModal = !this.showModal
       }
     },
-    changeBarTranslate(index, emotion, tailwindClass) {
+    changeBarTranslate(index, emotion) {
       this.selectedEmotionIndex = index
       this.selectedEmotion = emotion
-      this.translateClass = tailwindClass
     },
     getFaceGif(path) {
       return require(`@/assets/face/${path}`)
@@ -91,3 +109,12 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.v-leave-active {
+  transition: opacity 0.25s;
+}
+.v-leave-to {
+  opacity: 0;
+}
+</style>

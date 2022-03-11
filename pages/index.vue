@@ -140,6 +140,7 @@
 
 <script>
 export default {
+  layout: 'top',
   data() {
     return {
       visible0: false,
@@ -191,7 +192,7 @@ export default {
 }
 /* header */
 .css-g1d4iy {
-  z-index: 100;
+  z-index: 10;
   position: fixed;
   left: 24px;
   top: 15px;
