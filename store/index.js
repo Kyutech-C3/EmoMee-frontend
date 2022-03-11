@@ -4,11 +4,15 @@ export const state = () => ({
   faceSwitch: true,
   voiceSwitch: true,
   roomLimit: 0,
+  nameState: false,
 })
 
 export const getters = {
   getName(state) {
     return state.name
+  },
+  getNameState(state) {
+    return state.nameState
   },
 }
 
@@ -27,5 +31,8 @@ export const mutations = {
   },
   updateRoomLimit(state, isRoomLimit) {
     state.roomLimit = isRoomLimit
+  },
+  updateNameState(state, isNameState) {
+    state.nameState = isNameState
   },
 }
