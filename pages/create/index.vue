@@ -70,13 +70,13 @@ export default {
 </script>
 
 <style scoped>
-/* .background-image {
-  background-image: url('../../assets/face/pigeon/happy.gif');
-  background-image: url('../../assets/reaction/gif/middle_finger.gif');
-  background-repeat: repeat;
-  background-size: 0.1%;
-  background-color: rgba(255, 255, 255, 0.8);
-  background-attachment: fixed;
-  background-position: right bottom;
-} */
+.background-image {
+  /* background-image: url('../../assets/face/pigeon/happy.gif'); */
+  /* background-image: url('../../assets/reaction/gif/middle_finger.gif'); */
+  /* background-repeat: repeat; */
+  /* background-size: 3%; */
+  /* background-color: rgba(255, 255, 255, 0.8); */
+  /* background-attachment: fixed; */
+  /* background-position: right bottom; */
+}
 </style>
