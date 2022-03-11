@@ -108,9 +108,15 @@ export default {
       this.startMedia(true, true)
     }
 
-    this.ws = new WebSocket(
-      `${this.$config.webSocketBaseUrl}${this.$route.params.id}?user_name=${this.userName}`
-    )
+    if (this.$store.state.userId !== '') {
+      this.ws = new WebSocket(
+        `${this.$config.discordWebSocketBaseUrl}${this.$route.params.id}?user_id=${this.$store.state.userId}`
+      )
+    } else {
+      this.ws = new WebSocket(
+        `${this.$config.webSocketBaseUrl}${this.$route.params.id}?user_name=${this.userName}`
+      )
+    }
 
     if (this.ws !== null) {
       this.ws.onopen = (event) => {
