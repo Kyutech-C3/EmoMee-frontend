@@ -8,7 +8,11 @@
     </div>
     <transition>
       <RoomBaseModal v-if="showModal" class="absolute bottom-24 w-48">
-        <div v-for="(reaction, i) in reactionJson.reactions" :key="i">
+        <div
+          v-for="(reaction, i) in reactionJson.reactions"
+          :key="i"
+          :class="loadCount >= sourceCount ? 'block' : 'hidden'"
+        >
           <p class="font-bold">{{ reaction.title }}</p>
           <div class="w-full flex flex-wrap">
             <img
@@ -17,8 +21,12 @@
               :src="getReactionGif(source)"
               class="w-8 cursor-pointer scale-95 hover:scale-100"
               @click="sendReaction(source)"
+              @load="loadReaction()"
             />
           </div>
+        </div>
+        <div :class="loadCount < sourceCount ? 'block' : 'hidden'">
+          <LoadingAnimation />
         </div>
       </RoomBaseModal>
     </transition>
@@ -38,7 +46,14 @@ export default {
       showModal: false,
       reactionJson,
       reactionSources: [],
+      sourceCount: 0,
+      loadCount: 0,
     }
+  },
+  created() {
+    this.reactionJson.reactions.forEach((reaction) => {
+      this.sourceCount += reaction.sources.length
+    })
   },
   methods: {
     onOutsideClick() {
@@ -52,6 +67,11 @@ export default {
     sendReaction(source) {
       this.$emit('sendReaction', { reactionName: source, isAnimation: true })
       this.showModal = !this.showModal
+    },
+    loadReaction() {
+      if (this.loadCount < this.sourceCount) {
+        this.loadCount++
+      }
     },
   },
 }
