@@ -1,6 +1,6 @@
 <template>
   <div
-    class="rounded-3xl bg-orange-50 shadow-inner-xl w-192 h-90 z-10 py-6 px-9 text-center text-shadow-sm"
+    class="rounded-3xl bg-orange-50 shadow-inner-xl w-192 h-81 z-10 py-6 px-9 text-center text-shadow-sm"
   >
     <p class="mb-8 mt-6 text-3xl font-semibold">ルーム設定</p>
 
