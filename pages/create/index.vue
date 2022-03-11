@@ -1,13 +1,14 @@
 <template>
   <div
-    class="flex items-center justify-center w-screen h-screen flex-col relative"
+    class="background-image flex items-center justify-center w-screen h-screen flex-col relative"
   >
+    <img src="../../assets/top/EmoMee_logo.png" class="w-1/4 mb-10" />
     <CreateModal />
     <button
-      class="m-12 px-16 py-5 text-3xl shadow-xl bg-orange-50 rounded-2xl font-semibold"
+      class="m-12 px-18 py-7 text-3xl shadow-inner-xl text-shadow-sm bg-orange-50 rounded-2xl font-semibold"
       @click="createRoom()"
     >
-      参加
+      ルーム作成
     </button>
     <div v-if="hasError" class="text-red-600 font-semibold text-xl">
       ルームを作成出来ませんでした．
@@ -67,3 +68,15 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+/* .background-image {
+  background-image: url('../../assets/face/pigeon/happy.gif');
+  background-image: url('../../assets/reaction/gif/middle_finger.gif');
+  background-repeat: repeat;
+  background-size: 0.1%;
+  background-color: rgba(255, 255, 255, 0.8);
+  background-attachment: fixed;
+  background-position: right bottom;
+} */
+</style>
