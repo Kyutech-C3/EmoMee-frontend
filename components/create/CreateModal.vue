@@ -1,9 +1,9 @@
 <template>
   <div
-    class="rounded-2xl bg-orange-50 shadow-inner-xl w-192 h-80 z-10 p-9 text-center text-shadow-sm"
+    class="flex flex-col justify-center rounded-2xl bg-orange-50 shadow-inner-xl w-192 h-80 z-10 p-9 text-center text-shadow-sm"
   >
-    <p class="my-8 text-3xl font-bold">ルーム設定</p>
-    <div class="mt-20 text-2xl">
+    <p class="mb-8 text-3xl font-bold">ルーム設定</p>
+    <div class="mt-10 text-2xl">
       <span class="font-semibold mr-3">有効期限</span>
       <label>
         <select

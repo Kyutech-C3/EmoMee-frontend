@@ -1,6 +1,6 @@
 <template>
   <div
-    class="background-image flex items-center justify-center w-screen h-screen flex-col relative"
+    class="background-image flex items-center justify-center w-screen h-screen flex-col relative pt-5"
   >
     <img src="../../assets/top/EmoMee_logo.png" class="w-1/4 mb-10" />
     <CreateModal />

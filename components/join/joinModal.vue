@@ -1,11 +1,11 @@
 <template>
   <div
-    class="rounded-3xl bg-orange-50 shadow-inner-xl w-192 h-81 z-10 py-6 px-9 text-center text-shadow-sm"
+    class="rounded-3xl bg-orange-50 shadow-inner-xl w-192 h-100 z-10 py-6 px-9 text-center text-shadow-sm flex flex-col items-center justify-center"
   >
-    <p class="mb-8 mt-6 text-3xl font-semibold">ルーム設定</p>
+    <p class="mb-8 text-3xl font-semibold">ルーム設定</p>
 
     <!-- 設定項目部分 -->
-    <div class="my-9 text-3xl">
+    <div class="mt-2 text-3xl">
       <span v-if="$store.getters.getNameState" class="text-red-500">*</span>
       <input
         v-model="_isName"
@@ -18,41 +18,41 @@
         @input="inputNameValue"
       />
     </div>
-    <div class="my-5 text-2xl flex justify-center">
+    <div class="my-5 text-xl flex justify-center">
       <span class="font-semibold mr-18">表情検知</span>
       <div
-        class="relative inline-block w-14 mr-2 mt-1 align-middle select-none transition duration-200 ease-in"
+        class="relative inline-block w-12 mr-2 mt-1 align-middle select-none transition duration-200 ease-in"
       >
         <input
           id="toggle"
           v-model="faceSwitch"
           type="checkbox"
           name="toggle"
-          class="toggle-checkbox absolute block w-8 h-8 rounded-full bg-white border-2 appearance-none cursor-pointer"
+          class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-2 appearance-none cursor-pointer"
           @input="changeFaceSwitch"
         />
         <label
           for="toggle"
-          class="toggle-label block overflow-hidden h-8 rounded-full bg-gray-300 cursor-pointer"
+          class="toggle-label block overflow-hidden h-6 w-12 rounded-full bg-gray-300 cursor-pointer"
         ></label>
       </div>
     </div>
-    <div class="my-5 text-2xl flex justify-center">
+    <div class="my-5 text-xl flex justify-center">
       <span class="font-semibold mr-18">音声検知</span>
       <div
-        class="relative inline-block w-14 mr-2 mt-1 align-middle select-none transition duration-200 ease-in"
+        class="relative inline-block w-12 mr-2 mt-1 align-middle select-none transition duration-200 ease-in"
       >
         <input
           id="toggle2"
           v-model="voiceSwitch"
           type="checkbox"
           name="toggle"
-          class="toggle-checkbox absolute block w-8 h-8 rounded-full bg-white border-2 appearance-none cursor-pointer"
+          class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-2 appearance-none cursor-pointer"
           @input="changeVoiceSwitch"
         />
         <label
           for="toggle2"
-          class="toggle-label block overflow-hidden h-8 rounded-full bg-gray-300 cursor-pointer"
+          class="toggle-label block overflow-hidden h-6 w-12 rounded-full bg-gray-300 cursor-pointer"
         ></label>
       </div>
     </div>
@@ -60,32 +60,35 @@
     <!-- Ownerか参加者かで表示を変える． -->
     <div
       v-if="!isowner"
-      class="mt-8 pt-8 mb-8 text-2xl border-t-4 border-gray-400 border-dotted"
+      class="pt-4 text-xl border-t-4 border-gray-400 border-dotted flex justify-center"
     >
       <span class="font-semibold">ルームID</span>
       <input
         id="copyId"
         :value="roomid"
-        class="outline-none mx-5 font-semibold bg-orange-50 text-xl w-80 text-center text-gray-500"
+        class="outline-none mx-5 font-semibold bg-orange-50 text-sm w-80 text-center text-gray-500"
         readonly
       />
       <button @click="copyId()">
-        <FontAwesomeIcon :icon="['fas', 'copy']" class="w-7" />
+        <FontAwesomeIcon :icon="['fas', 'copy']" class="w-5" />
       </button>
     </div>
     <div
       v-if="isowner"
-      class="mt-8 pt-8 mb-8 text-2xl border-t-4 border-gray-400 border-dotted"
+      class="pt-4 text-xl border-t-4 border-gray-400 border-dotted flex justify-center"
     >
       <span class="font-semibold">共有URL</span>
       <input
         id="copyUrl"
         :value="url"
-        class="outline-none mx-5 font-semibold bg-orange-50 text-xl w-80 text-center text-gray-500"
+        class="outline-none mx-5 font-semibold bg-orange-50 text-sm w-80 text-center text-gray-500"
         readonly
       />
       <button @click="copyUrl()">
-        <FontAwesomeIcon :icon="['fas', 'copy']" class="w-7" />
+        <FontAwesomeIcon
+          :icon="['fas', 'copy']"
+          class="w-5 text-gray-500 hover:text-gray-800"
+        />
       </button>
     </div>
   </div>
