@@ -63,7 +63,7 @@
       <input
         id="copyId"
         :value="roomid"
-        class="mx-5 font-semibold bg-orange-50 text-xl w-80 text-center text-gray-500"
+        class="outline-none mx-5 font-semibold bg-orange-50 text-xl w-80 text-center text-gray-500"
         readonly
       />
       <button @click="copyId()">
@@ -78,7 +78,7 @@
       <input
         id="copyUrl"
         :value="url"
-        class="mx-5 font-semibold bg-orange-50 text-xl w-80 text-center text-gray-500"
+        class="outline-none mx-5 font-semibold bg-orange-50 text-xl w-80 text-center text-gray-500"
         readonly
       />
       <button @click="copyUrl()">
