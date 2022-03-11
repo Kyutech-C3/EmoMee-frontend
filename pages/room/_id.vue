@@ -90,18 +90,21 @@ export default {
     }
   },
   created() {
-    if (this.$route.query.user_name !== undefined) {
-      this.userName = this.$route.query.user_name
+    const { name, debug } = this.$route.query
+    if (name !== undefined) {
+      this.userName = name
     } else {
       this.userName = this.$store.getters.getName
     }
-    this.showDebugLog = this.$route.query.debug
+    this.showDebugLog = debug
   },
   mounted() {
     this.loadModels()
     this.video = document.createElement('video')
     this.video.muted = true
-    if (this.$route.query.face_enable !== 'false') {
+
+    const { analysys } = this.$route.query
+    if (analysys === ('true' || undefined)) {
       this.startMedia(true, true)
     }
 
