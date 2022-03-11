@@ -8,9 +8,10 @@
     <div class="my-9 text-3xl">
       <!-- <span class="font-semibold">名前</span> -->
       <input
-        v-model="name"
+        v-model="user_name"
         type="text"
         placeholder="名前を入力"
+        :disabled="$store.getters.getUserId !== ''"
         class="outline-none border-b-2 border-red-400 bg-orange-50 text-2xl py-2 my-1 text-center text-gray-700 font-semibold"
         @input="inputNameValue"
       />
@@ -94,9 +95,14 @@ export default {
   props: ['roomid', 'isowner', 'url'],
   data() {
     return {
-      name: '',
+      user_name: '',
       faceSwitch: true,
       voiceSwitch: true,
+    }
+  },
+  created() {
+    if (this.$store.getters.getUserId !== '') {
+      this.user_name = this.$store.getters.getName
     }
   },
   methods: {
@@ -117,7 +123,7 @@ export default {
       }
     },
     inputNameValue() {
-      this.$store.commit('inputName', this.name)
+      this.$store.commit('inputName', this.user_name)
     },
     changeFaceSwitch() {
       this.$store.commit('updateFaceSwitch', this.faceSwitch)
