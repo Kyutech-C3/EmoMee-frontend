@@ -108,9 +108,9 @@ export default {
       this.startMedia(true, true)
     }
 
-    if (this.$store.state.userId !== '') {
+    if (this.$store.getters.getUserId !== '') {
       this.ws = new WebSocket(
-        `${this.$config.discordWebSocketBaseUrl}${this.$route.params.id}?user_id=${this.$store.state.userId}`
+        `${this.$config.discordWebSocketBaseUrl}${this.$route.params.id}?user_id=${this.$store.getters.getUserId}`
       )
     } else {
       this.ws = new WebSocket(
