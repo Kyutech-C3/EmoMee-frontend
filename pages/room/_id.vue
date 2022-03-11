@@ -104,7 +104,7 @@ export default {
     this.video.muted = true
 
     const { analysys } = this.$route.query
-    if (analysys === ('true' || undefined)) {
+    if (analysys === 'true' || analysys === undefined) {
       this.startMedia(true, true)
     }
 
