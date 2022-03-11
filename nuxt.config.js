@@ -73,6 +73,8 @@ export default {
 
   publicRuntimeConfig: {
     webSocketBaseUrl: 'wss://api.emom.ee/ws/room/',
+    discordWebSocketBaseUrl: 'wss://api.emom.ee/ws/discord/room/',
+    baseUrl: 'https://api.emom.ee/api/v1/',
   },
 
   watchers: {

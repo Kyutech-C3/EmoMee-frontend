@@ -28,7 +28,6 @@ export default {
       responseCopy: {},
       isOwner: false,
       url: 'https://emom.ee/join/',
-      getRoomInfoUrl: 'https://api.emom.ee/api/v1/room/',
     }
   },
   computed: {
@@ -65,8 +64,9 @@ export default {
       try {
         // API叩く
         console.log('test')
-        this.getRoomInfoUrl = this.getRoomInfoUrl + this.roomId
-        const response = await axios.get(this.getRoomInfoUrl)
+        const response = await axios.get(
+          `${this.$config.baseUrl}room/${this.roomId}`
+        )
         // データ確認
         console.log(response)
       } catch (error) {
