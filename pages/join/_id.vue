@@ -49,6 +49,9 @@ export default {
       return this.$store.state.voiceSwitch
     },
   },
+  created() {
+    this.name = this.$store.getters.getName
+  },
   async mounted() {
     this.getInfo()
     await this.getRoomInfo()
