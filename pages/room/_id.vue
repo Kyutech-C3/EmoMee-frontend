@@ -115,6 +115,9 @@ export default {
       this.ws.onerror = (err) => {
         // eslint-disable-next-line no-console
         console.error(err)
+        this.$nuxt.error({
+          message: 'WebSocket connection failed',
+        })
       }
       this.ws.onmessage = (event) => {
         const json = JSON.parse(event.data)
