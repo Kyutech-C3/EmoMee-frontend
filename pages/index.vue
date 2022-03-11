@@ -35,7 +35,7 @@
         </div>
       </section>
       <section id="about EmoMee">
-        <header class="css-1k7gt20">
+        <header class="css-1k7gt20 slide">
           <h2 class="css-11pvt2h">--<b>EmoMeeとは</b>--</h2>
           <h3 class="css-1cmp5qk">
             表情を検知し、感情(Emotion)を絵文字(Emoji)で共有できるMeeting用Webアプリケーション
@@ -45,7 +45,7 @@
           </p>
         </header>
         <article class="css-1sf2xcr">
-          <div class="css-1ezjlpa">
+          <div class="css-1ezjlpa slide">
             <h2 class="css-11pvt2h"><b>表情伝達</b></h2>
             <h3 class="css-0cmp5qk"><b>POPなアイコンで表情を伝えよう</b></h3>
             <p class="css-g79a2p">
@@ -91,7 +91,7 @@
               ></video>
             </div>
           </div>
-          <div class="css-2ezjlpa">
+          <div class="css-2ezjlpa slide">
             <h2 class="css-11pvt2h"><b>手軽</b></h2>
             <h3 class="css-2cmp5qk"><b>面倒な手順は不要</b></h3>
             <p class="css-g79a2p">
@@ -101,7 +101,7 @@
           </div>
         </article>
         <article class="css-1sf2xcr">
-          <div class="css-1ezjlpa">
+          <div class="css-1ezjlpa slide">
             <h2 class="css-11pvt2h"><b>連携</b></h2>
             <h3 class="css-0cmp5qk">
               <b>いつものオンラインコミュニケーションツールと共に</b>
@@ -240,6 +240,24 @@ export default {}
 }
 
 /* explanation -EmoMee- */
+.slide {
+  /* overflow: hidden; */
+  animation: slideIn 1s 1;
+}
+@keyframes slideIn {
+  from {
+    transform: translateX(180px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+  }
+  40%,
+  100% {
+    opacity: 1;
+  }
+}
+
 .css-1k7gt20 {
   margin: 224px auto 0;
   margin-bottom: 100px auto 0;
