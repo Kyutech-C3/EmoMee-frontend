@@ -6,20 +6,30 @@
     >
       <FontAwesomeIcon :icon="['fas', 'plus']" class="w-9 mx-auto my-2" />
     </div>
-    <RoomBaseModal v-if="showModal" class="absolute bottom-24 w-48">
-      <div v-for="(reaction, i) in reactionJson.reactions" :key="i">
-        <p class="font-bold">{{ reaction.title }}</p>
-        <div class="w-full flex flex-wrap">
-          <img
-            v-for="(source, j) in reaction.sources"
-            :key="j"
-            :src="getReactionGif(source)"
-            class="w-8 cursor-pointer scale-95 hover:scale-100"
-            @click="sendReaction(source)"
-          />
+    <transition>
+      <RoomBaseModal v-if="showModal" class="absolute bottom-24 w-48">
+        <div
+          v-for="(reaction, i) in reactionJson.reactions"
+          :key="i"
+          :class="loadCount >= sourceCount ? 'block' : 'hidden'"
+        >
+          <p class="font-bold">{{ reaction.title }}</p>
+          <div class="w-full flex flex-wrap">
+            <img
+              v-for="(source, j) in reaction.sources"
+              :key="j"
+              :src="getReactionGif(source)"
+              class="w-8 cursor-pointer scale-95 hover:scale-100"
+              @click="sendReaction(source)"
+              @load="loadReaction()"
+            />
+          </div>
         </div>
-      </div>
-    </RoomBaseModal>
+        <div :class="loadCount < sourceCount ? 'block' : 'hidden'">
+          <LoadingAnimation />
+        </div>
+      </RoomBaseModal>
+    </transition>
   </div>
 </template>
 
@@ -36,7 +46,14 @@ export default {
       showModal: false,
       reactionJson,
       reactionSources: [],
+      sourceCount: 0,
+      loadCount: 0,
     }
+  },
+  created() {
+    this.reactionJson.reactions.forEach((reaction) => {
+      this.sourceCount += reaction.sources.length
+    })
   },
   methods: {
     onOutsideClick() {
@@ -51,6 +68,20 @@ export default {
       this.$emit('sendReaction', { reactionName: source, isAnimation: true })
       this.showModal = !this.showModal
     },
+    loadReaction() {
+      if (this.loadCount < this.sourceCount) {
+        this.loadCount++
+      }
+    },
   },
 }
 </script>
+
+<style scoped>
+.v-leave-active {
+  transition: opacity 0.25s;
+}
+.v-leave-to {
+  opacity: 0;
+}
+</style>

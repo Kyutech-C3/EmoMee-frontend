@@ -7,50 +7,52 @@
     >
       <FontAwesomeIcon :icon="['fas', 'ellipsis-vertical']" class="w-2" />
     </RoomBaseButton>
-    <RoomBaseModal v-if="showModal" class="absolute bottom-20 w-64">
-      <ul>
-        <li class="flex justify-between items-center my-3">
-          <p>表情検知</p>
-          <BaseToggleButton
-            :current-value="isFaceDetectorEnabled"
-            @changeValue="
-              (event) => {
-                isFaceDetectorEnabled = event
-                updateMenuValues()
-              }
-            "
-          />
-        </li>
-        <li class="flex justify-between items-center my-3">
-          <p>音声検知</p>
-          <BaseToggleButton
-            :current-value="isAudioDetectorEnabled"
-            @changeValue="
-              (event) => {
-                isAudioDetectorEnabled = event
-                updateMenuValues()
-              }
-            "
-          />
-        </li>
-        <li class="flex justify-between items-center my-3">
-          <p>デバックログの表示</p>
-          <BaseToggleButton
-            :current-value="showDebugLog"
-            @changeValue="(event) => $emit('showDebugLog', event)"
-          />
-        </li>
-        <li class="flex justify-between items-center my-3">
-          <p>招待リンクのコピー</p>
-          <div
-            class="px-5 py-1 hover:bg-gray-100 cursor-pointer"
-            @click="copyLink()"
-          >
-            <FontAwesomeIcon :icon="['fas', 'copy']" class="w-5" />
-          </div>
-        </li>
-      </ul>
-    </RoomBaseModal>
+    <transition>
+      <RoomBaseModal v-if="showModal" class="absolute bottom-20 w-64">
+        <ul>
+          <li class="flex justify-between items-center my-3">
+            <p>表情検知</p>
+            <BaseToggleButton
+              :current-value="isFaceDetectorEnabled"
+              @changeValue="
+                (event) => {
+                  isFaceDetectorEnabled = event
+                  updateMenuValues()
+                }
+              "
+            />
+          </li>
+          <li class="flex justify-between items-center my-3">
+            <p>音声検知</p>
+            <BaseToggleButton
+              :current-value="isAudioDetectorEnabled"
+              @changeValue="
+                (event) => {
+                  isAudioDetectorEnabled = event
+                  updateMenuValues()
+                }
+              "
+            />
+          </li>
+          <li class="flex justify-between items-center my-3">
+            <p>デバックログの表示</p>
+            <BaseToggleButton
+              :current-value="showDebugLog"
+              @changeValue="(event) => $emit('showDebugLog', event)"
+            />
+          </li>
+          <li class="flex justify-between items-center my-3">
+            <p>招待リンクのコピー</p>
+            <div
+              class="px-5 py-1 hover:bg-gray-100 cursor-pointer"
+              @click="copyLink()"
+            >
+              <FontAwesomeIcon :icon="['fas', 'copy']" class="w-5" />
+            </div>
+          </li>
+        </ul>
+      </RoomBaseModal>
+    </transition>
   </div>
 </template>
 
@@ -110,3 +112,12 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.v-leave-active {
+  transition: opacity 0.25s;
+}
+.v-leave-to {
+  opacity: 0;
+}
+</style>
