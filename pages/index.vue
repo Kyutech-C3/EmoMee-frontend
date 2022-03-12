@@ -2,7 +2,7 @@
   <div class="overflow-x-hidden">
     <div class="h-screen overflow-hidden">
       <video
-        class="h-full max-w-none"
+        class="w-full min-h-screen max-w-none object-cover"
         playsinline
         autoplay
         loop
@@ -17,9 +17,20 @@
           class="-translate-x-1/2 -translate-y-1/2"
         />
       </div>
+      <div class="w-100 absolute bottom-8 left-1/2">
+        <div
+          class="-translate-x-1/2 text-center text-xl font-thin tracking-widest"
+        >
+          <p class="text-white">scroll</p>
+          <p class="text-white">|</p>
+        </div>
+      </div>
     </div>
     <div class="h-screen overflow-hidden">
-      <img class="h-full max-w-none" src="@/assets/emomee-pc.jpg" />
+      <img
+        class="w-full min-h-screen max-w-none bg-cover"
+        src="@/assets/emomee-pc.jpg"
+      />
     </div>
     <div
       class="text-center h-screen flex flex-col justify-center items-center"
