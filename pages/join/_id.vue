@@ -71,12 +71,13 @@ export default {
     async getRoomInfo() {
       try {
         // API叩く
-        console.log('test')
+        // console.log('test')
+        // eslint-disable-next-line no-unused-vars
         const response = await axios.get(
           `${this.$config.baseUrl}room/${this.roomId}`
         )
         // データ確認
-        console.log(response)
+        // console.log(response)
       } catch (error) {
         this.hasError = true
         await this.sleep(2000)

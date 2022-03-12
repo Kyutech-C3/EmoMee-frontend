@@ -43,19 +43,19 @@ export default {
       try {
         // API叩く
         this.timeLimit = this.getRoomLimitInfo
-        console.log(this.getRoomLimitInfo)
-        console.log('test')
+        // console.log(this.getRoomLimitInfo)
+        // console.log('test')
         const response = await axios.post('https://api.emom.ee/api/v1/room', {
           limit: this.timeLimit,
         })
-        console.log(response)
+        // console.log(response)
         // データ確認
         this.roomId = response.data.room_id
         this.responseCopy = response
         this.isOwner = true
         // ストアに保存
         this.$store.commit('setOwnerInfo', this.roomId)
-        console.log(this.$store.roomId)
+        // console.log(this.$store.roomId)
         this.$router.push({ path: '../join/' + this.roomId })
       } catch (error) {
         this.hasError = true

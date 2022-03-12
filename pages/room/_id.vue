@@ -143,7 +143,7 @@ export default {
       }
       this.ws.onmessage = (event) => {
         const json = JSON.parse(event.data)
-        console.log(json)
+        // console.log(json)
 
         switch (json.event) {
           // ルーム入室時
@@ -486,7 +486,7 @@ export default {
       }
     },
     updateMenuValues(isFaceDetectorEnabled, isAudioDetectorEnabled) {
-      console.log([isFaceDetectorEnabled, isAudioDetectorEnabled])
+      // console.log([isFaceDetectorEnabled, isAudioDetectorEnabled])
       this.startMedia(isFaceDetectorEnabled, isAudioDetectorEnabled)
     },
   },

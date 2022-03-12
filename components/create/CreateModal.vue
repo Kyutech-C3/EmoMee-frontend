@@ -52,7 +52,7 @@ export default {
   methods: {
     setRoomLimit($event) {
       this.$store.commit('updateRoomLimit', $event.target.value)
-      console.log('event')
+      // console.log('event')
     },
   },
 }
