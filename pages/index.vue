@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="overflow-x-hidden">
     <div class="h-screen overflow-hidden">
       <video
-        class="w-screen"
+        class="h-full max-w-none"
         playsinline
         autoplay
         loop
@@ -19,7 +19,7 @@
       </div>
     </div>
     <div class="h-screen overflow-hidden">
-      <img class="w-screen" src="@/assets/emomee-pc.jpg" />
+      <img class="h-full max-w-none" src="@/assets/emomee-pc.jpg" />
     </div>
     <div
       class="text-center h-screen flex flex-col justify-center items-center"
@@ -34,7 +34,7 @@
         ボイスチャットでの会話が増えた今、声だけでは伝わりにくいニュアンスをカメラをオンをせず、手軽に相手の表情を見ながら会話したいときに「EmoMee」！！
       </p>
     </div>
-    <div class="absolute w-screen">
+    <div class="absolute w-full">
       <img
         src="@/assets/face/pigeon/neutral.gif"
         class="w-28 mx-auto -translate-y-1/2"
@@ -62,7 +62,7 @@
         muted
       />
     </div>
-    <div class="absolute w-screen">
+    <div class="absolute w-full">
       <img
         src="@/assets/face/pigeon/happy.gif"
         class="w-28 mx-auto -translate-y-1/2"
@@ -90,7 +90,7 @@
         </p>
       </div>
     </div>
-    <div class="absolute w-screen">
+    <div class="absolute w-full">
       <img
         src="@/assets/face/pigeon/sleep.gif"
         class="w-28 mx-auto -translate-y-1/2"
