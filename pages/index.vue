@@ -29,7 +29,7 @@
     <div class="h-screen overflow-hidden">
       <img
         class="w-full min-h-screen max-w-none bg-cover"
-        src="@/assets/emomee-pc.jpg"
+        src="@/assets/emomee-pc-mask.jpg"
       />
     </div>
     <div
@@ -64,13 +64,9 @@
           感情が伝えられることで、<b>コミュニケーションをより円滑に楽しく</b>行うことができます。
         </p>
       </div>
-      <video
+      <img
         class="h-80 border-0 rounded-xl overflow-hidden shadow-2xl"
-        src="@/assets/top/top_movie.mp4"
-        type="video/mp4"
-        playsinline
-        autoplay
-        muted
+        src="@/assets/top-1.gif"
       />
     </div>
     <div class="absolute w-full">
@@ -81,13 +77,9 @@
       />
     </div>
     <div class="h-screen flex items-center justify-evenly">
-      <video
+      <img
         class="h-80 border-0 rounded-xl overflow-hidden shadow-2xl"
-        src="@/assets/top/top_movie.mp4"
-        type="video/mp4"
-        playsinline
-        autoplay
-        muted
+        src="@/assets/top-2.gif"
       />
       <div
         class="text-center h-screem flex flex-col justify-center items-center"
@@ -122,13 +114,9 @@
           普段のオンラインコミュニケーションからオンライン発表など、様々なオンラインコミュニケーションの場面で簡単に使うことができます。
         </p>
       </div>
-      <video
+      <img
         class="h-80 border-0 rounded-xl overflow-hidden shadow-2xl"
-        src="@/assets/top/top_movie.mp4"
-        type="video/mp4"
-        playsinline
-        autoplay
-        muted
+        src="@/assets/top-3.gif"
       />
     </div>
     <div class="text-center h-screen flex flex-col justify-center items-center">
