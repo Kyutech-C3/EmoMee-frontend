@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-center justify-center w-screen h-screen flex-col relative bg-slate-500"
+    class="flex items-center justify-center w-screen h-screen flex-col relative bg-slate-500 pt-5"
   >
     <img src="../../assets/top/EmoMee_logo.png" class="w-1/4 mb-5" />
     <JoinModal v-model="name" :roomid="roomId" :isowner="isOwner" :url="url" />
