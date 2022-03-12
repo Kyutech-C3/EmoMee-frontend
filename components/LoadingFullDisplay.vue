@@ -7,7 +7,7 @@
       <transition name="logo" appear>
         <div v-if="showLogo" class="w-100 absolute top-1/2 left-1/2">
           <img
-            src="@/assets/top/EmoMee_logo.png"
+            src="@/assets/logo.png"
             alt="logo"
             class="-translate-x-1/2 -translate-y-1/2"
           />
