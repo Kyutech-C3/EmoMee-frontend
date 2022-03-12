@@ -127,6 +127,13 @@
       >
         ルーム作成
       </nuxt-link>
+      <a
+        href="https://discord.com/api/oauth2/authorize?client_id=950785390313373727&permissions=2147486720&scope=bot%20applications.commands"
+        target="_blank"
+        class="my-6 text-2xl text-white bg-slate-500 px-9 py-2 hover:bg-slate-600 border border-slate-600 rounded"
+      >
+        Discord Bot を<br />サーバーに招待する
+      </a>
     </div>
   </div>
 </template>
