@@ -10,12 +10,16 @@
         type="video/mp4"
         muted
       />
-      <div class="w-100 absolute top-1/2 left-1/2">
-        <img
-          src="@/assets/logo.png"
-          alt="logo"
-          class="-translate-x-1/2 -translate-y-1/2"
-        />
+      <div
+        class="w-100 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+      >
+        <img src="@/assets/logo.png" alt="logo" class="block" />
+        <nuxt-link
+          to="/create"
+          class="my-6 text-3xl text-white bg-slate-500 px-9 py-2 hover:bg-slate-600 border border-slate-600 rounded block mt-7 mx-auto w-fit"
+        >
+          ルーム作成
+        </nuxt-link>
       </div>
       <div class="w-100 absolute bottom-8 left-1/2">
         <div
