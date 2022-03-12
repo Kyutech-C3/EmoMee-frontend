@@ -1,5 +1,9 @@
 # EmoMee-frontend
 
+## 関連リポジトリ
+- [EmoMee バックエンド](https://github.com/Kyutech-C3/EmoMee-backend)
+- [EmoMee Discord Bot](https://github.com/Kyutech-C3/EmoMee-discord-bot)
+
 ## Build Setup
 
 ```bash
