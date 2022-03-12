@@ -31,7 +31,7 @@ export default {
     }, 100)
     setTimeout(() => {
       this.showLoading = false
-    }, 1500)
+    }, 2000)
   },
 }
 </script>
